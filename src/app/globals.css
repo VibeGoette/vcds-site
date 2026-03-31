@@ -44,3 +44,51 @@ main { overflow-x: hidden; }
 /* Hide scrollbar for horizontal scroll areas */
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ═══ BLOG VISUAL SYSTEM ═══ */
+
+/* Noise grain overlay — adds depth to gradient areas */
+.grain::after {
+  content: ''; position: absolute; inset: 0; opacity: 0.35; mix-blend-mode: overlay; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Staggered card reveal animation */
+@keyframes cardReveal {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.blog-card { animation: cardReveal 0.5s ease-out backwards; }
+.blog-card:nth-child(1) { animation-delay: 0.05s; }
+.blog-card:nth-child(2) { animation-delay: 0.1s; }
+.blog-card:nth-child(3) { animation-delay: 0.15s; }
+.blog-card:nth-child(4) { animation-delay: 0.2s; }
+.blog-card:nth-child(5) { animation-delay: 0.25s; }
+.blog-card:nth-child(6) { animation-delay: 0.3s; }
+.blog-card:nth-child(7) { animation-delay: 0.35s; }
+
+/* Reading progress glow */
+.progress-glow {
+  box-shadow: 0 0 12px 2px rgba(59, 130, 246, 0.4);
+}
+
+/* Article typography — editorial feel */
+.article-prose p { font-size: 1.0625rem; line-height: 1.85; color: #334155; margin-bottom: 1.5rem; }
+.article-prose h2 { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.01em; margin-top: 2.5rem; margin-bottom: 0.75rem; color: #0f172a; }
+.article-prose h3 { font-size: 1.2rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.5rem; color: #1e293b; }
+
+/* Pull-quote decorative marks */
+.pull-quote::before {
+  content: '\201C'; position: absolute; top: -0.25rem; left: 0;
+  font-size: 4rem; line-height: 1; font-weight: 800; color: #3b82f6; opacity: 0.15;
+  font-family: Georgia, 'Times New Roman', serif;
+}
+
+/* Hero SVG hover lift */
+.hero-svg-wrap { transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), box-shadow 0.5s ease; }
+.hero-svg-wrap:hover { transform: translateY(-4px); box-shadow: 0 20px 60px -15px rgba(0,0,0,0.3); }
+
+/* Circuit board decorative pattern */
+.circuit-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 50h30m10 0h30M50 10v30m0 10v30' stroke='%23ffffff' stroke-width='0.5' opacity='0.08' fill='none'/%3E%3Ccircle cx='50' cy='50' r='3' fill='%23ffffff' opacity='0.06'/%3E%3Ccircle cx='10' cy='50' r='2' fill='%23ffffff' opacity='0.04'/%3E%3Ccircle cx='90' cy='50' r='2' fill='%23ffffff' opacity='0.04'/%3E%3C/svg%3E");
+}
