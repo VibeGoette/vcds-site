@@ -32,7 +32,7 @@ export default function Fachhaendler() {
           <div className="space-y-3">
             {dealers.map(d => (
               <a key={d.name} href={d.url} target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-4 bg-white border border-slate-200 rounded-2xl p-5 hover:border-blue-200 transition-colors group">
+                className="flex items-center gap-4 bg-white border border-slate-200 rounded-xl p-4 sm:p-5 hover:border-blue-200 transition-colors group">
                 <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center shrink-0">
                   <Icon name="map" size={18} className="text-blue-600" />
                 </div>

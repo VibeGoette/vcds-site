@@ -40,7 +40,7 @@ export default function Fernwartung() {
           <div className="space-y-4">
             {steps.map(function(s, i) {
               return (
-                <div key={i} className="flex gap-4 items-start bg-white border border-slate-200 rounded-2xl p-5 hover:border-blue-200 transition-colors">
+                <div key={i} className="flex gap-3 sm:gap-4 items-start bg-white border border-slate-200 rounded-xl p-4 sm:p-5 hover:border-blue-200 transition-colors">
                   <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm shrink-0">{i + 1}</div>
                   <div>
                     <h3 className="font-bold text-slate-900 mb-1">{s.title}</h3>

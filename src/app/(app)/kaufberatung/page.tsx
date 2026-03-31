@@ -38,8 +38,8 @@ export default function Kaufberatung() {
           {/* Vergleichstabelle */}
           <section>
             <h2 className="text-2xl font-bold text-slate-900 mb-6">HEX-V2 vs HEX-NET im Vergleich</h2>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
+            <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+              <table className="w-full text-xs sm:text-sm min-w-[500px]">
                 <thead>
                   <tr className="border-b-2 border-slate-200">
                     <th className="text-left py-3 pr-4 font-semibold text-slate-500">Eigenschaft</th>

@@ -37,7 +37,7 @@ export default function Quickstart() {
 
         <div className="max-w-3xl mx-auto px-5 py-10 space-y-8">
           {/* Prerequisites */}
-          <div className="grid grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {[{ic:'plug',l:'Adapter',s:'HEX-V2 / NET'},{ic:'usb',l:'USB-Kabel',s:'Mitgeliefert'},{ic:'download',l:'Software',s:'USB / Download'},{ic:'globe',l:'Windows-PC',s:'Kein Mac'}].map(p => (
               <div key={p.l} className="bg-white border border-slate-200 rounded-xl p-3 text-center">
                 <div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center mx-auto mb-2"><Icon name={p.ic} size={16} className="text-blue-600" /></div>
@@ -73,17 +73,18 @@ export default function Quickstart() {
             </div>
             <div className="border-t border-slate-100 px-5 py-4 flex items-center justify-between">
               <button onClick={() => setStep(Math.max(0,step-1))} disabled={step===0}
-                className="flex items-center gap-1 text-sm text-slate-500 hover:text-slate-900 disabled:opacity-30 transition-colors">
+                aria-label="Vorheriger Schritt"
+                className="flex items-center gap-1 text-sm text-slate-500 hover:text-slate-900 disabled:opacity-30 transition-colors py-2 px-3 -ml-3 min-h-[44px]">
                 <Icon name="arrow" size={14} className="rotate-180" />Zurück
               </button>
               <div className="hidden sm:flex gap-1">
                 {steps.map((_,i) => (
-                  <button key={i} onClick={() => setStep(i)}
-                    className={`w-2 h-2 rounded-full transition-all ${i === step ? 'bg-blue-600 scale-125' : i < step ? 'bg-blue-300' : 'bg-slate-200'}`} />
+                  <button key={i} onClick={() => setStep(i)} aria-label={`Schritt ${i+1}`}
+                    className={`w-3 h-3 rounded-full transition-all ${i === step ? 'bg-blue-600 scale-125' : i < step ? 'bg-blue-300' : 'bg-slate-200'}`} />
                 ))}
               </div>
               {step < steps.length - 1 ? (
-                <button onClick={() => setStep(step+1)} className="flex items-center gap-1 px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-semibold hover:bg-blue-500 transition-colors">
+                <button onClick={() => setStep(step+1)} aria-label="Nächster Schritt" className="flex items-center gap-1 px-5 py-2.5 bg-blue-600 text-white rounded-md text-sm font-semibold hover:bg-blue-500 active:bg-blue-700 transition-colors min-h-[44px]">
                   Weiter<Icon name="arrow" size={14} className="text-white" />
                 </button>
               ) : (

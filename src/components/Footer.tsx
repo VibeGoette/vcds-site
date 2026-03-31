@@ -5,7 +5,7 @@ export function Footer() {
   return (
     <footer className="bg-slate-900 text-slate-400">
       <div className="max-w-6xl mx-auto px-5 pt-12 pb-8">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
           <div>
             <div className="flex items-baseline gap-1 mb-3">
               <span className="font-bold text-white text-base">VCDS</span>
@@ -34,7 +34,7 @@ export function Footer() {
             </div>
           </div>
         </div>
-        <div className="border-t border-white/5 pt-6 flex flex-col sm:flex-row justify-between items-center gap-3">
+        <div className="border-t border-white/5 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
           <p className="text-[10px] text-slate-600">© {new Date().getFullYear()} Auto-Intern GmbH · Ross-Tech VCDS</p>
           <nav className="flex gap-4 text-[10px]" aria-label="Rechtliche Links">
             <Link href="/impressum" className="hover:text-white transition-colors">Impressum</Link>

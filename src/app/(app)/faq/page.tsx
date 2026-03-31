@@ -35,7 +35,8 @@ export default function FAQ() {
             {faqs.map((f, i) => (
               <div key={i} className="border-b border-slate-100 last:border-0">
                 <button onClick={() => setOpen(open === i ? null : i)}
-                  className={`w-full flex items-center justify-between gap-4 px-6 py-5 text-left text-[15px] font-semibold transition-colors ${open === i ? 'bg-blue-50/50 text-slate-900' : 'text-slate-700 hover:bg-slate-50/50'}`}>
+                  aria-label={`Frage ${f.q} ${open === i ? 'schließen' : 'öffnen'}`}
+                  className={`w-full flex items-center justify-between gap-4 px-6 py-4 sm:py-5 text-left min-h-[48px] text-[15px] font-semibold transition-colors ${open === i ? 'bg-blue-50/50 text-slate-900' : 'text-slate-700 hover:bg-slate-50/50'}`}>
                   <span>{f.q}</span>
                   <span className={`shrink-0 transition-transform ${open === i ? 'rotate-180' : ''}`}>
                     <Icon name="chevron" size={16} className="text-slate-400" />

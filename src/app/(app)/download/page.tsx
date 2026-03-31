@@ -65,7 +65,7 @@ export default function Download() {
           <div className="flex gap-1 border-b border-slate-200 mb-6" role="tablist">
             {([['vcds','VCDS Software'],['support','Support'],['tools','Tools']] as const).map(([id,l]) => (
               <button key={id} role="tab" aria-selected={tab===id} onClick={()=>setTab(id)}
-                className={`px-4 py-3 text-sm font-medium border-b-2 -mb-px transition-colors ${tab===id ? 'text-blue-600 border-blue-600' : 'text-slate-500 border-transparent hover:text-blue-600'}`}>
+                className={`px-4 py-3 text-sm font-medium border-b-2 min-h-[44px] -mb-px transition-colors ${tab===id ? 'text-blue-600 border-blue-600' : 'text-slate-500 border-transparent hover:text-blue-600'}`}>
                 {l}
               </button>
             ))}

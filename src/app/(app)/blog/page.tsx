@@ -90,7 +90,7 @@ export default function Blog() {
 
         <div className="max-w-6xl mx-auto px-5 py-12">
           {/* Category Filter */}
-          <div className="flex gap-2 mb-8 overflow-x-auto pb-2">
+          <div className="flex gap-2 mb-8 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide">
             <span className="shrink-0 px-3 py-1.5 text-xs font-semibold rounded-md bg-blue-600 text-white">Alle</span>
             {Object.values(categories).map(function(c) {
               return <span key={c.label} className={'shrink-0 px-3 py-1.5 text-xs font-semibold rounded-lg border cursor-pointer hover:opacity-80 transition-opacity ' + c.color}>{c.label}</span>

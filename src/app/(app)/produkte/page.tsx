@@ -39,7 +39,7 @@ export default function Produkte() {
 
           <div className="space-y-3">
             {cats.map(c => (
-              <div key={c.n} className="bg-white border border-slate-200 rounded-2xl p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4 hover:border-blue-200 transition-colors">
+              <div key={c.n} className="bg-white border border-slate-200 rounded-2xl p-5 flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 hover:border-blue-200 transition-colors">
                 <div className="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center shrink-0"><Icon name={c.ic} size={20} className="text-blue-600" /></div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-0.5">

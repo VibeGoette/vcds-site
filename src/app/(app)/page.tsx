@@ -27,7 +27,7 @@ export default function Home() {
                 über HEX-V2, HEX-NET und die verschiedenen Lizenzmodelle. Erstklassiger
                 Support per Telefon, E-Mail und Chat.
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 mb-8">
+              <div className="flex flex-col sm:flex-row gap-3 mb-8 w-full sm:w-auto">
                 <a href="https://auto-intern.de/shop/" target="_blank" rel="noopener noreferrer"
                   className="px-6 py-3 bg-red-600 text-white font-semibold rounded-md hover:bg-red-500 transition-colors text-center">
                   Im Shop bestellen
@@ -122,12 +122,12 @@ export default function Home() {
         <section className="bg-slate-900 text-white py-16">
           <div className="max-w-6xl mx-auto px-5">
             <h2 className="text-center text-xl font-bold mb-10">Vorteile von VCDS</h2>
-            <div className="grid grid-cols-3 gap-6 text-center mb-12">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center mb-12">
               {[{v:'1000+',l:'Zufriedene Kunden'},{v:'15+',l:'Jahre Erfahrung'},{v:'32.445',l:'Fehlercodes im Klartext'}].map(s => (
                 <div key={s.l}><p className="text-3xl md:text-4xl font-bold text-blue-400">{s.v}</p><p className="text-xs text-slate-400 mt-2">{s.l}</p></div>
               ))}
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
               {[{n:'HEX-NET',ic:'wifi'},{n:'HEX-V2',ic:'usb'},{n:'Diagnose-Adapter',ic:'plug'},{n:'Komplettsysteme',ic:'shield'},{n:'Upgrades',ic:'bolt'},{n:'Zubehör',ic:'cog'}].map(c => (
                 <div key={c.n} className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 flex items-center gap-3 hover:bg-white/10 transition-colors">
                   <Icon name={c.ic} size={16} className="text-blue-400" />

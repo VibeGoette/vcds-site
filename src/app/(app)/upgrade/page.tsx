@@ -36,7 +36,7 @@ export default function Upgrade() {
               {upgrades.map(function(u) {
                 return (
                   <div key={u.from + u.to} className="bg-white border border-slate-200 rounded-2xl p-5 hover:border-blue-200 transition-colors">
-                    <div className="flex items-center gap-3 mb-2">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
                       <span className="px-2.5 py-1 text-xs font-semibold rounded-lg bg-slate-100 text-slate-600">{u.from}</span>
                       <Icon name="arrow" size={16} className="text-blue-500" />
                       <span className="px-2.5 py-1 text-xs font-semibold rounded-lg bg-blue-50 text-blue-700 border border-blue-200">{u.to}</span>

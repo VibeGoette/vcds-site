@@ -8,7 +8,7 @@ export default function Impressum() {
   return (
     <>
       <Header />
-      <main id="main" className="max-w-3xl mx-auto px-5 py-16">
+      <main id="main" className="flex-1 max-w-3xl mx-auto px-5 py-16 w-full">
         <h1 className="text-3xl font-bold text-slate-900 mb-8">Impressum</h1>
         <div className="text-slate-600 space-y-6 text-sm leading-relaxed">
           <div>
