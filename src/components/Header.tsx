@@ -7,18 +7,21 @@ import { Icon } from './Icon'
 const nav = [
   { label: 'Start', href: '/', children: [
     { label: 'Fachhändler', href: '/fachhaendler' },
-    { label: 'Quickstart', href: '/quickstart' },
+    { label: 'Blog', href: '/blog' },
     { label: 'Wiki', href: 'https://wiki.vcds.de', ext: true },
     { label: 'Forum', href: 'https://forum.vcds.de', ext: true },
   ]},
   { label: 'Produkte', href: '/produkte', children: [
     { label: 'Über VCDS', href: '/ueber-vcds' },
     { label: 'Übersicht', href: '/produkte' },
+    { label: 'Kaufberatung', href: '/kaufberatung' },
+    { label: 'Upgrade', href: '/upgrade' },
   ]},
   { label: 'Kontakt', href: '/kontakt' },
   { label: 'Hilfe & FAQ', href: '/faq', children: [
     { label: 'FAQ', href: '/faq' },
     { label: 'Quickstart', href: '/quickstart' },
+    { label: 'Fernwartung', href: '/fernwartung' },
   ]},
   { label: 'Download', href: '/download' },
 ]
