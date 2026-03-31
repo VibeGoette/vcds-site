@@ -1,0 +1,11 @@
+node_modules
+.next
+.git
+.gitignore
+.env.local
+.env*.local
+*.md
+database.db
+database.db-journal
+media/
+.vercel

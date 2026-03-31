@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  vcds-site:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PAYLOAD_SECRET=${PAYLOAD_SECRET:-vcds-production-secret-change-me-min-32-chars!!}
+      - DATABASE_URI=file:/app/data/database.db
+      - NEXT_PUBLIC_SITE_URL=${SITE_URL:-https://vcds.de}
+    volumes:
+      - vcds-data:/app/data
+      - vcds-media:/app/media
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  vcds-data:
+    driver: local
+  vcds-media:
+    driver: local
