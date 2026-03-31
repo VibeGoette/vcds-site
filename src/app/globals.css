@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body { letter-spacing: 0.1px; line-height: 1.65; }
+h1,h2,h3,h4,h5,h6 { letter-spacing: 0.02em; text-wrap: balance; }
+h1 { letter-spacing: -0.01em; }
+
+.sr-only { position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0; }
+
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after { animation-duration:0.01ms!important;transition-duration:0.01ms!important; }
+}
