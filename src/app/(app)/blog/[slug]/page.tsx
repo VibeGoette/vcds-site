@@ -277,9 +277,6 @@ function Section({ s }: { s: Sec }) {
 }
 
 /* ═══ PAGE COMPONENT ═══ */
-const allSlugs = Object.keys(P)
-export function generateStaticParams() { return allSlugs.map(s => ({ slug: s })) }
-
 export default function BlogPost({ params }: { params: { slug: string } }) {
   const post = P[params.slug]
   if (!post) notFound()
