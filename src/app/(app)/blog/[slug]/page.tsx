@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, use } from 'react'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { Icon } from '@/components/Icon'
@@ -277,8 +277,9 @@ function Section({ s }: { s: Sec }) {
 }
 
 /* ═══ PAGE COMPONENT ═══ */
-export default function BlogPost({ params }: { params: { slug: string } }) {
-  const post = P[params.slug]
+export default function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = use(params)
+  const post = P[slug]
   if (!post) notFound()
   const related = post.related.map(s => P[s]).filter(Boolean)
 
