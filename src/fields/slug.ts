@@ -1,14 +1,13 @@
-import type { Field } from 'payload'
+import type { Field, TextField } from 'payload'
 
 /**
  * Reusable slug field with auto-generation from title.
  * Usage: import { slugField } from '@/fields/slug'
- * Then spread into collection fields: ...slugField()
+ * Then add to collection fields array: slugField()
  */
 export const slugField = (
   sourceField: string = 'title',
-  overrides?: Partial<Field>,
-): Field => ({
+): TextField => ({
   name: 'slug',
   type: 'text',
   required: true,
@@ -16,16 +15,14 @@ export const slugField = (
   index: true,
   admin: {
     position: 'sidebar',
-    description: `Wird automatisch aus "${sourceField}" generiert. Kann manuell überschrieben werden.`,
+    description: `Wird automatisch aus "${sourceField}" generiert. Kann manuell ueberschrieben werden.`,
   },
   hooks: {
     beforeValidate: [
-      ({ value, data }) => {
-        // Auto-generate slug from source field if empty
+      ({ value, data }: { value?: string; data?: Record<string, unknown> }) => {
         if (!value && data?.[sourceField]) {
-          return slugify(data[sourceField])
+          return slugify(data[sourceField] as string)
         }
-        // Ensure existing slug is properly formatted
         if (value) {
           return slugify(value)
         }
@@ -33,7 +30,6 @@ export const slugField = (
       },
     ],
   },
-  ...overrides,
 })
 
 /**

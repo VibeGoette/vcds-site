@@ -367,13 +367,13 @@ var allSlugs = Object.keys(posts)
 
 export function generateStaticParams() { return allSlugs.map(function(s) { return { slug: s } }) }
 
-export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
-  var p = posts[params.slug]; if (!p) return { title: 'Nicht gefunden' }
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  var { slug } = await params; var p = posts[slug]; if (!p) return { title: 'Nicht gefunden' }
   return { title: p.title, description: p.excerpt }
 }
 
-export default function BlogPost({ params }: { params: { slug: string } }) {
-  var post = posts[params.slug]; if (!post) notFound()
+export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
+  var { slug } = await params; var post = posts[slug]; if (!post) notFound()
   var rel = post.related.map(function(s) { return posts[s] }).filter(Boolean)
   var catColor = post.category === 'versionshistorie' ? 'bg-green-500/20 text-green-300 border-green-400/30' : 'bg-blue-500/20 text-blue-300 border-blue-400/30'
 
