@@ -20,7 +20,7 @@ export default function UeberVCDS() {
         <div className="max-w-3xl mx-auto px-5 py-12 space-y-16">
           <section>
             <div className="bg-blue-50 border border-blue-100 rounded-2xl p-6 flex items-center gap-5">
-              <div className="w-14 h-14 rounded-xl bg-blue-600 flex items-center justify-center shrink-0"><Icon name="search" size={24} className="text-white" /></div>
+              <div className="w-14 h-14 rounded-md bg-blue-600 flex items-center justify-center shrink-0"><Icon name="search" size={24} className="text-white" /></div>
               <div><p className="text-3xl font-bold text-blue-600">32.445</p><p className="text-sm text-blue-800">Fehlercodes werden aktuell im Klartext unterstützt. Auch die neuesten Fahrzeuge bis Modelljahr 2025.</p></div>
             </div>
           </section>
@@ -76,7 +76,7 @@ export default function UeberVCDS() {
           </section>
 
           <div className="text-center pt-4">
-            <a href="https://auto-intern.de/shop/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-500 transition-colors text-lg">
+            <a href="https://auto-intern.de/shop/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-8 py-4 bg-red-600 text-white font-semibold rounded-md hover:bg-red-500 transition-colors text-lg">
               Im Auto-Intern Shop bestellen <Icon name="arrow" size={18} className="text-white" />
             </a>
           </div>

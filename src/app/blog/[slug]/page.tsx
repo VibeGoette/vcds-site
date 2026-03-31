@@ -194,7 +194,7 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
             <h3 className="font-bold text-slate-900 mb-2">Interesse geweckt?</h3>
             <p className="text-sm text-slate-600 mb-4">Alle VCDS Diagnoseadapter erhaeltlich im Auto-Intern Shop.</p>
             <a href="https://auto-intern.de/shop/" target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-500 transition-colors">
+              className="inline-flex items-center gap-2 px-6 py-3 bg-red-600 text-white font-semibold rounded-md hover:bg-red-500 transition-colors">
               Im Shop bestellen <Icon name="arrow" size={16} className="text-white" />
             </a>
           </div>

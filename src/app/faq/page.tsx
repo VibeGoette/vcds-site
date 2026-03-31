@@ -53,8 +53,8 @@ export default function FAQ() {
             <h2 className="text-lg font-bold text-slate-900 mb-2">Ihre Frage ist nicht dabei?</h2>
             <p className="text-sm text-slate-600 mb-5">Unser Support-Team der Auto-Intern GmbH hilft Ihnen gerne weiter.</p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <a href="/kontakt" className="px-5 py-2.5 bg-blue-600 text-white rounded-lg font-semibold text-sm hover:bg-blue-500 transition-colors">Kontakt aufnehmen</a>
-              <a href="https://forum.vcds.de" target="_blank" rel="noopener noreferrer" className="px-5 py-2.5 border border-blue-200 text-blue-600 rounded-lg font-semibold text-sm hover:bg-blue-50 transition-colors">Im Forum fragen</a>
+              <a href="/kontakt" className="px-5 py-2.5 bg-blue-600 text-white rounded-md font-semibold text-sm hover:bg-blue-500 transition-colors">Kontakt aufnehmen</a>
+              <a href="https://forum.vcds.de" target="_blank" rel="noopener noreferrer" className="px-5 py-2.5 border border-blue-200 text-blue-600 rounded-md font-semibold text-sm hover:bg-blue-50 transition-colors">Im Forum fragen</a>
             </div>
           </div>
         </div>

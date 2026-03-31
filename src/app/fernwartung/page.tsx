@@ -54,7 +54,7 @@ export default function Fernwartung() {
           <div className="text-center pt-6">
             <a href="https://www.vcds.de/wp-content/uploads/2024/08/AnyDesk_VCDSde_Client.zip"
               target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-500 transition-colors text-lg">
+              className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-500 transition-colors text-lg">
               <Icon name="download" size={20} className="text-white" />
               AnyDesk herunterladen
             </a>

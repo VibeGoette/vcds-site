@@ -29,11 +29,11 @@ export default function Home() {
               </p>
               <div className="flex flex-col sm:flex-row gap-3 mb-8">
                 <a href="https://auto-intern.de/shop/" target="_blank" rel="noopener noreferrer"
-                  className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-500 transition-colors text-center">
+                  className="px-6 py-3 bg-red-600 text-white font-semibold rounded-md hover:bg-red-500 transition-colors text-center">
                   Im Shop bestellen
                 </a>
                 <Link href="/kaufberatung"
-                  className="px-6 py-3 border border-white/20 text-white font-semibold rounded-lg hover:bg-white/5 transition-colors text-center">
+                  className="px-6 py-3 border border-white/20 text-white font-semibold rounded-md hover:bg-white/5 transition-colors text-center">
                   Kaufberatung lesen
                 </Link>
               </div>
@@ -109,7 +109,7 @@ export default function Home() {
                     ))}
                   </div>
                   <a href={p.url} target="_blank" rel="noopener noreferrer"
-                    className="block w-full py-3 bg-blue-600 text-white text-center font-semibold rounded-xl hover:bg-blue-500 transition-colors">
+                    className="block w-full py-3 bg-red-600 text-white text-center font-semibold rounded-md hover:bg-red-500 transition-colors">
                     Im Auto-Intern Shop bestellen
                   </a>
                 </div>

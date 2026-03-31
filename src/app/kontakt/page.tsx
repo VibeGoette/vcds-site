@@ -35,7 +35,7 @@ export default function Kontakt() {
                   <div><label className="block text-sm font-medium text-slate-700 mb-1.5">Telefon</label><input type="tel" className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all" placeholder="+49 ..." /></div>
                 </div>
                 <div><label className="block text-sm font-medium text-slate-700 mb-1.5">Nachricht *</label><textarea rows={4} className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all resize-y" placeholder="Ihre Nachricht..." /></div>
-                <button type="submit" className="px-8 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-500 transition-colors">Nachricht senden</button>
+                <button type="submit" className="px-8 py-3 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-500 transition-colors">Nachricht senden</button>
               </form>
             </div>
             <aside className="lg:col-span-2 space-y-6">

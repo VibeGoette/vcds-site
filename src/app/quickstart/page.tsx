@@ -83,11 +83,11 @@ export default function Quickstart() {
                 ))}
               </div>
               {step < steps.length - 1 ? (
-                <button onClick={() => setStep(step+1)} className="flex items-center gap-1 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-semibold hover:bg-blue-500 transition-colors">
+                <button onClick={() => setStep(step+1)} className="flex items-center gap-1 px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-semibold hover:bg-blue-500 transition-colors">
                   Weiter<Icon name="arrow" size={14} className="text-white" />
                 </button>
               ) : (
-                <span className="flex items-center gap-1 px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-semibold">
+                <span className="flex items-center gap-1 px-4 py-2 bg-green-600 text-white rounded-md text-sm font-semibold">
                   <Icon name="check" size={14} className="text-white" />Fertig
                 </span>
               )}

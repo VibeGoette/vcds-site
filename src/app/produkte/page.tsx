@@ -50,7 +50,7 @@ export default function Produkte() {
                 </div>
                 <div className="shrink-0 flex items-center gap-3">
                   {c.p && <span className="font-bold text-blue-600">{c.p}</span>}
-                  <a href={c.url} target="_blank" rel="noopener noreferrer" className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-semibold hover:bg-blue-500 transition-colors whitespace-nowrap">
+                  <a href={c.url} target="_blank" rel="noopener noreferrer" className="px-4 py-2 bg-red-600 text-white rounded-md text-sm font-semibold hover:bg-red-500 transition-colors whitespace-nowrap">
                     Zum Shop
                   </a>
                 </div>

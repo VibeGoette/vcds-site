@@ -81,7 +81,7 @@ export function Header() {
             </div>
           ))}
           <a href="https://auto-intern.de/shop/" target="_blank" rel="noopener noreferrer"
-            className="ml-3 px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-500 transition-colors">
+            className="ml-3 px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded-md hover:bg-red-500 transition-colors">
             Zum Shop
           </a>
         </nav>
@@ -111,7 +111,7 @@ export function Header() {
               </div>
             ))}
             <a href="https://auto-intern.de/shop/" target="_blank" rel="noopener noreferrer"
-              className="block mt-3 text-center py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-500 transition-colors">
+              className="block mt-3 text-center py-3 bg-red-600 text-white font-semibold rounded-md hover:bg-red-500 transition-colors">
               Zum Shop
             </a>
           </div>

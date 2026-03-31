@@ -40,7 +40,7 @@ function DLCard({ d }: { d: DLItem }) {
           {d.notice && <div className="mt-2 ml-6 flex items-start gap-1.5"><Icon name="warning" size={12} className="text-amber-500 shrink-0 mt-0.5" /><p className="text-xs text-amber-700">{d.notice}</p></div>}
         </div>
         <a href={d.url} target="_blank" rel="noopener noreferrer"
-          className="shrink-0 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-semibold hover:bg-blue-500 transition-colors flex items-center gap-1.5">
+          className="shrink-0 px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-semibold hover:bg-blue-500 transition-colors flex items-center gap-1.5">
           <Icon name="download" size={14} className="text-white" />Download
         </a>
       </div>

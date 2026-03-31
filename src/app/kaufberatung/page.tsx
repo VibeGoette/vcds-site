@@ -157,7 +157,7 @@ export default function Kaufberatung() {
           {/* CTA */}
           <div className="text-center pt-6 border-t border-slate-200 space-y-4">
             <a href="https://auto-intern.de/shop/" target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-500 transition-colors text-lg">
+              className="inline-flex items-center gap-2 px-8 py-4 bg-red-600 text-white font-semibold rounded-md hover:bg-red-500 transition-colors text-lg">
               Im Auto-Intern Shop bestellen <Icon name="arrow" size={18} className="text-white" />
             </a>
             <p className="text-sm text-slate-500">
