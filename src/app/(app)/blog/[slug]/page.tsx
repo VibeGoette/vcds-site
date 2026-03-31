@@ -1,4 +1,5 @@
 import { Header } from '@/components/Header'
+import { ArticleSchema, BreadcrumbSchema } from '@/components/StructuredData'
 import { Footer } from '@/components/Footer'
 import { Icon } from '@/components/Icon'
 import Link from 'next/link'
@@ -378,7 +379,9 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
   var catColor = post.category === 'versionshistorie' ? 'bg-green-500/20 text-green-300 border-green-400/30' : 'bg-blue-500/20 text-blue-300 border-blue-400/30'
 
   return (
-    <><Header /><main id="main">
+    <><ArticleSchema title={post.title} description={post.excerpt} datePublished={post.date} slug={post.slug} />
+      <BreadcrumbSchema items={[{name:"Start",url:"/"},{name:"Blog",url:"/blog"},{name:post.title,url:"/blog/"+post.slug}]} />
+      <Header /><main id="main">
       <section className="bg-gradient-to-br from-slate-900 to-blue-900 text-white px-5 py-14 md:py-20">
         <div className="max-w-3xl mx-auto">
           <div className="flex items-center gap-2 text-xs text-slate-400 mb-4">

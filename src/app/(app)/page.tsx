@@ -1,4 +1,5 @@
 import { Header } from '@/components/Header'
+import { OrganizationSchema, ProductSchema } from '@/components/StructuredData'
 import { Footer } from '@/components/Footer'
 import { Icon } from '@/components/Icon'
 import Link from 'next/link'
@@ -7,6 +8,9 @@ export default function Home() {
   return (
     <>
       <Header />
+      <OrganizationSchema />
+      <ProductSchema name="Ross-Tech HEX-V2" description="USB Diagnoseadapter fuer VW, Audi, Skoda, Seat. 3/10/Unlimited VIN." price="294" sku="HEX-V2" url="https://www.auto-intern.de/shop/diagnose-adapter/198/hex-v2-inkl.-vcds-lizenz" />
+      <ProductSchema name="Ross-Tech HEX-NET" description="WLAN Diagnoseadapter fuer VW, Audi, Skoda, Seat. Kabellose Diagnose." price="514" sku="HEX-NET" url="https://www.auto-intern.de/shop/diagnose-adapter/199/hex-net-wifi-inkl.-vcds-lizenz" />
       <main id="main">
         {/* Hero */}
         <section className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-blue-900 text-white px-5 py-16 md:py-24 overflow-hidden">

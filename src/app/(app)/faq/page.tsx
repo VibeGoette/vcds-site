@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { Header } from '@/components/Header'
+import { FAQSchema } from '@/components/StructuredData'
 import { Footer } from '@/components/Footer'
 import { Icon } from '@/components/Icon'
 
@@ -21,6 +22,7 @@ export default function FAQ() {
   const [open, setOpen] = useState<number|null>(null)
   return (
     <>
+      <FAQSchema items={faqs} />
       <Header />
       <main id="main">
         <section className="bg-gradient-to-br from-slate-900 to-blue-900 text-white px-5 py-14 md:py-20">

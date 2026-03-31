@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { Header } from '@/components/Header'
+import { SoftwareSchema } from '@/components/StructuredData'
 import { Footer } from '@/components/Footer'
 import { Icon } from '@/components/Icon'
 
@@ -53,6 +54,7 @@ export default function Download() {
   const items = tab === 'vcds' ? dlVcds : tab === 'support' ? dlSupport : dlTools
   return (
     <>
+      <SoftwareSchema />
       <Header />
       <main id="main">
         <section className="bg-gradient-to-br from-slate-900 to-blue-900 text-white px-5 py-14 md:py-20">
