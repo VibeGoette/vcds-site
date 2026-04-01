@@ -5,8 +5,20 @@ import { Icon } from '@/components/Icon'
 import { getTestimonials } from '@/lib/payload'
 import Link from 'next/link'
 
+const fallbackTestimonials = [
+  { id: '1', quote: 'Super Service, sehr netter Kontakt. Haben uns unheimlich geholfen! Kann man nur empfehlen!!', authorName: 'Verifizierter VCDS-Kunde', company: null },
+  { id: '2', quote: 'Gestern das Problem geschildert und keine 24 Stunden später hatte ich ein Leihgerät. Schneller geht es nicht. Absolut Top der Service.', authorName: 'Autohaus Nordost Berlin', company: null },
+  { id: '3', quote: 'Bester Laden überhaupt. Die Mitarbeiter sind super drauf und haben von der Materie Ahnung. Support ist 1A.', authorName: 'Verifizierter VCDS-Kunde', company: null },
+]
+
 export default async function Home() {
-  const testimonials = await getTestimonials()
+  let testimonials = fallbackTestimonials as typeof fallbackTestimonials
+  try {
+    const cms = await getTestimonials()
+    if (cms.length > 0) testimonials = cms as typeof fallbackTestimonials
+  } catch {
+    // DB not available — use fallback
+  }
   return (
     <>
       <Header />

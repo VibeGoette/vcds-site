@@ -52,7 +52,12 @@ function estimateReadingTime(excerpt: string | null | undefined): string {
 }
 
 export default async function Blog() {
-  const cmsPosts = await getPosts()
+  let cmsPosts: Awaited<ReturnType<typeof getPosts>> = []
+  try {
+    cmsPosts = await getPosts()
+  } catch {
+    // DB not available
+  }
 
   const posts = cmsPosts.map(p => {
     const style = cardStyles[p.slug] ?? categoryGradients[p.category] ?? categoryGradients.beratung
