@@ -14,8 +14,8 @@ function cleanupExpiredEntries() {
 
 function isRateLimited(ip: string): boolean {
   const now = Date.now()
-  // Cleanup expired entries to prevent memory leak
-  if (rateLimit.size > 1000) cleanupExpiredEntries()
+  // Cleanup expired entries every 100 requests to prevent memory leak
+  if (rateLimit.size > 100) cleanupExpiredEntries()
   const entry = rateLimit.get(ip)
   if (!entry || now > entry.resetAt) {
     rateLimit.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW })
