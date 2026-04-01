@@ -2,7 +2,6 @@
 import { useState, useEffect } from 'react'
 import { Icon } from '@/components/Icon'
 import Link from 'next/link'
-import { notFound } from 'next/navigation'
 
 /* ═══ READING PROGRESS — with glow effect ═══ */
 function ReadingProgress() {
@@ -67,7 +66,7 @@ function VisualCrack() {
 
 function VisualComparison() {
   return (
-    <svg viewBox="0 0 800 380" className="w-full h-auto" aria-hidden="true">
+    <svg viewBox="0 0 800 380" className="w-full h-auto" role="img" aria-label="Vergleich: HEX-V2 ab 294 EUR mit USB (3/10/Unlimited VIN) vs. HEX-NET ab 514 EUR mit WLAN + USB (10/Unlimited VIN). Gleiche Software, gleicher Support.">
       <defs>
         <linearGradient id="vG" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#1e3a5f"/><stop offset="50%" stopColor="#2563eb"/><stop offset="100%" stopColor="#0891b2"/></linearGradient>
       </defs>
@@ -145,7 +144,7 @@ function VisualGeneric({ gradient, icon, label }: { gradient: string; icon: stri
       <defs><linearGradient id="gG" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor={gradient.split(',')[0]}/><stop offset="100%" stopColor={gradient.split(',')[1]}/></linearGradient></defs>
       <rect width="800" height="280" fill={`url(#gG)`} rx="16"/>
       <g stroke="white" strokeWidth="0.5" opacity="0.05"><path d="M0 40h800"/><path d="M0 240h800"/><path d="M400 0v280"/></g>
-      <g opacity="0.06" transform="translate(400,140)"><Icon name={icon} size={200} className="text-white"/></g>
+      <circle cx="400" cy="140" r="60" fill="white" fillOpacity="0.06"/>
       <rect x="300" y="200" width="200" height="40" rx="20" fill="white" fillOpacity="0.1"/>
       <text x="400" y="226" textAnchor="middle" fontSize="14" fontWeight="700" fill="white" opacity="0.6" letterSpacing="0.05em">{label}</text>
     </svg>
@@ -280,7 +279,7 @@ export const hardcodedSlugs = new Set(Object.keys(P))
 /* ═══ PAGE COMPONENT ═══ */
 export function BlogPostClient({ slug }: { slug: string }) {
   const post = P[slug]
-  if (!post) notFound()
+  if (!post) return null
   const related = post.related.map(s => P[s]).filter(Boolean)
 
   return (

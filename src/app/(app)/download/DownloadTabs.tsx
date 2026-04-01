@@ -94,13 +94,13 @@ export function DownloadTabs({ vcds, support, tools }: DownloadTabsProps) {
         <TabsTrigger value="tools">Tools</TabsTrigger>
       </TabsList>
       <TabsContent value="vcds">
-        <div className="space-y-3">{vcds.map((d, i) => <DLCard key={i} d={d} />)}</div>
+        <div className="space-y-3">{vcds.map(d => <DLCard key={d.title} d={d} />)}</div>
       </TabsContent>
       <TabsContent value="support">
-        <div className="space-y-3">{support.map((d, i) => <DLCard key={i} d={d} />)}</div>
+        <div className="space-y-3">{support.map(d => <DLCard key={d.title} d={d} />)}</div>
       </TabsContent>
       <TabsContent value="tools">
-        <div className="space-y-3">{tools.map((d, i) => <DLCard key={i} d={d} />)}</div>
+        <div className="space-y-3">{tools.map(d => <DLCard key={d.title} d={d} />)}</div>
       </TabsContent>
     </Tabs>
   )
