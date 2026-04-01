@@ -185,12 +185,12 @@ export async function seed(payload: Payload): Promise<void> {
         {
           name: '10 VIN – Enthusiast',
           description: 'Für den erfahrenen Hobbyschrauber. Bis zu zehn Fahrzeuge auslesen, codieren und diagnostizieren.',
-          price: 'ab 374 €',
+          price: 'ab 364 €',
         },
         {
           name: 'Unlimited – Professional',
           description: 'Für Werkstätten und Service-Dienstleister. Unbegrenzt viele Fahrzeuge auslesen, codieren und diagnostizieren.',
-          price: 'ab 474 €',
+          price: 'ab 594 €',
         },
       ],
       compatibility: 'Alle VW-Modelle bis 2025',
@@ -222,7 +222,7 @@ export async function seed(payload: Payload): Promise<void> {
         {
           name: 'Unlimited – Professional',
           description: 'Kabellos unbegrenzt viele Fahrzeuge auslesen, codieren und diagnostizieren.',
-          price: 'ab 614 €',
+          price: 'ab 794 €',
         },
       ],
       compatibility: 'Geeignet für neueste Fahrzeuge der Baujahre bis 2024 (größtenteils auch schon Modelljahr 2025)',

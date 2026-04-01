@@ -24,7 +24,32 @@ export default function UeberVCDS() {
           <section>
             <h2 className="text-2xl font-bold text-slate-900 mb-4">Warum VCDS?</h2>
             <p className="text-slate-600 leading-relaxed mb-4">Ein neues Diagnosegerät zu kaufen kann eine schwere Entscheidung sein — muss es aber nicht. VCDS bietet Ihnen einen riesigen Funktionsumfang, mit dem Sie viele Diagnosearbeiten an Ihrem Fahrzeug schnell und einfach durchführen können.</p>
-            <p className="text-slate-600 leading-relaxed">Im Preis-Leistungsverhältnis setzt sich VCDS gegenüber seinen hochwertigen Konkurrenten durch. Updates des Systems sind kostenlos. Mit dem Kauf bei der Auto-Intern GmbH erhalten Sie außerdem kostenlosen Support.</p>
+            <p className="text-slate-600 leading-relaxed mb-4">Im Preis-Leistungsverhältnis setzt sich VCDS gegenüber seinen hochwertigen Konkurrenten durch. Updates des Systems sind kostenlos. Mit dem Kauf bei der Auto-Intern GmbH erhalten Sie außerdem kostenlosen Support per Telefon, E-Mail und Chat.</p>
+            <p className="text-slate-600 leading-relaxed">Über 50% aller Autofahrer in Deutschland fahren ein Fahrzeug aus dem VW-Konzern. VCDS bietet die umfassendste Diagnose für genau diese Fahrzeuge — tiefer als jedes generische OBD-II-Tool.</p>
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-bold text-slate-900 mb-6">Was kann VCDS?</h2>
+            <div className="grid sm:grid-cols-2 gap-3">
+              {[
+                { icon: 'search', title: 'Fehler lesen & löschen', desc: 'Fehlerspeicher aller Steuergeräte auslesen und löschen — nicht nur Motor, sondern ABS, Airbags, Klimaanlage, Gateway und mehr.' },
+                { icon: 'bolt', title: 'Auto-Scan', desc: 'Automatische Abfrage aller installierten Steuergeräte in wenigen Minuten. Dokumentation des gesamten Fahrzeugzustands.' },
+                { icon: 'cog', title: 'Codierung & Anpassung', desc: 'Funktionen freischalten, Steuergeräte konfigurieren und anpassen. Tausende dokumentierte Anpassungskanäle.' },
+                { icon: 'shield', title: 'Grundeinstellungen', desc: 'Komponenten anlernen: Drosselklappe, Luftmassenmesser, Bremsenanlernvorgänge und mehr.' },
+                { icon: 'clock', title: 'Messwerte aufzeichnen', desc: 'Live-Messdaten aller Steuergeräte anzeigen und als CSV aufzeichnen. Analyse nach der Fahrt möglich.' },
+                { icon: 'plug', title: 'Stellglied-Diagnose', desc: 'Einzelne Aktoren direkt ansteuern und testen. Fensterheber, Lüfter, Injektoren und mehr.' },
+              ].map(f => (
+                <div key={f.title} className="bg-white border border-slate-200 rounded-xl p-4 flex gap-3">
+                  <div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center shrink-0">
+                    <Icon name={f.icon} size={16} className="text-blue-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-slate-900 text-sm mb-1">{f.title}</h3>
+                    <p className="text-xs text-slate-600 leading-relaxed">{f.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </section>
 
           <section>
