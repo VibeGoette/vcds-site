@@ -108,7 +108,7 @@ export function renderMarkdown(content: string): string {
 export function extractMarkdownHeadings(content: string): Array<{ id: string; text: string; level: number }> {
   const headings: Array<{ id: string; text: string; level: number }> = []
   for (const line of content.split('\n')) {
-    const match = line.match(/^(#{2,3})\s+(.+)/)
+    const match = line.match(/^(#{1,4})\s+(.+)/)
     if (match) {
       headings.push({ id: slugify(match[2]), text: match[2], level: match[1].length })
     }

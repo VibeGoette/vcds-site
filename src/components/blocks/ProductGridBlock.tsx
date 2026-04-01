@@ -42,7 +42,7 @@ export function ProductGridBlockComponent({ heading, products, columns = '3' }: 
           return (
             <Link
               key={product.id ?? product.slug}
-              href="/produkte"
+              href={product.slug ? `/produkte#${product.slug}` : '/produkte'}
               className="group flex flex-col rounded-xl border border-slate-200 overflow-hidden hover:shadow-md hover:border-blue-200 transition-all"
             >
               {cardUrl ? (

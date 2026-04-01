@@ -77,7 +77,18 @@ function serializeInline(nodes: LexicalNode[]): string {
   }).join('')
 }
 
-function serializeNodes(nodes: LexicalNode[]): string {
+function uniqueId(base: string, usedIds: Set<string>): string {
+  let id = base
+  let counter = 1
+  while (usedIds.has(id)) {
+    id = `${base}-${counter++}`
+  }
+  usedIds.add(id)
+  return id
+}
+
+function serializeNodes(nodes: LexicalNode[], usedIds?: Set<string>): string {
+  const ids = usedIds ?? new Set<string>()
   const html: string[] = []
 
   for (const node of nodes) {
@@ -91,7 +102,7 @@ function serializeNodes(nodes: LexicalNode[]): string {
         const level = node.tag ?? 'h2'
         const inner = serializeInline(node.children ?? [])
         const plainText = extractText(node.children ?? [])
-        const id = slugify(plainText)
+        const id = uniqueId(slugify(plainText), ids)
         const styles: Record<string, string> = {
           h1: 'text-2xl font-extrabold text-slate-900 mt-10 mb-4 tracking-tight',
           h2: 'text-xl font-extrabold text-slate-900 mt-8 mb-3 tracking-tight',
@@ -115,7 +126,7 @@ function serializeNodes(nodes: LexicalNode[]): string {
         break
       }
       case 'quote': {
-        const inner = serializeNodes(node.children ?? [])
+        const inner = serializeNodes(node.children ?? [], ids)
         html.push(`<blockquote class="border-l-4 border-blue-500 pl-5 my-6 py-2 text-slate-600 italic">${inner}</blockquote>`)
         break
       }
@@ -124,7 +135,7 @@ function serializeNodes(nodes: LexicalNode[]): string {
         break
       }
       default: {
-        if (node.children) html.push(serializeNodes(node.children))
+        if (node.children) html.push(serializeNodes(node.children, ids))
         break
       }
     }
