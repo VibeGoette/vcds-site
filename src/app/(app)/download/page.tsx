@@ -39,7 +39,7 @@ export default async function Download() {
         // Resolve download URL: uploaded file or external URL
         let url = ''
         if (d.downloadSource === 'upload' && d.downloadFile && typeof d.downloadFile === 'object' && 'url' in d.downloadFile) {
-          url = (d.downloadFile as any).url
+          url = (d.downloadFile as { url: string }).url
         } else {
           url = d.downloadUrl ?? ''
         }

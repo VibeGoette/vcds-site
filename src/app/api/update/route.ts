@@ -45,7 +45,7 @@ export async function GET(request: NextRequest) {
     // Resolve download URL
     let downloadUrl = ''
     if (latest.downloadSource === 'upload' && latest.downloadFile && typeof latest.downloadFile === 'object' && 'url' in latest.downloadFile) {
-      downloadUrl = (latest.downloadFile as any).url
+      downloadUrl = (latest.downloadFile as { url: string }).url
     } else {
       downloadUrl = latest.downloadUrl ?? ''
     }
