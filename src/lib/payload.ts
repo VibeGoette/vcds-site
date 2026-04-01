@@ -39,13 +39,14 @@ export async function getPosts() {
   return docs
 }
 
-/** Fetch a single post by slug */
+/** Fetch a single post by slug (depth:2 for populated relationships) */
 export async function getPostBySlug(slug: string) {
   const payload = await getPayloadClient()
   const { docs } = await payload.find({
     collection: 'posts',
     where: { slug: { equals: slug } },
     limit: 1,
+    depth: 2,
   })
   return docs[0] || null
 }

@@ -4,6 +4,10 @@
  * No external dependencies needed.
  */
 
+function slugify(text: string): string {
+  return text.toLowerCase().replace(/[^a-z0-9äöüß]+/g, '-').replace(/^-|-$/g, '')
+}
+
 function escapeHtml(str: string): string {
   return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 }
@@ -52,13 +56,14 @@ export function renderMarkdown(content: string): string {
     if (headingMatch) {
       const level = headingMatch[1].length
       const text = inlineMarkdown(headingMatch[2])
+      const id = slugify(headingMatch[2])
       const styles: Record<number, string> = {
         1: 'text-2xl font-extrabold text-slate-900 mt-10 mb-4 tracking-tight',
         2: 'text-xl font-extrabold text-slate-900 mt-8 mb-3 tracking-tight',
         3: 'text-lg font-bold text-slate-800 mt-6 mb-2',
         4: 'text-base font-bold text-slate-700 mt-4 mb-2',
       }
-      html.push(`<h${level} class="${styles[level]}">${text}</h${level}>`)
+      html.push(`<h${level} id="${id}" class="${styles[level]}">${text}</h${level}>`)
       i++; continue
     }
 
@@ -97,4 +102,16 @@ export function renderMarkdown(content: string): string {
   }
 
   return html.join('\n')
+}
+
+/** Extract headings from Markdown for Table of Contents */
+export function extractMarkdownHeadings(content: string): Array<{ id: string; text: string; level: number }> {
+  const headings: Array<{ id: string; text: string; level: number }> = []
+  for (const line of content.split('\n')) {
+    const match = line.match(/^(#{2,3})\s+(.+)/)
+    if (match) {
+      headings.push({ id: slugify(match[2]), text: match[2], level: match[1].length })
+    }
+  }
+  return headings
 }
