@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Quicksand } from 'next/font/google'
+import Script from 'next/script'
 import '../globals.css'
 
 const quicksand = Quicksand({ subsets: ['latin'], weight: ['300','400','500','600','700'], display: 'swap', variable: '--font-quicksand' })
@@ -47,6 +48,12 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         Zum Hauptinhalt springen
       </a>
       {children}
+      {/* LiveChat.com Widget */}
+      <Script id="livechat-widget" strategy="lazyOnload">{`
+        window.__lc = window.__lc || {};
+        window.__lc.license = 17285498;
+        ;(function(n,t,c){function i(n){return e._h?e._h.apply(null,n):e._q.push(n)}var e={_q:[],_h:null,_v:"2.0",on:function(){i(["on",c.call(arguments)])},once:function(){i(["once",c.call(arguments)])},off:function(){i(["off",c.call(arguments)])},get:function(){if(!e._h)throw new Error("[LiveChatWidget] You can't use getters before load.");return i(["get",c.call(arguments)])},call:function(){i(["call",c.call(arguments)])}};window.LiveChatWidget=window.LiveChatWidget||e;var s=t.createElement("script");s.async=!0;s.type="text/javascript";s.src="https://cdn.livechatinc.com/tracking.js";t.head.appendChild(s)})(window,document,[].slice)
+      `}</Script>
     </div>
   )
 }
