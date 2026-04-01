@@ -46,9 +46,15 @@ function formatDate(dateStr: string | null | undefined): string {
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
 
-  // Hardcoded posts use the existing client component
+  // Hardcoded posts use the existing client component, wrapped with server Header/Footer
   if (hardcodedSlugs.has(slug)) {
-    return <BlogPostClient slug={slug} />
+    return (
+      <>
+        <Header />
+        <BlogPostClient slug={slug} />
+        <Footer />
+      </>
+    )
   }
 
   // CMS-driven post
