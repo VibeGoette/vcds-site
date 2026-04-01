@@ -45,7 +45,16 @@ export async function POST(request: NextRequest) {
     )
   }
 
-  let body: any
+  interface ContactBody {
+    name?: unknown
+    email?: unknown
+    message?: unknown
+    adapterNr?: unknown
+    phone?: unknown
+    honeypot?: unknown
+  }
+
+  let body: ContactBody
   try {
     body = await request.json()
   } catch {
