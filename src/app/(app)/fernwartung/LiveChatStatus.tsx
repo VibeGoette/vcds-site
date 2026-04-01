@@ -44,7 +44,8 @@ export function LiveChatStatus() {
   const openChat = () => {
     // LiveChat.com widget trigger
     if (typeof window !== 'undefined') {
-      const lc = (window as Record<string, unknown>).LiveChatWidget as { call?: (method: string) => void } | undefined
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const lc = (window as unknown as Record<string, unknown>).LiveChatWidget as { call?: (method: string) => void } | undefined
       if (lc?.call) {
         lc.call('maximize')
         return

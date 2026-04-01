@@ -50,7 +50,8 @@ export function ContactForm() {
           <Icon name="check" size={24} className="text-green-600" />
         </div>
         <h3 className="font-bold text-green-900 text-lg mb-2">Nachricht gesendet!</h3>
-        <p className="text-sm text-green-700 mb-4">Vielen Dank. Wir melden uns schnellstmöglich bei Ihnen.</p>
+        <p className="text-sm text-green-700 mb-2">Vielen Dank. Wir melden uns schnellstmöglich bei Ihnen.</p>
+        <p className="text-xs text-green-600">E-Mails werden Mo–Fr bis 17:00 Uhr bearbeitet.</p>
         <button
           onClick={() => setStatus('idle')}
           className="text-sm text-green-600 font-semibold hover:underline"

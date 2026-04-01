@@ -85,7 +85,11 @@ export default async function Kontakt() {
                   <div className="flex items-center gap-3"><Icon name="mail" size={16} className="text-slate-400" /><span className="text-sm text-slate-600">{contact.email}</span></div>
                   <div className="flex items-center gap-3"><Icon name="clock" size={16} className="text-slate-400" /><span className="text-sm text-slate-500">{contact.hours}</span></div>
                 </div>
-                {contact.note && <p className="text-xs text-slate-400 mt-4">{contact.note}</p>}
+                <div className="flex items-start gap-2 mt-4 pt-3 border-t border-slate-200/50">
+                  <Icon name="mail" size={12} className="text-blue-400 shrink-0 mt-0.5" />
+                  <p className="text-xs text-slate-500">E-Mails werden <strong className="text-slate-700">Mo–Fr bis 17:00 Uhr</strong> bearbeitet.</p>
+                </div>
+                {contact.note && <p className="text-xs text-slate-400 mt-2">{contact.note}</p>}
               </Card>
               <Card className="bg-blue-50 border-blue-100">
                 <h3 className="font-bold text-slate-900 mb-3">Selbst informieren</h3>
