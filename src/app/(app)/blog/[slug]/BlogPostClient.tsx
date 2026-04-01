@@ -1,7 +1,5 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { Header } from '@/components/Header'
-import { Footer } from '@/components/Footer'
 import { Icon } from '@/components/Icon'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -288,7 +286,6 @@ export function BlogPostClient({ slug }: { slug: string }) {
   return (
     <>
       <ReadingProgress />
-      <Header />
       <main id="main">
         {/* ═══ IMMERSIVE HERO — with circuit-board overlay + grain ═══ */}
         <section className={`bg-gradient-to-br ${post.gradient} relative overflow-hidden`}>
@@ -398,7 +395,6 @@ export function BlogPostClient({ slug }: { slug: string }) {
           )}
         </article>
       </main>
-      <Footer />
     </>
   )
 }
