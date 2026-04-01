@@ -75,71 +75,49 @@ export function HeaderClient({ navItems }: { navItems: NavItem[] }) {
               {/* ═══ DROPDOWN ═══ */}
               {item.children && (
                 <div
-                  className={`absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[280px] bg-white border border-slate-200/80 rounded-xl shadow-xl shadow-slate-200/50 transition-all duration-200 origin-top ${
+                  className={`absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[260px] bg-white border border-slate-200 rounded-lg shadow-md transition-all duration-150 ${
                     activeDrop === item.label
-                      ? 'opacity-100 visible scale-100 translate-y-0'
-                      : 'opacity-0 invisible scale-[0.97] -translate-y-1 pointer-events-none'
+                      ? 'opacity-100 visible translate-y-0'
+                      : 'opacity-0 invisible -translate-y-1 pointer-events-none'
                   }`}
                   role="menu"
                   onMouseEnter={() => handleMouseEnter(item.label)}
                   onMouseLeave={handleMouseLeave}
                 >
-                  {/* Arrow indicator */}
-                  <div className="absolute -top-[6px] left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-l border-t border-slate-200/80 rotate-45 rounded-tl-[2px]" />
-
-                  <div className="relative p-1.5">
-                    {item.children.map((c, idx) => {
+                  <div className="py-1.5 px-1.5">
+                    {item.children.map((c) => {
                       const active = isActive(c.href)
                       return (
                         <Link
                           key={c.href}
                           href={c.href}
                           role="menuitem"
-                          className={`group flex items-start gap-3 px-3 py-2.5 rounded-lg transition-all duration-150 ${
+                          className={`group flex items-center gap-2.5 px-3 py-2 rounded-md transition-colors ${
                             active
-                              ? 'bg-blue-50 text-blue-600'
+                              ? 'bg-slate-50 text-blue-600'
                               : 'text-slate-700 hover:bg-slate-50'
-                          } ${idx > 0 ? '' : ''}`}
+                          }`}
                           {...(c.isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                         >
-                          <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5 transition-colors ${
-                            active
-                              ? 'bg-blue-100 text-blue-600'
-                              : 'bg-slate-100 text-slate-500 group-hover:bg-blue-100 group-hover:text-blue-600'
-                          }`}>
-                            <Icon name={c.icon ?? 'arrow'} size={15} />
-                          </div>
+                          <Icon name={c.icon ?? 'arrow'} size={14} className={active ? 'text-blue-500' : 'text-slate-400 group-hover:text-slate-600'} />
                           <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-1.5">
-                              <span className={`text-[13px] font-semibold transition-colors ${
-                                active ? 'text-blue-600' : 'text-slate-800 group-hover:text-blue-600'
-                              }`}>
-                                {c.label}
-                              </span>
-                              {c.isExternal && (
-                                <svg className="w-3 h-3 text-slate-300 shrink-0" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
-                                  <path d="M3.5 1.5h7v7M10.5 1.5L1.5 10.5" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                              )}
-                            </div>
+                            <span className={`text-[13px] font-medium ${
+                              active ? 'text-blue-600' : 'text-slate-700 group-hover:text-slate-900'
+                            }`}>
+                              {c.label}
+                            </span>
                             {c.desc && (
-                              <p className="text-[11px] text-slate-400 mt-0.5 leading-snug">{c.desc}</p>
+                              <p className="text-[11px] text-slate-400 leading-snug">{c.desc}</p>
                             )}
                           </div>
+                          {c.isExternal && (
+                            <svg className="w-3 h-3 text-slate-300 shrink-0" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
+                              <path d="M3.5 1.5h7v7M10.5 1.5L1.5 10.5" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                          )}
                         </Link>
                       )
                     })}
-                  </div>
-
-                  {/* Footer link to parent */}
-                  <div className="border-t border-slate-100 px-1.5 py-1.5">
-                    <Link
-                      href={item.href}
-                      className="flex items-center justify-between px-3 py-2 rounded-lg text-[12px] font-semibold text-slate-400 hover:text-blue-600 hover:bg-slate-50 transition-colors"
-                    >
-                      Alle {item.label} anzeigen
-                      <Icon name="arrow" size={11} className="text-current" />
-                    </Link>
                   </div>
                 </div>
               )}
