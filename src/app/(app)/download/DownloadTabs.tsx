@@ -33,23 +33,13 @@ function DLCard({ d }: { d: DLItem }) {
   )
 }
 
-const dlVcds: DLItem[] = [
-  { title:'VCDS DRV (DE)', ver:'25.3.2', date:'29.01.2026', adapters:['HEX-V2','HEX-NET','Multiscan'], url:'https://download.ross-tech.de/drv' },
-  { title:'VCDS (EN)', ver:'25.3.2', date:'20.10.2025', adapters:['HEX-V2','HEX-NET'], url:'https://www.ross-tech.com/vcds/download/current.php' },
-  { title:'VCDS Beta (EN)', notice:'Adapter muss auf Beta-Kanal stehen', url:'https://www.ross-tech.com/vcds/download/beta/current.php' },
-  { title:'VCDS Mobile Assistant', notice:'Android 4.1+, nur mit HEX-NET', url:'https://play.google.com/store/apps/details?id=com.ross_tech.vcds_mobile_assistant&hl=de' },
-]
-const dlSupport: DLItem[] = [
-  { title:'Fernwartung (AnyDesk)', url:'https://www.vcds.de/wp-content/uploads/2024/08/AnyDesk_VCDSde_Client.zip' },
-  { title:'USB Treiber (Multiscan)', notice:'Nicht mit Windows 11 kompatibel', url:'https://www.vcds.de/wp-content/uploads/2024/08/usb-driver.zip' },
-]
-const dlTools: DLItem[] = [
-  { title:'VCDServiceReset', ver:'1.1', url:'https://www.vcds.de/wp-content/uploads/2024/08/VCDServiceResetV1.1.zip' },
-  { title:'CodingCompare', ver:'2.3.0', url:'https://www.vcds.de/wp-content/uploads/2024/08/CodingCompareV2.3.0.zip' },
-  { title:'VCDScripter', ver:'1.8.0', url:'https://www.vcds.de/wp-content/uploads/2024/08/VCDScripter_V1.8.0.zip' },
-]
+interface DownloadTabsProps {
+  vcds: DLItem[]
+  support: DLItem[]
+  tools: DLItem[]
+}
 
-export function DownloadTabs() {
+export function DownloadTabs({ vcds, support, tools }: DownloadTabsProps) {
   return (
     <Tabs defaultValue="vcds">
       <TabsList>
@@ -58,13 +48,13 @@ export function DownloadTabs() {
         <TabsTrigger value="tools">Tools</TabsTrigger>
       </TabsList>
       <TabsContent value="vcds">
-        <div className="space-y-3">{dlVcds.map((d, i) => <DLCard key={i} d={d} />)}</div>
+        <div className="space-y-3">{vcds.map((d, i) => <DLCard key={i} d={d} />)}</div>
       </TabsContent>
       <TabsContent value="support">
-        <div className="space-y-3">{dlSupport.map((d, i) => <DLCard key={i} d={d} />)}</div>
+        <div className="space-y-3">{support.map((d, i) => <DLCard key={i} d={d} />)}</div>
       </TabsContent>
       <TabsContent value="tools">
-        <div className="space-y-3">{dlTools.map((d, i) => <DLCard key={i} d={d} />)}</div>
+        <div className="space-y-3">{tools.map((d, i) => <DLCard key={i} d={d} />)}</div>
       </TabsContent>
     </Tabs>
   )

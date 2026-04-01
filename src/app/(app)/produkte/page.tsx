@@ -5,11 +5,32 @@ import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/Badge'
 import { IconBox } from '@/components/ui/IconBox'
+import { getProducts } from '@/lib/payload'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = { title: 'Produkte', description: 'VCDS Diagnoseadapter: HEX-V2 ab 294€, HEX-NET ab 514€. Komplettsysteme, Upgrades, Zubehör.' }
 
-const cats = [
+const connectionIcons: Record<string, string> = {
+  'usb': 'usb',
+  'wifi-usb': 'wifi',
+  'other': 'plug',
+}
+
+const connectionLabels: Record<string, string> = {
+  'usb': 'USB',
+  'wifi-usb': 'WLAN',
+}
+
+const categoryIcons: Record<string, string> = {
+  'hex-v2': 'usb',
+  'hex-net': 'wifi',
+  'adapter': 'plug',
+  'komplettsysteme': 'shield',
+  'upgrades': 'bolt',
+  'zubehoer': 'cog',
+}
+
+const fallbackCats = [
   { n:'HEX-NET', p:'ab 514 €', b:'WLAN', d:'Kabelloser Diagnoseadapter mit WLAN. 10 oder unbegrenzte Fahrzeuge.', ic:'wifi', url:'https://www.auto-intern.de/shop/diagnose-adapter/199/hex-net-wifi-inkl.-vcds-lizenz' },
   { n:'HEX-V2', p:'ab 294 €', b:'USB', d:'Kabelgebundener Adapter. 3, 10 oder unbegrenzte Fahrzeuge.', ic:'usb', url:'https://www.auto-intern.de/shop/diagnose-adapter/198/hex-v2-inkl.-vcds-lizenz' },
   { n:'Diagnose-Adapter', p:'', b:'', d:'Diverse Adapter mit Fehlercode-Auslesung und Messwertaufzeichnung.', ic:'plug', url:'https://auto-intern.de/shop/' },
@@ -18,7 +39,25 @@ const cats = [
   { n:'Zubehör', p:'', b:'', d:'Adapterkabel, Transportkoffer, USB-Sticks mit Software.', ic:'cog', url:'https://auto-intern.de/shop/' },
 ]
 
-export default function Produkte() {
+export default async function Produkte() {
+  let cats = fallbackCats
+
+  try {
+    const cmsProducts = await getProducts()
+    if (cmsProducts.length > 0) {
+      cats = cmsProducts.map(p => ({
+        n: p.name,
+        p: p.price ?? '',
+        b: p.connection ? (connectionLabels[p.connection] ?? '') : '',
+        d: p.shortDescription ?? '',
+        ic: p.connection ? (connectionIcons[p.connection] ?? categoryIcons[p.category] ?? 'plug') : (categoryIcons[p.category] ?? 'plug'),
+        url: p.shopUrl ?? 'https://auto-intern.de/shop/',
+      }))
+    }
+  } catch {
+    // CMS not available
+  }
+
   return (
     <>
       <Header />

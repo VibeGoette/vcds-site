@@ -5,6 +5,8 @@ import { PageHero } from '@/components/ui/PageHero'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { IconBox } from '@/components/ui/IconBox'
+import { getFAQs } from '@/lib/payload'
+import { lexicalToText } from '@/lib/serializeLexical'
 import { FAQAccordion } from './FAQAccordion'
 import type { Metadata } from 'next'
 
@@ -13,7 +15,7 @@ export const metadata: Metadata = {
   description: 'Häufig gestellte Fragen zu VCDS, HEX-V2, HEX-NET, Kompatibilität und Installation.',
 }
 
-const faqs = [
+const fallbackFaqs = [
   { q:'Für welche Fahrzeugmarken ist VCDS geeignet?', a:'VW, Audi, SEAT, Škoda, Bentley, Bugatti, Lamborghini und einige Porsche-Modelle.' },
   { q:'Welche Folgekosten habe ich nach dem Kauf?', a:'Keine. Updates innerhalb der gleichen Hauptversion sind kostenlos.' },
   { q:'Kann ich VCDS auf meinem Mac nutzen?', a:'VCDS ist Windows-basiert. Über Boot Camp oder Parallels möglich, aber ohne Garantie.' },
@@ -26,7 +28,21 @@ const faqs = [
   { q:'Wie ist VCDS beim Thema SFD aufgestellt?', a:'SFD (Schutz von Fahrzeugdiagnosen) ist eine Technologie in neueren VW-Fahrzeugen. VCDS hat Funktionen implementiert, um mit SFD-geschützten Fahrzeugen zu arbeiten.' },
 ]
 
-export default function FAQ() {
+export default async function FAQ() {
+  let faqs = fallbackFaqs
+
+  try {
+    const cmsFaqs = await getFAQs()
+    if (cmsFaqs.length > 0) {
+      faqs = cmsFaqs.map(f => ({
+        q: f.question,
+        a: lexicalToText(f.answer),
+      }))
+    }
+  } catch {
+    // CMS not available — use fallback
+  }
+
   return (
     <>
       <FAQSchema items={faqs} />

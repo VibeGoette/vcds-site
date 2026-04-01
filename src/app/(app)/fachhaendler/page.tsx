@@ -3,11 +3,12 @@ import { Footer } from '@/components/Footer'
 import { Icon } from '@/components/Icon'
 import { PageHero } from '@/components/ui/PageHero'
 import { IconBox } from '@/components/ui/IconBox'
+import { getDealers } from '@/lib/payload'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = { title: 'Fachhändler', description: 'Autorisierte VCDS Fachhändler in Deutschland, Österreich und der Schweiz.' }
 
-const dealers = [
+const fallbackDealers = [
   { name:'CCD Car Diagnostics', city:'Bochum', country:'DE', url:'https://car-diagnostics.eu' },
   { name:'Auto-Intern', city:'Bochum', country:'DE', url:'https://www.auto-intern.de/shop/' },
   { name:'SLSpeed', city:'Waldeck', country:'DE', url:'https://www.slspeed.de/de/' },
@@ -19,7 +20,23 @@ const dealers = [
   { name:'Autotronic', city:'Schweiz', country:'CH', url:'https://www.autotronic-shop.ch' },
 ]
 
-export default function Fachhaendler() {
+export default async function Fachhaendler() {
+  let dealers = fallbackDealers
+
+  try {
+    const cmsDealers = await getDealers()
+    if (cmsDealers.length > 0) {
+      dealers = cmsDealers.map(d => ({
+        name: d.companyName,
+        city: d.city ?? '',
+        country: d.country,
+        url: d.shopUrl,
+      }))
+    }
+  } catch {
+    // CMS not available
+  }
+
   return (
     <>
       <Header />
@@ -37,7 +54,7 @@ export default function Fachhaendler() {
                 <IconBox icon="map" size="sm" />
                 <div className="flex-1 min-w-0">
                   <h3 className="font-bold text-slate-900 group-hover:text-blue-600 transition-colors">{d.name}</h3>
-                  <p className="text-sm text-slate-500">{d.city} · {d.country}</p>
+                  <p className="text-sm text-slate-500">{d.city}{d.city && d.country ? ' · ' : ''}{d.country}</p>
                 </div>
                 <Icon name="arrow" size={16} className="text-slate-300 group-hover:text-blue-500 transition-colors shrink-0" />
               </a>
