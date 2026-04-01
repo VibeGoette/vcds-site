@@ -1,6 +1,7 @@
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { Icon } from '@/components/Icon'
+import { PageHero } from '@/components/ui/PageHero'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -13,13 +14,7 @@ export default function Kaufberatung() {
     <>
       <Header />
       <main id="main">
-        <section className="bg-gradient-to-br from-slate-900 to-blue-900 text-white px-5 py-14 md:py-20">
-          <div className="max-w-6xl mx-auto">
-            <p className="text-xs text-slate-400 mb-3">Start / Kaufberatung</p>
-            <h1 className="text-3xl md:text-4xl font-bold mb-3">Kaufberatung</h1>
-            <p className="text-slate-300 max-w-xl">Welches VCDS Interface ist das richtige? Hier finden Sie alle Informationen, um eine fundierte Kaufentscheidung zu treffen.</p>
-          </div>
-        </section>
+        <PageHero breadcrumb="Start / Kaufberatung" title="Kaufberatung" description="Welches VCDS Interface ist das richtige? Hier finden Sie alle Informationen, um eine fundierte Kaufentscheidung zu treffen." />
 
         <div className="max-w-3xl mx-auto px-5 py-12 space-y-14">
           {/* Intro */}

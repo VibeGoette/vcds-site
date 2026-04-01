@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { Icon } from '@/components/Icon'
+import { PageHero } from '@/components/ui/PageHero'
 
 const steps = [
   { t:'VCDS Setup starten', d:'Starten Sie das Installationsprogramm von Ihrem USB-Stick oder aus dem Download-Bereich.' },
@@ -28,12 +29,7 @@ export default function Quickstart() {
     <>
       <Header />
       <main id="main">
-        <section className="bg-gradient-to-br from-slate-900 to-blue-900 text-white px-5 py-14 md:py-20">
-          <div className="max-w-6xl mx-auto"><p className="text-xs text-slate-400 mb-3">Start / Quickstart</p>
-            <h1 className="text-3xl md:text-4xl font-bold mb-3">Quickstart & Registrierung</h1>
-            <p className="text-slate-300 max-w-xl">Der interaktive Leitfaden zur Ersteinrichtung Ihres VCDS-Adapters. In {steps.length} Schritten vom Auspacken bis zur fertigen Diagnose.</p>
-          </div>
-        </section>
+        <PageHero breadcrumb="Start / Quickstart" title="Quickstart & Registrierung" description={`Der interaktive Leitfaden zur Ersteinrichtung Ihres VCDS-Adapters. In ${steps.length} Schritten vom Auspacken bis zur fertigen Diagnose.`} />
 
         <div className="max-w-3xl mx-auto px-5 py-10 space-y-8">
           {/* Prerequisites */}

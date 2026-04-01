@@ -1,6 +1,7 @@
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { Icon } from '@/components/Icon'
+import { getPosts } from '@/lib/payload'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 
@@ -12,24 +13,78 @@ export const metadata: Metadata = {
 const cats: Record<string, { label: string; bg: string; text: string; border: string }> = {
   beratung: { label: 'Beratung', bg: 'bg-blue-500/10', text: 'text-blue-600', border: 'border-blue-200' },
   versionshistorie: { label: 'Release', bg: 'bg-emerald-500/10', text: 'text-emerald-600', border: 'border-emerald-200' },
+  anleitungen: { label: 'Anleitung', bg: 'bg-purple-500/10', text: 'text-purple-600', border: 'border-purple-200' },
+  news: { label: 'News', bg: 'bg-amber-500/10', text: 'text-amber-600', border: 'border-amber-200' },
+  mini: { label: 'Mini', bg: 'bg-slate-500/10', text: 'text-slate-600', border: 'border-slate-200' },
 }
 
-const posts = [
-  { slug: 'warum-kein-vcds-crack', title: 'VCDS Crack Download Deutsch', category: 'beratung', date: '27.10.2025', reading: '4 Min', excerpt: 'VCDS Cracks in Deutschland? Kann das legal sein? Nein. Ist es wenigstens risikoarm? Auch nicht. Erfahren Sie warum ein Original die einzige sichere Wahl ist.', icon: 'warning', gradient: 'from-red-600 via-red-500 to-orange-500', tag: 'Wichtig' },
-  { slug: 'qual-der-wahl-vcds', title: 'HEX-V2 vs. HEX-NET — Die Qual der Wahl!', category: 'beratung', date: '22.05.2025', reading: '5 Min', excerpt: 'Kabelloses Arbeiten oder Budget im Blick? Der grosse Produktvergleich mit klarer Empfehlung.', icon: 'bolt', gradient: 'from-blue-600 via-blue-500 to-cyan-500' },
-  { slug: 'fin-verbrauch-bei-vcds', title: 'FIN-Verbrauch bei VCDS', category: 'beratung', date: '04.04.2025', reading: '3 Min', excerpt: 'Die vollstaendige Uebersicht: Welche Funktionen verbrauchen eine FIN und welche nicht?', icon: 'shield', gradient: 'from-emerald-600 via-emerald-500 to-teal-500' },
-  { slug: 'welches-vcds-kaufen', title: 'Welches VCDS kaufen?', category: 'beratung', date: '05.02.2025', reading: '6 Min', excerpt: 'Einsatzzweck, Fahrzeuganzahl, Budget — die Kaufentscheidung leicht gemacht.', icon: 'search', gradient: 'from-violet-600 via-violet-500 to-purple-500' },
-  { slug: 'gute-wahl-vcds', title: 'Eine gute Wahl fuer Diagnosearbeiten', category: 'beratung', date: '31.01.2025', reading: '3 Min', excerpt: 'Warum VCDS die Fahrzeugdiagnose-Landschaft nachhaltig veraendert hat.', icon: 'check', gradient: 'from-slate-800 via-slate-700 to-slate-600' },
-  { slug: 'update-25-3-1', title: 'Update 25.3.1', category: 'versionshistorie', date: '23.04.2025', reading: '2 Min', excerpt: 'HEX-NET v3 Support, Modelljahr 2025+ und ueberarbeitete Druckfunktion.', icon: 'download', gradient: 'from-emerald-600 via-green-500 to-lime-500' },
-  { slug: 'vorsicht-vor-gefaelschten-vcds-interfaces', title: 'Gefaelschte VCDS Interfaces erkennen', category: 'beratung', date: '17.01.2025', reading: '4 Min', excerpt: 'Clone-Produkte taeuschen mit niedrigen Preisen. So erkennen Sie Originale.', icon: 'warning', gradient: 'from-amber-600 via-amber-500 to-yellow-500' },
-  { slug: 'zugriffsberechtigungscodes-was-man-wissen-sollte', title: 'Zugriffsberechtigungscodes erklaert', category: 'beratung', date: '21.10.2024', reading: '3 Min', excerpt: 'PDF notwendig fuer VCDS? Nein. VCDS zeigt Codes automatisch an — Just-in-Time.', icon: 'cog', gradient: 'from-indigo-700 via-indigo-600 to-blue-500' },
-]
+/** Visual styles per slug — gradient, icon, tag for blog cards */
+const cardStyles: Record<string, { icon: string; gradient: string; tag?: string }> = {
+  'warum-kein-vcds-crack': { icon: 'warning', gradient: 'from-red-600 via-red-500 to-orange-500', tag: 'Wichtig' },
+  'qual-der-wahl-vcds': { icon: 'bolt', gradient: 'from-blue-600 via-blue-500 to-cyan-500' },
+  'fin-verbrauch-bei-vcds': { icon: 'shield', gradient: 'from-emerald-600 via-emerald-500 to-teal-500' },
+  'welches-vcds-kaufen': { icon: 'search', gradient: 'from-violet-600 via-violet-500 to-purple-500' },
+  'gute-wahl-vcds': { icon: 'check', gradient: 'from-slate-800 via-slate-700 to-slate-600' },
+  'update-25-3-1': { icon: 'download', gradient: 'from-emerald-600 via-green-500 to-lime-500' },
+  'vorsicht-vor-gefaelschten-vcds-interfaces': { icon: 'warning', gradient: 'from-amber-600 via-amber-500 to-yellow-500' },
+  'zugriffsberechtigungscodes-was-man-wissen-sollte': { icon: 'cog', gradient: 'from-indigo-700 via-indigo-600 to-blue-500' },
+}
 
-const featured = posts[0]
-const secondary = posts.slice(1, 3)
-const rest = posts.slice(3)
+/** Fallback gradients by category */
+const categoryGradients: Record<string, { icon: string; gradient: string }> = {
+  beratung: { icon: 'info', gradient: 'from-blue-600 via-blue-500 to-cyan-500' },
+  versionshistorie: { icon: 'download', gradient: 'from-emerald-600 via-green-500 to-lime-500' },
+  anleitungen: { icon: 'book', gradient: 'from-purple-600 via-purple-500 to-pink-500' },
+  news: { icon: 'bolt', gradient: 'from-amber-600 via-amber-500 to-yellow-500' },
+  mini: { icon: 'info', gradient: 'from-slate-700 via-slate-600 to-slate-500' },
+}
 
-export default function Blog() {
+function formatDate(dateStr: string | null | undefined): string {
+  if (!dateStr) return ''
+  const d = new Date(dateStr)
+  return d.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' })
+}
+
+function estimateReadingTime(excerpt: string | null | undefined): string {
+  const len = excerpt?.length ?? 0
+  const mins = Math.max(2, Math.round(len / 60))
+  return `${mins} Min`
+}
+
+export default async function Blog() {
+  const cmsPosts = await getPosts()
+
+  const posts = cmsPosts.map(p => {
+    const style = cardStyles[p.slug] ?? categoryGradients[p.category] ?? categoryGradients.beratung
+    return {
+      slug: p.slug,
+      title: p.title,
+      category: p.category,
+      date: formatDate(p.publishedAt),
+      reading: estimateReadingTime(p.excerpt),
+      excerpt: p.excerpt ?? '',
+      icon: style.icon,
+      gradient: style.gradient,
+      tag: 'tag' in style ? style.tag : undefined,
+    }
+  })
+
+  const featured = posts[0]
+  const secondary = posts.slice(1, 3)
+  const rest = posts.slice(3)
+
+  if (!featured) {
+    return (
+      <>
+        <Header />
+        <main id="main">
+          <div className="max-w-6xl mx-auto px-4 py-20 text-center text-slate-500">Noch keine Blog-Beiträge vorhanden.</div>
+        </main>
+        <Footer />
+      </>
+    )
+  }
+
   return (
     <>
       <Header />

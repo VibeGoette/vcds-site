@@ -127,6 +127,17 @@ export const Posts: CollectionConfig = {
         description: 'Max. 300 Zeichen. Wird in der Blog-Übersicht und in Suchergebnissen angezeigt.',
       },
     },
+    // ── Changelog / Update-Markdown ──
+    {
+      name: 'changelog',
+      type: 'textarea',
+      label: 'Update / Changelog (Markdown)',
+      admin: {
+        description: 'Markdown-Inhalt für Software-Updates und Changelogs. Unterstützt Überschriften, Listen, Code-Blöcke, Links etc.',
+        condition: (data) => data?.category === 'versionshistorie',
+        rows: 20,
+      },
+    },
     // ── Block-basierter Content ──
     {
       name: 'layout',
