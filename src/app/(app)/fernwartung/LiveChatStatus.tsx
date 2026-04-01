@@ -2,18 +2,20 @@
 import { useState, useEffect } from 'react'
 import { Icon } from '@/components/Icon'
 
+const BUSINESS_START = 9 * 60  // 9:00
+const BUSINESS_END = 16 * 60   // 16:00
+const LIVECHAT_URL = 'https://direct.lc.chat/17285498/'
+
+/** Check business hours in German timezone (Europe/Berlin) */
 function isBusinessHours(): boolean {
-  const now = new Date()
+  const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Berlin' }))
   const day = now.getDay() // 0=Sun, 6=Sat
-  const hour = now.getHours()
-  const minute = now.getMinutes()
-  const timeInMinutes = hour * 60 + minute
-  // Mo-Fr 9:00-16:00 (540-960 minutes)
-  return day >= 1 && day <= 5 && timeInMinutes >= 540 && timeInMinutes < 960
+  const timeInMinutes = now.getHours() * 60 + now.getMinutes()
+  return day >= 1 && day <= 5 && timeInMinutes >= BUSINESS_START && timeInMinutes < BUSINESS_END
 }
 
 function getNextAvailable(): string {
-  const now = new Date()
+  const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Berlin' }))
   const day = now.getDay()
   const hour = now.getHours()
 
@@ -42,17 +44,19 @@ export function LiveChatStatus() {
   }, [])
 
   const openChat = () => {
-    // LiveChat.com widget trigger
-    if (typeof window !== 'undefined') {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const lc = (window as unknown as Record<string, unknown>).LiveChatWidget as { call?: (method: string) => void } | undefined
-      if (lc?.call) {
-        lc.call('maximize')
+    if (typeof window === 'undefined') return
+    try {
+      const widget = (window as unknown as Record<string, unknown>).LiveChatWidget as
+        | { call?: (method: string) => void }
+        | undefined
+      if (widget?.call) {
+        widget.call('maximize')
         return
       }
-      // Fallback: open LiveChat directly
-      window.open('https://direct.lc.chat/17285498/', '_blank')
+    } catch {
+      // Widget not loaded
     }
+    window.open(LIVECHAT_URL, '_blank')
   }
 
   return (
@@ -75,6 +79,7 @@ export function LiveChatStatus() {
       {online ? (
         <button
           onClick={openChat}
+          aria-label="LiveChat öffnen"
           className="flex items-center justify-center gap-2 w-full py-3 bg-emerald-600 text-white rounded-lg text-sm font-bold hover:bg-emerald-500 active:bg-emerald-700 transition-colors shadow-sm shadow-emerald-200"
         >
           <Icon name="chat" size={14} />

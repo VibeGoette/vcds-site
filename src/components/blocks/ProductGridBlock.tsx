@@ -10,7 +10,7 @@ interface Product {
   shortDescription?: string
   price?: string
   connection?: string
-  featuredImage?: { url?: string; alt?: string; sizes?: { card?: { url?: string } } } | null
+  featuredImage?: { url?: string; alt?: string; sizes?: { card?: { url?: string }; desktop?: { url?: string }; mobile?: { url?: string } } } | null
 }
 
 interface ProductGridBlockProps {
@@ -37,7 +37,7 @@ export function ProductGridBlockComponent({ heading, products, columns = '3' }: 
           const img = product.featuredImage && typeof product.featuredImage === 'object' && product.featuredImage.url
             ? product.featuredImage
             : null
-          const cardUrl = img?.sizes?.card?.url ?? img?.url
+          const cardUrl = img?.sizes?.desktop?.url ?? img?.sizes?.card?.url ?? img?.url
 
           return (
             <Link

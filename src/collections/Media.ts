@@ -6,7 +6,7 @@ export const Media: CollectionConfig = {
   admin: {
     group: 'Medien',
     defaultColumns: ['filename', 'alt', 'mimeType', 'updatedAt'],
-    description: 'Bilder hochladen: PNG, JPEG, WebP, SVG oder GIF. 3 Größen werden automatisch generiert: Thumbnail (300×200), Card (600×400), Hero (1920px breit).',
+    description: 'Bilder hochladen: PNG, JPEG, WebP, SVG oder GIF. 5 Größen werden automatisch generiert: Thumbnail (300×200), Mobile (480×320), Card (800×533), Desktop (1200×800), Hero (1920px breit). Empfohlen: Original in 1200×800 oder größer hochladen.',
   },
   access: {
     read: () => true,
@@ -22,9 +22,21 @@ export const Media: CollectionConfig = {
         position: 'centre',
       },
       {
+        name: 'mobile',
+        width: 480,
+        height: 320,
+        position: 'centre',
+      },
+      {
         name: 'card',
-        width: 600,
-        height: 400,
+        width: 800,
+        height: 533,
+        position: 'centre',
+      },
+      {
+        name: 'desktop',
+        width: 1200,
+        height: 800,
         position: 'centre',
       },
       {

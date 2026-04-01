@@ -58,14 +58,14 @@ export const Products: CollectionConfig = {
       relationTo: 'media',
       label: 'Hauptbild',
       admin: {
-        description: 'Wird auf der Produktseite, Homepage und in Blog-Einbettungen angezeigt. Empfohlen: 600×400px (Querformat), PNG oder WebP, max. 500 KB. Wird automatisch in 3 Größen generiert (300px Thumbnail, 600px Card, 1920px Hero).',
+        description: 'Wird auf Produktseite, Homepage und in Blog-Einbettungen angezeigt. Empfohlen: 1200×800px (Querformat), PNG oder WebP. Wird automatisch in 5 Größen generiert (Thumbnail, Mobile 480px, Card 800px, Desktop 1200px, Hero 1920px).',
       },
     },
     {
       name: 'gallery',
       type: 'array',
       label: 'Bildergalerie',
-      admin: { description: 'Weitere Produktbilder (seitlich, oben, im Koffer etc.). Empfohlen: 600×400px oder 1200×800px, PNG/WebP/JPEG.' },
+      admin: { description: 'Weitere Produktbilder (seitlich, oben, im Koffer etc.). Empfohlen: 1200×800px, PNG/WebP/JPEG.' },
       fields: [
         {
           name: 'image',

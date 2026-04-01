@@ -33,16 +33,17 @@ interface ProductCard {
   ic: string
   url: string
   img: { url: string; alt?: string; width?: number; height?: number } | null
-  imgCard: string | null
+  imgDesktop: string | null
+  imgMobile: string | null
 }
 
 const fallbackCats: ProductCard[] = [
-  { n:'HEX-NET', p:'ab 514 €', b:'WLAN', d:'Kabelloser Diagnoseadapter mit WLAN. 10 oder unbegrenzte Fahrzeuge.', ic:'wifi', url:'https://www.auto-intern.de/shop/diagnose-adapter/199/hex-net-wifi-inkl.-vcds-lizenz', img: null, imgCard: null },
-  { n:'HEX-V2', p:'ab 294 €', b:'USB', d:'Kabelgebundener Adapter. 3, 10 oder unbegrenzte Fahrzeuge.', ic:'usb', url:'https://www.auto-intern.de/shop/diagnose-adapter/198/hex-v2-inkl.-vcds-lizenz', img: null, imgCard: null },
-  { n:'Diagnose-Adapter', p:'', b:'', d:'Diverse Adapter mit Fehlercode-Auslesung und Messwertaufzeichnung.', ic:'plug', url:'https://auto-intern.de/shop/', img: null, imgCard: null },
-  { n:'Komplettsysteme', p:'', b:'', d:'Komplettsets für professionelle Werkstätten.', ic:'shield', url:'https://auto-intern.de/shop/', img: null, imgCard: null },
-  { n:'Upgrades', p:'', b:'', d:'Ältere Adapter auf den neuesten Standard upgraden.', ic:'bolt', url:'https://www.auto-intern.de/shop/upgrades-erweiterungsmodule/', img: null, imgCard: null },
-  { n:'Zubehör', p:'', b:'', d:'Adapterkabel, Transportkoffer, USB-Sticks mit Software.', ic:'cog', url:'https://auto-intern.de/shop/', img: null, imgCard: null },
+  { n:'HEX-NET', p:'ab 514 €', b:'WLAN', d:'Kabelloser Diagnoseadapter mit WLAN. 10 oder unbegrenzte Fahrzeuge.', ic:'wifi', url:'https://www.auto-intern.de/shop/diagnose-adapter/199/hex-net-wifi-inkl.-vcds-lizenz', img: null, imgDesktop: null, imgMobile: null },
+  { n:'HEX-V2', p:'ab 294 €', b:'USB', d:'Kabelgebundener Adapter. 3, 10 oder unbegrenzte Fahrzeuge.', ic:'usb', url:'https://www.auto-intern.de/shop/diagnose-adapter/198/hex-v2-inkl.-vcds-lizenz', img: null, imgDesktop: null, imgMobile: null },
+  { n:'Diagnose-Adapter', p:'', b:'', d:'Diverse Adapter mit Fehlercode-Auslesung und Messwertaufzeichnung.', ic:'plug', url:'https://auto-intern.de/shop/', img: null, imgDesktop: null, imgMobile: null },
+  { n:'Komplettsysteme', p:'', b:'', d:'Komplettsets für professionelle Werkstätten.', ic:'shield', url:'https://auto-intern.de/shop/', img: null, imgDesktop: null, imgMobile: null },
+  { n:'Upgrades', p:'', b:'', d:'Ältere Adapter auf den neuesten Standard upgraden.', ic:'bolt', url:'https://www.auto-intern.de/shop/upgrades-erweiterungsmodule/', img: null, imgDesktop: null, imgMobile: null },
+  { n:'Zubehör', p:'', b:'', d:'Adapterkabel, Transportkoffer, USB-Sticks mit Software.', ic:'cog', url:'https://auto-intern.de/shop/', img: null, imgDesktop: null, imgMobile: null },
 ]
 
 function extractImage(media: unknown): { url: string; alt?: string; width?: number; height?: number } | null {
@@ -53,10 +54,10 @@ function extractImage(media: unknown): { url: string; alt?: string; width?: numb
   return null
 }
 
-function extractCardUrl(media: unknown): string | null {
+function extractSizeUrl(media: unknown, size: string): string | null {
   if (media && typeof media === 'object' && 'sizes' in media) {
-    const m = media as { sizes?: { card?: { url?: string } } }
-    return m.sizes?.card?.url ?? null
+    const m = media as { sizes?: Record<string, { url?: string }> }
+    return m.sizes?.[size]?.url ?? null
   }
   return null
 }
@@ -75,7 +76,8 @@ export default async function Produkte() {
         ic: p.connection ? (categoryIcons[p.category] ?? 'plug') : (categoryIcons[p.category] ?? 'plug'),
         url: p.shopUrl ?? 'https://auto-intern.de/shop/',
         img: extractImage(p.featuredImage),
-        imgCard: extractCardUrl(p.featuredImage),
+        imgDesktop: extractSizeUrl(p.featuredImage, 'desktop'),
+        imgMobile: extractSizeUrl(p.featuredImage, 'mobile'),
       }))
     }
   } catch {
@@ -108,13 +110,13 @@ export default async function Produkte() {
               <Card key={c.n} variant="interactive" padding="tight" className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                 {/* Product image or icon fallback */}
                 {c.img ? (
-                  <div className="w-full sm:w-24 h-32 sm:h-20 relative rounded-lg overflow-hidden bg-slate-50 shrink-0">
+                  <div className="w-full sm:w-28 h-36 sm:h-24 relative rounded-lg overflow-hidden bg-slate-50 shrink-0">
                     <Image
-                      src={c.imgCard ?? c.img.url}
+                      src={c.imgDesktop ?? c.img.url}
                       alt={c.img.alt ?? c.n}
                       fill
                       className="object-contain p-2"
-                      sizes="(max-width: 640px) 100vw, 96px"
+                      sizes="(max-width: 640px) 480px, 112px"
                     />
                   </div>
                 ) : (
