@@ -2,12 +2,23 @@
  * Extract plain text from Lexical rich text JSON.
  * Used for simple text rendering (e.g. FAQ answers).
  */
-export function lexicalToText(richText: any): string {
+
+interface LexicalNode {
+  type: string
+  text?: string
+  children?: LexicalNode[]
+}
+
+interface LexicalRichText {
+  root?: { children: LexicalNode[] }
+}
+
+export function lexicalToText(richText: LexicalRichText | null | undefined): string {
   if (!richText?.root?.children) return ''
   return extractText(richText.root.children)
 }
 
-function extractText(nodes: any[]): string {
+function extractText(nodes: LexicalNode[]): string {
   return nodes
     .map((node) => {
       if (node.type === 'text') return node.text ?? ''

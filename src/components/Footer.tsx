@@ -59,7 +59,7 @@ export async function Footer() {
     }
 
     if (navigation?.footerNav?.length) {
-      footerNav = navigation.footerNav.map((item: any) => ({
+      footerNav = (navigation.footerNav as Array<{ label: string; href: string; isExternal?: boolean }>).map((item) => ({
         label: item.label,
         href: item.href,
         isExternal: item.isExternal ?? false,
