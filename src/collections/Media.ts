@@ -56,7 +56,7 @@ export const Media: CollectionConfig = {
       label: 'Alt-Text (Bildbeschreibung)',
       admin: {
         description:
-          'Pflicht für Accessibility. Beschreibt was auf dem Bild zu sehen ist. Dekorative Bilder: "Dekorativ" eintragen.',
+          'Pflicht für Barrierefreiheit und SEO. Beschreibt was auf dem Bild zu sehen ist. Beispiel: "VCDS HEX-V2 Diagnoseadapter mit USB-Kabel, Frontansicht". Rein dekorative Bilder: "Dekorativ" eintragen.',
       },
     },
     {

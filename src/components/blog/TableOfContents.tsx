@@ -47,7 +47,7 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
           onClick={() => setIsOpen(!isOpen)}
           className="flex items-center gap-2 text-sm font-bold text-slate-700 w-full py-3 border-b border-slate-200"
         >
-          <svg className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-90' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-90' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
           </svg>
           Inhaltsverzeichnis

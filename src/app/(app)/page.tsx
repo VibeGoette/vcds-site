@@ -78,7 +78,7 @@ export default async function Home() {
                   Kaufberatung lesen
                 </Link>
               </div>
-              <div className="flex flex-col sm:flex-row gap-4 text-sm text-slate-400">
+              <div className="flex flex-col sm:flex-row gap-4 text-sm text-slate-500">
                 <span className="flex items-center gap-2"><Icon name="phone" size={14} className="text-slate-500" />+49 (0) 234 58 545 800</span>
                 <span className="flex items-center gap-2"><Icon name="mail" size={14} className="text-slate-500" />support@vcds.de</span>
                 <span className="flex items-center gap-2"><Icon name="map" size={14} className="text-slate-500" />Bochum</span>

@@ -111,7 +111,7 @@ export function HeaderClient({ navItems }: { navItems: NavItem[] }) {
                             )}
                           </div>
                           {c.isExternal && (
-                            <svg className="w-3 h-3 text-slate-300 shrink-0" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
+                            <svg className="w-3 h-3 text-slate-300 shrink-0" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
                               <path d="M3.5 1.5h7v7M10.5 1.5L1.5 10.5" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
                           )}
@@ -179,7 +179,7 @@ export function HeaderClient({ navItems }: { navItems: NavItem[] }) {
                                 {c.desc && <p className="text-[11px] text-slate-400 mt-0.5">{c.desc}</p>}
                               </div>
                               {c.isExternal && (
-                                <svg className="w-3.5 h-3.5 text-slate-300 shrink-0" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                <svg className="w-3.5 h-3.5 text-slate-300 shrink-0" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
                                   <path d="M3.5 1.5h7v7M10.5 1.5L1.5 10.5" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                               )}
