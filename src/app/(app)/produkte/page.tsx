@@ -1,6 +1,10 @@
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
-import { Icon } from '@/components/Icon'
+import { PageHero } from '@/components/ui/PageHero'
+import { Card } from '@/components/ui/Card'
+import { Button } from '@/components/ui/Button'
+import { Badge } from '@/components/ui/Badge'
+import { IconBox } from '@/components/ui/IconBox'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = { title: 'Produkte', description: 'VCDS Diagnoseadapter: HEX-V2 ab 294€, HEX-NET ab 514€. Komplettsysteme, Upgrades, Zubehör.' }
@@ -19,42 +23,39 @@ export default function Produkte() {
     <>
       <Header />
       <main id="main">
-        <section className="bg-gradient-to-br from-slate-900 to-blue-900 text-white px-5 py-14 md:py-20">
-          <div className="max-w-6xl mx-auto"><p className="text-xs text-slate-400 mb-3">Start / Produkte</p>
-            <h1 className="text-3xl md:text-4xl font-bold mb-3">Produktübersicht</h1>
-            <p className="text-slate-300 max-w-xl">Alle VCDS Diagnoseadapter im Überblick. Erhältlich im Auto-Intern Shop.</p>
-          </div>
-        </section>
+        <PageHero
+          breadcrumb="Start / Produkte"
+          title="Produktübersicht"
+          description="Alle VCDS Diagnoseadapter im Überblick. Erhältlich im Auto-Intern Shop."
+        />
 
         <div className="max-w-6xl mx-auto px-5 py-12">
           <div className="grid sm:grid-cols-3 gap-4 mb-12">
             {[{ic:'search',t:'Präzise Diagnose',d:'Alle Steuergeräte auslesen'},{ic:'cog',t:'Einfache Codierung',d:'Funktionen freischalten'},{ic:'bolt',t:'Auto-Scan',d:'Komplett in Minuten'}].map(f => (
-              <div key={f.t} className="bg-white border border-slate-200 rounded-2xl p-6 text-center">
-                <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center mx-auto mb-4"><Icon name={f.ic} size={22} className="text-blue-600" /></div>
+              <Card key={f.t} className="text-center">
+                <IconBox icon={f.ic} size="lg" className="mx-auto mb-4" />
                 <h3 className="font-bold text-slate-900 mb-1">{f.t}</h3>
                 <p className="text-sm text-slate-500">{f.d}</p>
-              </div>
+              </Card>
             ))}
           </div>
 
           <div className="space-y-3">
             {cats.map(c => (
-              <div key={c.n} className="bg-white border border-slate-200 rounded-2xl p-5 flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 hover:border-blue-200 transition-colors">
-                <div className="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center shrink-0"><Icon name={c.ic} size={20} className="text-blue-600" /></div>
+              <Card key={c.n} variant="interactive" padding="tight" className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
+                <IconBox icon={c.ic} />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-0.5">
                     <h3 className="font-bold text-slate-900">{c.n}</h3>
-                    {c.b && <span className="px-2 py-0.5 text-[10px] font-semibold rounded-md bg-blue-50 text-blue-700 border border-blue-200">{c.b}</span>}
+                    {c.b && <Badge>{c.b}</Badge>}
                   </div>
                   <p className="text-sm text-slate-500">{c.d}</p>
                 </div>
                 <div className="shrink-0 flex items-center gap-3">
                   {c.p && <span className="font-bold text-blue-600">{c.p}</span>}
-                  <a href={c.url} target="_blank" rel="noopener noreferrer" className="px-4 py-2 bg-red-600 text-white rounded-md text-sm font-semibold hover:bg-red-500 transition-colors whitespace-nowrap">
-                    Zum Shop
-                  </a>
+                  <Button variant="primary" size="sm" href={c.url} external>Zum Shop</Button>
                 </div>
-              </div>
+              </Card>
             ))}
           </div>
           <p className="text-center text-xs text-slate-400 mt-8">Alle Produkte erhältlich unter auto-intern.de/shop</p>
