@@ -29,7 +29,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   if (hardcodedSlugs.has(slug)) return {}
 
-  const post = await getPostBySlug(slug)
+  let post: Awaited<ReturnType<typeof getPostBySlug>> | null = null
+  try {
+    post = await getPostBySlug(slug)
+  } catch {
+    // DB not available
+  }
   if (!post) return {}
 
   return {
@@ -58,7 +63,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   }
 
   // CMS-driven post
-  const post = await getPostBySlug(slug)
+  let post: Awaited<ReturnType<typeof getPostBySlug>> | null = null
+  try {
+    post = await getPostBySlug(slug)
+  } catch {
+    // DB not available
+  }
   if (!post) notFound()
 
   const gradient = catGradients[post.category] ?? catGradients.beratung
