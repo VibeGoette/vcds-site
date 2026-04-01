@@ -51,7 +51,7 @@ export async function getPostBySlug(slug: string) {
   return docs[0] || null
 }
 
-/** Fetch all active products sorted by sortOrder */
+/** Fetch all active products sorted by sortOrder (depth:2 for images) */
 export async function getProducts() {
   const payload = await getPayloadClient()
   const { docs } = await payload.find({
@@ -59,6 +59,7 @@ export async function getProducts() {
     where: { isActive: { equals: true } },
     sort: 'sortOrder',
     limit: 50,
+    depth: 2,
   })
   return docs
 }

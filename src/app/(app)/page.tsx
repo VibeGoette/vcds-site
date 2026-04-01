@@ -2,8 +2,9 @@ import { Header } from '@/components/Header'
 import { OrganizationSchema, ProductSchema } from '@/components/StructuredData'
 import { Footer } from '@/components/Footer'
 import { Icon } from '@/components/Icon'
-import { getTestimonials } from '@/lib/payload'
+import { getTestimonials, getProducts } from '@/lib/payload'
 import Link from 'next/link'
+import Image from 'next/image'
 
 const fallbackTestimonials = [
   { id: '1', quote: 'Super Service, sehr netter Kontakt. Haben uns unheimlich geholfen! Kann man nur empfehlen!!', authorName: 'Verifizierter VCDS-Kunde', company: null },
@@ -11,11 +12,33 @@ const fallbackTestimonials = [
   { id: '3', quote: 'Bester Laden überhaupt. Die Mitarbeiter sind super drauf und haben von der Materie Ahnung. Support ist 1A.', authorName: 'Verifizierter VCDS-Kunde', company: null },
 ]
 
+const fallbackProducts = [
+  { name:'HEX-V2', sub:'Der Allrounder', price:'ab 294 €', icon:'usb', badge:'USB', feats:['Voller Funktionsumfang','3 / 10 / Unlimited VIN','Kabelgebunden (USB)','Kostenloser Support und Forum'], url:'https://www.auto-intern.de/shop/diagnose-adapter/198/hex-v2-inkl.-vcds-lizenz', img: null as { url: string; alt?: string } | null },
+  { name:'HEX-NET', sub:'Für Profis und Werkstätten', price:'ab 514 €', icon:'wifi', badge:'WLAN', feats:['Alles was der HEX-V2 kann, plus:','Kabellos über WLAN','Messwerte während der Fahrt','10 / Unlimited VIN'], url:'https://www.auto-intern.de/shop/diagnose-adapter/199/hex-net-wifi-inkl.-vcds-lizenz', img: null as { url: string; alt?: string } | null },
+]
+
 export default async function Home() {
   let testimonials = fallbackTestimonials as typeof fallbackTestimonials
+  let homeProducts = fallbackProducts
   try {
-    const cms = await getTestimonials()
+    const [cms, cmsProducts] = await Promise.all([getTestimonials(), getProducts()])
     if (cms.length > 0) testimonials = cms as typeof fallbackTestimonials
+    if (cmsProducts.length > 0) {
+      // Pick the first hex-v2 and hex-net for the homepage
+      const v2 = cmsProducts.find(p => p.category === 'hex-v2')
+      const net = cmsProducts.find(p => p.category === 'hex-net')
+      const toCard = (p: typeof cmsProducts[0], fb: typeof fallbackProducts[0]) => {
+        const img = p.featuredImage && typeof p.featuredImage === 'object' && 'url' in p.featuredImage
+          ? { url: (p.featuredImage as { url: string }).url, alt: (p.featuredImage as { alt?: string }).alt }
+          : null
+        const highlights = Array.isArray(p.highlights) ? p.highlights.map(h => (h as { text: string }).text) : fb.feats
+        return { ...fb, name: p.name, price: p.price ?? fb.price, url: p.shopUrl ?? fb.url, img, feats: highlights.length > 0 ? highlights : fb.feats }
+      }
+      homeProducts = [
+        v2 ? toCard(v2, fallbackProducts[0]) : fallbackProducts[0],
+        net ? toCard(net, fallbackProducts[1]) : fallbackProducts[1],
+      ]
+    }
   } catch {
     // DB not available — use fallback
   }
@@ -103,21 +126,26 @@ export default async function Home() {
               unser umfangreiches Angebot und der Support von Auto-Intern bringen Sie weiter.
             </p>
             <div className="grid md:grid-cols-2 gap-6">
-              {[
-                { name:'HEX-V2', sub:'Der Allrounder', price:'ab 294 €', icon:'usb', badge:'USB', feats:['Voller Funktionsumfang','3 / 10 / Unlimited VIN','Kabelgebunden (USB)','Kostenloser Support und Forum'], url:'https://www.auto-intern.de/shop/diagnose-adapter/198/hex-v2-inkl.-vcds-lizenz' },
-                { name:'HEX-NET', sub:'Für Profis und Werkstätten', price:'ab 514 €', icon:'wifi', badge:'WLAN', feats:['Alles was der HEX-V2 kann, plus:','Kabellos über WLAN','Messwerte während der Fahrt','10 / Unlimited VIN'], url:'https://www.auto-intern.de/shop/diagnose-adapter/199/hex-net-wifi-inkl.-vcds-lizenz' },
-              ].map(p => (
+              {homeProducts.map(p => (
                 <div key={p.name} className="bg-white border border-slate-200 rounded-2xl p-6 hover:border-blue-200 hover:shadow-md transition-all">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
-                        <Icon name={p.icon} size={20} className="text-blue-600" />
-                      </div>
-                      <span className="px-2.5 py-0.5 text-xs font-semibold rounded-md bg-blue-50 text-blue-700 border border-blue-200">{p.badge}</span>
+                  {p.img ? (
+                    <div className="relative w-full h-40 mb-4 rounded-xl overflow-hidden bg-slate-50">
+                      <Image src={p.img.url} alt={p.img.alt ?? p.name} fill className="object-contain p-3" sizes="(max-width: 768px) 100vw, 50vw" />
                     </div>
+                  ) : (
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
+                          <Icon name={p.icon} size={20} className="text-blue-600" />
+                        </div>
+                        <span className="px-2.5 py-0.5 text-xs font-semibold rounded-md bg-blue-50 text-blue-700 border border-blue-200">{p.badge}</span>
+                      </div>
+                    </div>
+                  )}
+                  <div className="flex items-center justify-between mb-1">
+                    <h3 className="text-xl font-bold text-slate-900">{p.name}</h3>
                     <span className="text-lg font-bold text-blue-600">{p.price}</span>
                   </div>
-                  <h3 className="text-xl font-bold text-slate-900 mb-1">{p.name}</h3>
                   <p className="text-sm text-blue-600 font-medium mb-4">{p.sub}</p>
                   <div className="space-y-2 mb-6">
                     {p.feats.map(f => (

@@ -6,6 +6,7 @@ export const Media: CollectionConfig = {
   admin: {
     group: 'Medien',
     defaultColumns: ['filename', 'alt', 'mimeType', 'updatedAt'],
+    description: 'Bilder hochladen: PNG, JPEG, WebP, SVG oder GIF. 3 Größen werden automatisch generiert: Thumbnail (300×200), Card (600×400), Hero (1920px breit).',
   },
   access: {
     read: () => true,

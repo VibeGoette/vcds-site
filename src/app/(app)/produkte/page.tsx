@@ -6,15 +6,10 @@ import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/Badge'
 import { IconBox } from '@/components/ui/IconBox'
 import { getProducts } from '@/lib/payload'
+import Image from 'next/image'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = { title: 'Produkte', description: 'VCDS Diagnoseadapter: HEX-V2 ab 294€, HEX-NET ab 514€. Komplettsysteme, Upgrades, Zubehör.' }
-
-const connectionIcons: Record<string, string> = {
-  'usb': 'usb',
-  'wifi-usb': 'wifi',
-  'other': 'plug',
-}
 
 const connectionLabels: Record<string, string> = {
   'usb': 'USB',
@@ -30,14 +25,41 @@ const categoryIcons: Record<string, string> = {
   'zubehoer': 'cog',
 }
 
-const fallbackCats = [
-  { n:'HEX-NET', p:'ab 514 €', b:'WLAN', d:'Kabelloser Diagnoseadapter mit WLAN. 10 oder unbegrenzte Fahrzeuge.', ic:'wifi', url:'https://www.auto-intern.de/shop/diagnose-adapter/199/hex-net-wifi-inkl.-vcds-lizenz' },
-  { n:'HEX-V2', p:'ab 294 €', b:'USB', d:'Kabelgebundener Adapter. 3, 10 oder unbegrenzte Fahrzeuge.', ic:'usb', url:'https://www.auto-intern.de/shop/diagnose-adapter/198/hex-v2-inkl.-vcds-lizenz' },
-  { n:'Diagnose-Adapter', p:'', b:'', d:'Diverse Adapter mit Fehlercode-Auslesung und Messwertaufzeichnung.', ic:'plug', url:'https://auto-intern.de/shop/' },
-  { n:'Komplettsysteme', p:'', b:'', d:'Komplettsets für professionelle Werkstätten.', ic:'shield', url:'https://auto-intern.de/shop/' },
-  { n:'Upgrades', p:'', b:'', d:'Ältere Adapter auf den neuesten Standard upgraden.', ic:'bolt', url:'https://www.auto-intern.de/shop/upgrades-erweiterungsmodule/' },
-  { n:'Zubehör', p:'', b:'', d:'Adapterkabel, Transportkoffer, USB-Sticks mit Software.', ic:'cog', url:'https://auto-intern.de/shop/' },
+interface ProductCard {
+  n: string
+  p: string
+  b: string
+  d: string
+  ic: string
+  url: string
+  img: { url: string; alt?: string; width?: number; height?: number } | null
+  imgCard: string | null
+}
+
+const fallbackCats: ProductCard[] = [
+  { n:'HEX-NET', p:'ab 514 €', b:'WLAN', d:'Kabelloser Diagnoseadapter mit WLAN. 10 oder unbegrenzte Fahrzeuge.', ic:'wifi', url:'https://www.auto-intern.de/shop/diagnose-adapter/199/hex-net-wifi-inkl.-vcds-lizenz', img: null, imgCard: null },
+  { n:'HEX-V2', p:'ab 294 €', b:'USB', d:'Kabelgebundener Adapter. 3, 10 oder unbegrenzte Fahrzeuge.', ic:'usb', url:'https://www.auto-intern.de/shop/diagnose-adapter/198/hex-v2-inkl.-vcds-lizenz', img: null, imgCard: null },
+  { n:'Diagnose-Adapter', p:'', b:'', d:'Diverse Adapter mit Fehlercode-Auslesung und Messwertaufzeichnung.', ic:'plug', url:'https://auto-intern.de/shop/', img: null, imgCard: null },
+  { n:'Komplettsysteme', p:'', b:'', d:'Komplettsets für professionelle Werkstätten.', ic:'shield', url:'https://auto-intern.de/shop/', img: null, imgCard: null },
+  { n:'Upgrades', p:'', b:'', d:'Ältere Adapter auf den neuesten Standard upgraden.', ic:'bolt', url:'https://www.auto-intern.de/shop/upgrades-erweiterungsmodule/', img: null, imgCard: null },
+  { n:'Zubehör', p:'', b:'', d:'Adapterkabel, Transportkoffer, USB-Sticks mit Software.', ic:'cog', url:'https://auto-intern.de/shop/', img: null, imgCard: null },
 ]
+
+function extractImage(media: unknown): { url: string; alt?: string; width?: number; height?: number } | null {
+  if (media && typeof media === 'object' && 'url' in media) {
+    const m = media as { url?: string; alt?: string; width?: number; height?: number; sizes?: { card?: { url?: string } } }
+    if (m.url) return { url: m.url, alt: m.alt, width: m.width, height: m.height }
+  }
+  return null
+}
+
+function extractCardUrl(media: unknown): string | null {
+  if (media && typeof media === 'object' && 'sizes' in media) {
+    const m = media as { sizes?: { card?: { url?: string } } }
+    return m.sizes?.card?.url ?? null
+  }
+  return null
+}
 
 export default async function Produkte() {
   let cats = fallbackCats
@@ -50,8 +72,10 @@ export default async function Produkte() {
         p: p.price ?? '',
         b: p.connection ? (connectionLabels[p.connection] ?? '') : '',
         d: p.shortDescription ?? '',
-        ic: p.connection ? (connectionIcons[p.connection] ?? categoryIcons[p.category] ?? 'plug') : (categoryIcons[p.category] ?? 'plug'),
+        ic: p.connection ? (categoryIcons[p.category] ?? 'plug') : (categoryIcons[p.category] ?? 'plug'),
         url: p.shopUrl ?? 'https://auto-intern.de/shop/',
+        img: extractImage(p.featuredImage),
+        imgCard: extractCardUrl(p.featuredImage),
       }))
     }
   } catch {
@@ -81,8 +105,21 @@ export default async function Produkte() {
 
           <div className="space-y-3">
             {cats.map(c => (
-              <Card key={c.n} variant="interactive" padding="tight" className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
-                <IconBox icon={c.ic} />
+              <Card key={c.n} variant="interactive" padding="tight" className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                {/* Product image or icon fallback */}
+                {c.img ? (
+                  <div className="w-full sm:w-24 h-32 sm:h-20 relative rounded-lg overflow-hidden bg-slate-50 shrink-0">
+                    <Image
+                      src={c.imgCard ?? c.img.url}
+                      alt={c.img.alt ?? c.n}
+                      fill
+                      className="object-contain p-2"
+                      sizes="(max-width: 640px) 100vw, 96px"
+                    />
+                  </div>
+                ) : (
+                  <IconBox icon={c.ic} />
+                )}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-0.5">
                     <h3 className="font-bold text-slate-900">{c.n}</h3>
