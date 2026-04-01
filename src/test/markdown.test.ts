@@ -75,4 +75,26 @@ describe('renderMarkdown', () => {
     const html = renderMarkdown('This is ***bold italic***')
     expect(html).toContain('<strong><em>bold italic</em></strong>')
   })
+
+  it('blocks javascript: URLs in links (XSS prevention)', () => {
+    const html = renderMarkdown('[click](javascript:alert("xss"))')
+    expect(html).toContain('href="#"')
+    expect(html).not.toContain('javascript:')
+  })
+
+  it('blocks data: URLs in links', () => {
+    const html = renderMarkdown('[click](data:text/html,<script>alert(1)</script>)')
+    expect(html).toContain('href="#"')
+    expect(html).not.toContain('data:')
+  })
+
+  it('allows https links', () => {
+    const html = renderMarkdown('[safe](https://vcds.de)')
+    expect(html).toContain('href="https://vcds.de"')
+  })
+
+  it('allows mailto links', () => {
+    const html = renderMarkdown('[email](mailto:support@vcds.de)')
+    expect(html).toContain('href="mailto:support@vcds.de"')
+  })
 })

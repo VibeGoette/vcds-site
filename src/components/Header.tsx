@@ -1,6 +1,19 @@
 import { getNavigation } from '@/lib/payload'
 import { HeaderClient } from './HeaderClient'
 
+interface CmsNavChild {
+  label: string
+  href: string
+  isExternal?: boolean
+}
+
+interface CmsNavItem {
+  label: string
+  href: string
+  isExternal?: boolean
+  children?: CmsNavChild[]
+}
+
 /** Hardcoded fallback navigation in case CMS has no data yet */
 const fallbackNav = [
   { label: 'Start', href: '/', children: [
@@ -30,12 +43,12 @@ export async function Header() {
   try {
     const navigation = await getNavigation()
     if (navigation?.mainNav?.length) {
-      navItems = navigation.mainNav.map((item: any) => ({
+      navItems = (navigation.mainNav as CmsNavItem[]).map((item) => ({
         label: item.label,
         href: item.href,
         isExternal: item.isExternal ?? false,
         ...(item.children?.length ? {
-          children: item.children.map((c: any) => ({
+          children: item.children.map((c) => ({
             label: c.label,
             href: c.href,
             isExternal: c.isExternal ?? false,

@@ -5,15 +5,24 @@ const rateLimit = new Map<string, { count: number; resetAt: number }>()
 const RATE_LIMIT_MAX = 3
 const RATE_LIMIT_WINDOW = 15 * 60 * 1000 // 15 Minuten
 
+function cleanupExpiredEntries() {
+  const now = Date.now()
+  for (const [ip, entry] of rateLimit) {
+    if (now > entry.resetAt) rateLimit.delete(ip)
+  }
+}
+
 function isRateLimited(ip: string): boolean {
   const now = Date.now()
+  // Cleanup expired entries to prevent memory leak
+  if (rateLimit.size > 1000) cleanupExpiredEntries()
   const entry = rateLimit.get(ip)
   if (!entry || now > entry.resetAt) {
     rateLimit.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW })
     return false
   }
   entry.count++
-  return entry.count > RATE_LIMIT_MAX
+  return entry.count >= RATE_LIMIT_MAX
 }
 
 function sanitize(str: string): string {
