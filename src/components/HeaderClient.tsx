@@ -1,10 +1,10 @@
 'use client'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Icon } from './Icon'
 
-interface NavChild { label: string; href: string; isExternal?: boolean }
+interface NavChild { label: string; href: string; isExternal?: boolean; icon?: string; desc?: string }
 interface NavItem { label: string; href: string; isExternal?: boolean; children?: NavChild[] }
 
 export function HeaderClient({ navItems }: { navItems: NavItem[] }) {
@@ -12,6 +12,8 @@ export function HeaderClient({ navItems }: { navItems: NavItem[] }) {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [activeDrop, setActiveDrop] = useState<string | null>(null)
   const [scrolled, setScrolled] = useState(false)
+  const [mobileExpanded, setMobileExpanded] = useState<string | null>(null)
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 16)
@@ -19,7 +21,7 @@ export function HeaderClient({ navItems }: { navItems: NavItem[] }) {
     return () => window.removeEventListener('scroll', fn)
   }, [])
 
-  useEffect(() => { setMobileOpen(false); setActiveDrop(null) }, [pathname])
+  useEffect(() => { setMobileOpen(false); setActiveDrop(null); setMobileExpanded(null) }, [pathname])
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : ''
@@ -34,6 +36,15 @@ export function HeaderClient({ navItems }: { navItems: NavItem[] }) {
 
   const isActive = useCallback((href: string) => href === '/' ? pathname === '/' : pathname.startsWith(href), [pathname])
 
+  // Delayed close to prevent flickering when moving mouse between trigger and dropdown
+  const handleMouseEnter = (label: string) => {
+    if (closeTimer.current) { clearTimeout(closeTimer.current); closeTimer.current = null }
+    setActiveDrop(label)
+  }
+  const handleMouseLeave = () => {
+    closeTimer.current = setTimeout(() => setActiveDrop(null), 150)
+  }
+
   return (
     <header className={`sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b transition-all duration-200 ${scrolled ? 'h-14 shadow-sm border-slate-100' : 'h-16 border-slate-200'}`}>
       <div className="max-w-6xl mx-auto px-4 sm:px-5 h-full flex items-center justify-between">
@@ -42,11 +53,12 @@ export function HeaderClient({ navItems }: { navItems: NavItem[] }) {
           <span className="text-lg font-bold text-slate-300">.de</span>
         </Link>
 
+        {/* ═══ DESKTOP NAV ═══ */}
         <nav className="hidden lg:flex items-center gap-0.5" aria-label="Hauptnavigation">
           {navItems.map(item => (
             <div key={item.label} className="relative"
-              onMouseEnter={() => item.children && setActiveDrop(item.label)}
-              onMouseLeave={() => setActiveDrop(null)}>
+              onMouseEnter={() => item.children && handleMouseEnter(item.label)}
+              onMouseLeave={handleMouseLeave}>
               {item.children ? (
                 <button className={`px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-1 ${isActive(item.href) ? 'text-blue-600' : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'}`}
                   aria-expanded={activeDrop === item.label} aria-haspopup="true"
@@ -59,16 +71,76 @@ export function HeaderClient({ navItems }: { navItems: NavItem[] }) {
                   {item.label}
                 </Link>
               )}
+
+              {/* ═══ DROPDOWN ═══ */}
               {item.children && (
-                <div className={`absolute top-full left-0 mt-1 min-w-[200px] bg-white border border-slate-100 rounded-xl shadow-lg py-2 transition-all duration-200 ${activeDrop === item.label ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-1 pointer-events-none'}`} role="menu">
-                  {item.children.map(c => (
-                    <Link key={c.href} href={c.href} role="menuitem"
-                      className="flex items-center px-4 py-2.5 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 mx-1 rounded-md transition-colors"
-                      {...(c.isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
-                      {c.label}
-                      {c.isExternal && <Icon name="arrow" size={10} className="ml-auto text-slate-300" />}
+                <div
+                  className={`absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[280px] bg-white border border-slate-200/80 rounded-xl shadow-xl shadow-slate-200/50 transition-all duration-200 origin-top ${
+                    activeDrop === item.label
+                      ? 'opacity-100 visible scale-100 translate-y-0'
+                      : 'opacity-0 invisible scale-[0.97] -translate-y-1 pointer-events-none'
+                  }`}
+                  role="menu"
+                  onMouseEnter={() => handleMouseEnter(item.label)}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  {/* Arrow indicator */}
+                  <div className="absolute -top-[6px] left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-l border-t border-slate-200/80 rotate-45 rounded-tl-[2px]" />
+
+                  <div className="relative p-1.5">
+                    {item.children.map((c, idx) => {
+                      const active = isActive(c.href)
+                      return (
+                        <Link
+                          key={c.href}
+                          href={c.href}
+                          role="menuitem"
+                          className={`group flex items-start gap-3 px-3 py-2.5 rounded-lg transition-all duration-150 ${
+                            active
+                              ? 'bg-blue-50 text-blue-600'
+                              : 'text-slate-700 hover:bg-slate-50'
+                          } ${idx > 0 ? '' : ''}`}
+                          {...(c.isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                        >
+                          <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5 transition-colors ${
+                            active
+                              ? 'bg-blue-100 text-blue-600'
+                              : 'bg-slate-100 text-slate-500 group-hover:bg-blue-100 group-hover:text-blue-600'
+                          }`}>
+                            <Icon name={c.icon ?? 'arrow'} size={15} />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-1.5">
+                              <span className={`text-[13px] font-semibold transition-colors ${
+                                active ? 'text-blue-600' : 'text-slate-800 group-hover:text-blue-600'
+                              }`}>
+                                {c.label}
+                              </span>
+                              {c.isExternal && (
+                                <svg className="w-3 h-3 text-slate-300 shrink-0" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                  <path d="M3.5 1.5h7v7M10.5 1.5L1.5 10.5" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                              )}
+                            </div>
+                            {c.desc && (
+                              <p className="text-[11px] text-slate-400 mt-0.5 leading-snug">{c.desc}</p>
+                            )}
+                          </div>
+                        </Link>
+                      )
+                    })}
+                  </div>
+
+                  {/* Footer link to parent */}
+                  <div className="border-t border-slate-100 px-1.5 py-1.5">
+                    <Link
+                      href={item.href}
+                      className="flex items-center justify-between px-3 py-2 rounded-lg text-[12px] font-semibold text-slate-400 hover:text-blue-600 hover:bg-slate-50 transition-colors"
+                    >
+                      Alle {item.label} anzeigen
+                      <Icon name="arrow" size={11} className="text-current" />
                     </Link>
-                  ))}
+                  </div>
                 </div>
               )}
             </div>
@@ -79,6 +151,7 @@ export function HeaderClient({ navItems }: { navItems: NavItem[] }) {
           </a>
         </nav>
 
+        {/* ═══ MOBILE HAMBURGER ═══ */}
         <button className="lg:hidden p-2.5 -mr-1 rounded-md hover:bg-slate-100 active:bg-slate-200 transition-colors" onClick={() => setMobileOpen(!mobileOpen)}
           aria-expanded={mobileOpen} aria-label={mobileOpen ? 'Menü schließen' : 'Menü öffnen'}>
           <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
@@ -87,35 +160,73 @@ export function HeaderClient({ navItems }: { navItems: NavItem[] }) {
         </button>
       </div>
 
+      {/* ═══ MOBILE MENU ═══ */}
       {mobileOpen && (
         <>
-          <div className="lg:hidden fixed inset-0 top-14 bg-black/20 z-40" onClick={() => setMobileOpen(false)} aria-hidden="true" />
+          <div className="lg:hidden fixed inset-0 top-14 bg-black/20 z-40 backdrop-blur-[2px]" onClick={() => setMobileOpen(false)} aria-hidden="true" />
           <nav className="lg:hidden fixed top-14 left-0 right-0 bg-white border-b shadow-xl z-50 max-h-[calc(100vh-3.5rem)] overflow-y-auto overscroll-contain" aria-label="Mobile Navigation">
-            <div className="max-w-6xl mx-auto px-4 py-3">
+            <div className="max-w-6xl mx-auto px-4 py-2">
               {navItems.map(item => (
                 <div key={item.label} className="border-b border-slate-100 last:border-0">
-                  <Link href={item.href} className="flex items-center justify-between py-3.5 text-[15px] font-semibold text-slate-800 hover:text-blue-600 active:text-blue-700 transition-colors" onClick={() => setMobileOpen(false)}>
-                    {item.label}
-                  </Link>
-                  {item.children && (
-                    <div className="pb-2 space-y-0.5">
-                      {item.children.map(c => (
-                        <Link key={c.href} href={c.href}
-                          className="flex items-center pl-4 py-2.5 text-sm text-slate-500 hover:text-blue-600 rounded-md hover:bg-blue-50 transition-colors min-h-[44px]"
-                          onClick={() => setMobileOpen(false)}
-                          {...(c.isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
-                          {c.label}
-                          {c.isExternal && <Icon name="arrow" size={10} className="ml-2 text-slate-300" />}
-                        </Link>
-                      ))}
-                    </div>
+                  {item.children ? (
+                    <>
+                      <button
+                        className="flex items-center justify-between w-full py-3.5 text-[15px] font-semibold text-slate-800 hover:text-blue-600 transition-colors"
+                        onClick={() => setMobileExpanded(mobileExpanded === item.label ? null : item.label)}
+                        aria-expanded={mobileExpanded === item.label}
+                      >
+                        <span className="flex items-center gap-2">
+                          {item.label}
+                          {isActive(item.href) && <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />}
+                        </span>
+                        <Icon name="chevron" size={14} className={`text-slate-400 transition-transform duration-200 ${mobileExpanded === item.label ? 'rotate-180' : ''}`} />
+                      </button>
+                      <div className={`overflow-hidden transition-all duration-200 ${mobileExpanded === item.label ? 'max-h-[500px] opacity-100 pb-2' : 'max-h-0 opacity-0'}`}>
+                        {item.children.map(c => {
+                          const active = isActive(c.href)
+                          return (
+                            <Link key={c.href} href={c.href}
+                              className={`flex items-center gap-3 pl-2 pr-3 py-3 rounded-lg transition-colors min-h-[48px] ${
+                                active ? 'bg-blue-50 text-blue-600' : 'text-slate-600 hover:bg-slate-50 hover:text-blue-600'
+                              }`}
+                              onClick={() => setMobileOpen(false)}
+                              {...(c.isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
+                              <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
+                                active ? 'bg-blue-100 text-blue-600' : 'bg-slate-100 text-slate-500'
+                              }`}>
+                                <Icon name={c.icon ?? 'arrow'} size={14} />
+                              </div>
+                              <div className="flex-1">
+                                <span className="text-sm font-medium">{c.label}</span>
+                                {c.desc && <p className="text-[11px] text-slate-400 mt-0.5">{c.desc}</p>}
+                              </div>
+                              {c.isExternal && (
+                                <svg className="w-3.5 h-3.5 text-slate-300 shrink-0" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                  <path d="M3.5 1.5h7v7M10.5 1.5L1.5 10.5" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                              )}
+                            </Link>
+                          )
+                        })}
+                      </div>
+                    </>
+                  ) : (
+                    <Link href={item.href}
+                      className="flex items-center justify-between py-3.5 text-[15px] font-semibold text-slate-800 hover:text-blue-600 active:text-blue-700 transition-colors"
+                      onClick={() => setMobileOpen(false)}>
+                      <span className="flex items-center gap-2">
+                        {item.label}
+                        {isActive(item.href) && <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />}
+                      </span>
+                    </Link>
                   )}
                 </div>
               ))}
-              <div className="pt-3 pb-1">
+              <div className="pt-3 pb-2">
                 <a href="https://auto-intern.de/shop/" target="_blank" rel="noopener noreferrer"
-                  className="block text-center py-3.5 bg-red-600 text-white font-semibold rounded-md hover:bg-red-500 active:bg-red-700 transition-colors min-h-[48px] flex items-center justify-center">
+                  className="flex items-center justify-center py-3.5 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-500 active:bg-red-700 transition-colors min-h-[48px] text-sm">
                   Zum Shop
+                  <Icon name="arrow" size={14} className="ml-2" />
                 </a>
               </div>
             </div>
