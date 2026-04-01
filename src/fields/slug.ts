@@ -1,4 +1,4 @@
-import type { Field, TextField } from 'payload'
+import type { TextField } from 'payload'
 
 /**
  * Reusable slug field with auto-generation from title.
