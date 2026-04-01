@@ -2,9 +2,11 @@ import { Header } from '@/components/Header'
 import { OrganizationSchema, ProductSchema } from '@/components/StructuredData'
 import { Footer } from '@/components/Footer'
 import { Icon } from '@/components/Icon'
+import { getTestimonials } from '@/lib/payload'
 import Link from 'next/link'
 
-export default function Home() {
+export default async function Home() {
+  const testimonials = await getTestimonials()
   return (
     <>
       <Header />
@@ -170,15 +172,11 @@ export default function Home() {
           <div className="max-w-6xl mx-auto px-5">
             <h2 className="text-2xl font-bold text-slate-900 mb-8">Das sagen unsere Kunden</h2>
             <div className="grid md:grid-cols-3 gap-4">
-              {[
-                {q:'Super Service, sehr netter Kontakt. Haben uns unheimlich geholfen! Kann man nur empfehlen!!',a:'Verifizierter VCDS-Kunde'},
-                {q:'Gestern das Problem geschildert und keine 24 Stunden später hatte ich ein Leihgerät. Schneller geht es nicht. Absolut Top der Service.',a:'Autohaus Nordost Berlin'},
-                {q:'Bester Laden überhaupt. Die Mitarbeiter sind super drauf und haben von der Materie Ahnung. Support ist 1A.',a:'Verifizierter VCDS-Kunde'},
-              ].map((t,i) => (
-                <div key={i} className="bg-white border border-slate-200 rounded-2xl p-5 hover:border-blue-200 transition-colors">
+              {testimonials.map((t) => (
+                <div key={t.id} className="bg-white border border-slate-200 rounded-2xl p-5 hover:border-blue-200 transition-colors">
                   <Icon name="quote" size={16} className="text-blue-300 mb-3" />
-                  <p className="text-sm text-slate-700 italic leading-relaxed mb-4">{t.q}</p>
-                  <p className="text-xs font-semibold text-slate-400">{t.a}</p>
+                  <p className="text-sm text-slate-700 italic leading-relaxed mb-4">{t.quote}</p>
+                  <p className="text-xs font-semibold text-slate-400">{t.authorName}{t.company ? ` — ${t.company}` : ''}</p>
                 </div>
               ))}
             </div>
