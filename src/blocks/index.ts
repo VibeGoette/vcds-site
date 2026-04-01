@@ -288,12 +288,93 @@ export const TeamBlock: Block = {
   ],
 }
 
+/**
+ * Callout Block — Info/Warning/Success/Danger boxes
+ */
+export const CalloutBlock: Block = {
+  slug: 'callout',
+  labels: { singular: 'Hinweis-Box', plural: 'Hinweis-Boxen' },
+  fields: [
+    {
+      name: 'variant',
+      type: 'select',
+      required: true,
+      defaultValue: 'info',
+      label: 'Variante',
+      options: [
+        { label: 'Info (blau)', value: 'info' },
+        { label: 'Warnung (gelb)', value: 'warning' },
+        { label: 'Erfolg (grün)', value: 'success' },
+        { label: 'Gefahr (rot)', value: 'danger' },
+      ],
+    },
+    {
+      name: 'title',
+      type: 'text',
+      label: 'Titel',
+      admin: { description: 'Optional. Wird fett über dem Inhalt angezeigt.' },
+    },
+    {
+      name: 'content',
+      type: 'richText',
+      required: true,
+      label: 'Inhalt',
+    },
+  ],
+}
+
+/**
+ * Pullquote Block — Highlighted quote with attribution
+ */
+export const PullquoteBlock: Block = {
+  slug: 'pullquote',
+  labels: { singular: 'Zitat', plural: 'Zitate' },
+  fields: [
+    {
+      name: 'text',
+      type: 'textarea',
+      required: true,
+      label: 'Zitat-Text',
+    },
+    {
+      name: 'attribution',
+      type: 'text',
+      label: 'Quelle / Autor',
+      admin: { description: 'Optional. Z.B. "Ross-Tech" oder "VCDS Forum"' },
+    },
+  ],
+}
+
+/**
+ * Divider Block — Visual separator between content sections
+ */
+export const DividerBlock: Block = {
+  slug: 'divider',
+  labels: { singular: 'Trenner', plural: 'Trenner' },
+  fields: [
+    {
+      name: 'style',
+      type: 'select',
+      defaultValue: 'default',
+      label: 'Stil',
+      options: [
+        { label: 'Standard (Gradient + Punkt)', value: 'default' },
+        { label: 'Drei Punkte', value: 'dot' },
+        { label: 'Gradient-Linie', value: 'gradient' },
+      ],
+    },
+  ],
+}
+
 // ── Export all blocks for use in payload.config.ts ──
 export const contentBlocks: Block[] = [
   RichTextBlock,
   ImageBlock,
   YouTubeBlock,
   CTABlock,
+  CalloutBlock,
+  PullquoteBlock,
+  DividerBlock,
   ProductGridBlock,
   FAQBlock,
   TestimonialBlock,

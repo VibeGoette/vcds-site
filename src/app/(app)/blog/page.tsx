@@ -2,7 +2,9 @@ import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { Icon } from '@/components/Icon'
 import { getPosts } from '@/lib/payload'
+import { calculateReadingTime } from '@/lib/blog-utils'
 import Link from 'next/link'
+import Image from 'next/image'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -45,12 +47,6 @@ function formatDate(dateStr: string | null | undefined): string {
   return d.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' })
 }
 
-function estimateReadingTime(excerpt: string | null | undefined): string {
-  const len = excerpt?.length ?? 0
-  const mins = Math.max(2, Math.round(len / 60))
-  return `${mins} Min`
-}
-
 export default async function Blog() {
   let cmsPosts: Awaited<ReturnType<typeof getPosts>> = []
   try {
@@ -61,16 +57,21 @@ export default async function Blog() {
 
   const posts = cmsPosts.map(p => {
     const style = cardStyles[p.slug] ?? categoryGradients[p.category] ?? categoryGradients.beratung
+    const readMins = calculateReadingTime(p as Parameters<typeof calculateReadingTime>[0])
+    const featImg = p.featuredImage && typeof p.featuredImage === 'object' && 'url' in p.featuredImage
+      ? p.featuredImage as { url: string; alt?: string; width?: number; height?: number }
+      : null
     return {
       slug: p.slug,
       title: p.title,
       category: p.category,
       date: formatDate(p.publishedAt),
-      reading: estimateReadingTime(p.excerpt),
+      reading: `${readMins} Min`,
       excerpt: p.excerpt ?? '',
       icon: style.icon,
       gradient: style.gradient,
       tag: 'tag' in style ? style.tag : undefined,
+      featuredImage: featImg,
     }
   })
 
@@ -111,11 +112,22 @@ export default async function Blog() {
               {/* Featured — spans 3 cols */}
               <Link href={'/blog/' + featured.slug} className="lg:col-span-3 group block relative rounded-2xl overflow-hidden">
                 <div className={`aspect-[16/10] md:aspect-[16/9] bg-gradient-to-br ${featured.gradient} relative grain`}>
+                  {featured.featuredImage && (
+                    <Image
+                      src={featured.featuredImage.url}
+                      alt={featured.featuredImage.alt ?? featured.title}
+                      fill
+                      className="object-cover opacity-60 group-hover:opacity-70 transition-opacity duration-500"
+                      sizes="(max-width: 1024px) 100vw, 60vw"
+                    />
+                  )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                   {/* Large decorative icon */}
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.08]">
-                    <Icon name={featured.icon} size={200} className="text-white" />
-                  </div>
+                  {!featured.featuredImage && (
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.08]">
+                      <Icon name={featured.icon} size={200} className="text-white" />
+                    </div>
+                  )}
                   {/* Content overlay */}
                   <div className="absolute bottom-0 left-0 right-0 p-5 md:p-8">
                     <div className="flex items-center gap-3 mb-3">
