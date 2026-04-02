@@ -8,11 +8,14 @@ import { IconBox } from '@/components/ui/IconBox'
 import { getFAQs } from '@/lib/payload'
 import { lexicalToText } from '@/lib/serializeLexical'
 import { FAQAccordion } from './FAQAccordion'
+import { getPageSeo } from '@/lib/seo'
 import type { Metadata } from 'next'
 
-export const metadata: Metadata = {
+export async function generateMetadata(): Promise<Metadata> {
+  return getPageSeo('faq', {
   title: 'FAQ',
   description: 'Häufig gestellte Fragen zu VCDS, HEX-V2, HEX-NET, Kompatibilität, Installation, Fehlerbehebung und Bedienung.',
+})
 }
 
 interface FaqCategory {

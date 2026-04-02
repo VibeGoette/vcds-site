@@ -5,11 +5,14 @@ import { PageHero } from '@/components/ui/PageHero'
 import { InfoBox } from '@/components/ui/InfoBox'
 import { Card } from '@/components/ui/Card'
 import { LiveChatStatus } from './LiveChatStatus'
+import { getPageSeo } from '@/lib/seo'
 import type { Metadata } from 'next'
 
-export const metadata: Metadata = {
+export async function generateMetadata(): Promise<Metadata> {
+  return getPageSeo('fernwartung', {
   title: 'Fernwartung',
   description: 'VCDS Fernwartung: AnyDesk herunterladen, Adresse mitteilen, Support-Mitarbeiter hilft direkt auf Ihrem Bildschirm. LiveChat verfügbar Mo–Fr 9–16 Uhr.',
+})
 }
 
 const anydeskSteps = [

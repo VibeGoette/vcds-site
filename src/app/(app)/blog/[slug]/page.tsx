@@ -11,6 +11,7 @@ import { TableOfContents } from '@/components/blog/TableOfContents'
 import { ShareButtons } from '@/components/blog/ShareButtons'
 import { AuthorBio } from '@/components/blog/AuthorBio'
 import { RelatedPosts } from '@/components/blog/RelatedPosts'
+import { ArticleSchema } from '@/components/StructuredData'
 import { lexicalToHtml, extractLexicalHeadings } from '@/lib/serializeLexical'
 import { extractMarkdownHeadings } from '@/lib/markdown'
 import { calculateReadingTime } from '@/lib/blog-utils'
@@ -47,10 +48,18 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
   if (!post) return {}
 
-  return {
-    title: post.title,
-    description: post.excerpt ?? undefined,
+  const seo = (post as { seo?: { metaTitle?: string; metaDescription?: string; ogImage?: { url?: string } | null; noIndex?: boolean } }).seo
+  const result: Metadata = {
+    title: seo?.metaTitle || post.title,
+    description: seo?.metaDescription || post.excerpt || undefined,
   }
+  if (seo?.ogImage && typeof seo.ogImage === 'object' && seo.ogImage.url) {
+    result.openGraph = { images: [{ url: seo.ogImage.url }] }
+  }
+  if (seo?.noIndex) {
+    result.robots = { index: false, follow: true }
+  }
+  return result
 }
 
 function formatDate(dateStr: string | null | undefined): string {
@@ -125,6 +134,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   return (
     <>
       <Header />
+      <ArticleSchema
+        title={post.title}
+        description={post.excerpt ?? ''}
+        datePublished={post.publishedAt ?? ''}
+        slug={slug}
+      />
       <ReadingProgress />
       <main id="main">
         {/* ═══ HERO ═══ */}

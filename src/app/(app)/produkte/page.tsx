@@ -7,9 +7,12 @@ import { Badge } from '@/components/ui/Badge'
 import { IconBox } from '@/components/ui/IconBox'
 import { getProducts } from '@/lib/payload'
 import Image from 'next/image'
+import { getPageSeo } from '@/lib/seo'
 import type { Metadata } from 'next'
 
-export const metadata: Metadata = { title: 'Produkte', description: 'VCDS Diagnoseadapter: HEX-V2 ab 294€, HEX-NET ab 514€. Komplettsysteme, Upgrades, Zubehör.' }
+export async function generateMetadata(): Promise<Metadata> {
+  return getPageSeo('produkte', { title: 'Produkte', description: 'VCDS Diagnoseadapter: HEX-V2 ab 294€, HEX-NET ab 514€. Komplettsysteme, Upgrades, Zubehör.' })
+}
 
 const connectionLabels: Record<string, string> = {
   'usb': 'USB',

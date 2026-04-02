@@ -2,9 +2,12 @@ import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { Icon } from '@/components/Icon'
 import { PageHero } from '@/components/ui/PageHero'
+import { getPageSeo } from '@/lib/seo'
 import type { Metadata } from 'next'
 
-export const metadata: Metadata = { title: 'Über VCDS', description: 'VCDS von Ross-Tech: 32.445 Fehlercodes, Auto-Scan, Codierung für VW, Audi, Skoda, Seat.' }
+export async function generateMetadata(): Promise<Metadata> {
+  return getPageSeo('ueber-vcds', { title: 'Über VCDS', description: 'VCDS von Ross-Tech: 32.445 Fehlercodes, Auto-Scan, Codierung für VW, Audi, Skoda, Seat.' })
+}
 
 export default function UeberVCDS() {
   return (

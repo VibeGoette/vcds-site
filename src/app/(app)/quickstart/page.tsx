@@ -2,11 +2,14 @@ import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { PageHero } from '@/components/ui/PageHero'
 import { QuickstartWizard, stepCount } from './QuickstartWizard'
+import { getPageSeo } from '@/lib/seo'
 import type { Metadata } from 'next'
 
-export const metadata: Metadata = {
+export async function generateMetadata(): Promise<Metadata> {
+  return getPageSeo('quickstart', {
   title: 'Quickstart',
   description: 'Interaktiver Leitfaden zur Ersteinrichtung Ihres VCDS-Adapters.',
+})
 }
 
 export default function Quickstart() {

@@ -366,6 +366,116 @@ export const DividerBlock: Block = {
   ],
 }
 
+/**
+ * Step Guide Block — Step-by-step instructions with optional screenshots
+ * Ideal for Quickstart, AHK-Anleitungen, Troubleshooting guides
+ */
+export const StepGuideBlock: Block = {
+  slug: 'stepGuide',
+  labels: { singular: 'Schritt-für-Schritt Anleitung', plural: 'Schritt-für-Schritt Anleitungen' },
+  fields: [
+    {
+      name: 'heading',
+      type: 'text',
+      label: 'Überschrift',
+      admin: { description: 'Optional. Z.B. "So installieren Sie VCDS"' },
+    },
+    {
+      name: 'steps',
+      type: 'array',
+      label: 'Schritte',
+      minRows: 1,
+      maxRows: 30,
+      admin: {
+        description: 'Einzelne Schritte der Anleitung. Jeder Schritt kann einen Screenshot enthalten.',
+      },
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          required: true,
+          label: 'Schritt-Titel',
+          admin: { description: 'Z.B. "VCDS herunterladen", "Interface anschließen"' },
+        },
+        {
+          name: 'description',
+          type: 'richText',
+          required: true,
+          label: 'Beschreibung',
+          admin: { description: 'Detaillierte Anleitung für diesen Schritt.' },
+        },
+        {
+          name: 'screenshot',
+          type: 'upload',
+          relationTo: 'media',
+          label: 'Screenshot / Bild',
+          admin: { description: 'Optional. Screenshot oder Foto für diesen Schritt.' },
+        },
+        {
+          name: 'screenshotCaption',
+          type: 'text',
+          label: 'Bildunterschrift',
+          admin: { description: 'Optional. Wird unter dem Screenshot angezeigt.' },
+        },
+        {
+          name: 'hint',
+          type: 'text',
+          label: 'Hinweis / Tipp',
+          admin: { description: 'Optional. Kurzer Hinweis unter der Beschreibung (z.B. "Tipp: Als Administrator ausführen").' },
+        },
+      ],
+    },
+  ],
+}
+
+/**
+ * Screenshot Block — Annotated screenshot with optional numbered markers
+ * Useful for UI walkthroughs and visual guides
+ */
+export const ScreenshotBlock: Block = {
+  slug: 'screenshot',
+  labels: { singular: 'Screenshot (annotiert)', plural: 'Screenshots (annotiert)' },
+  fields: [
+    {
+      name: 'image',
+      type: 'upload',
+      relationTo: 'media',
+      required: true,
+      label: 'Screenshot',
+    },
+    {
+      name: 'caption',
+      type: 'text',
+      label: 'Bildunterschrift',
+    },
+    {
+      name: 'alt',
+      type: 'text',
+      required: true,
+      label: 'Alt-Text',
+      admin: { description: 'Beschreibung für Screenreader und SEO.' },
+    },
+    {
+      name: 'size',
+      type: 'select',
+      label: 'Bildgröße',
+      defaultValue: 'full',
+      options: [
+        { label: 'Vollbreite', value: 'full' },
+        { label: 'Mittel (720px)', value: 'medium' },
+        { label: 'Klein (480px)', value: 'small' },
+      ],
+    },
+    {
+      name: 'border',
+      type: 'checkbox',
+      label: 'Rahmen anzeigen',
+      defaultValue: true,
+      admin: { description: 'Dünner Rahmen um den Screenshot für bessere Abgrenzung.' },
+    },
+  ],
+}
+
 // ── Export all blocks for use in payload.config.ts ──
 export const contentBlocks: Block[] = [
   RichTextBlock,
@@ -380,4 +490,6 @@ export const contentBlocks: Block[] = [
   TestimonialBlock,
   StatsBlock,
   TeamBlock,
+  StepGuideBlock,
+  ScreenshotBlock,
 ]

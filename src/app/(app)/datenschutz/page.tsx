@@ -1,8 +1,11 @@
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
+import { getPageSeo } from '@/lib/seo'
 import type { Metadata } from 'next'
 
-export const metadata: Metadata = { title: 'Datenschutzerklärung' }
+export async function generateMetadata(): Promise<Metadata> {
+  return getPageSeo('datenschutz', { title: 'Datenschutzerklärung' })
+}
 
 export default function Datenschutz() {
   return (
