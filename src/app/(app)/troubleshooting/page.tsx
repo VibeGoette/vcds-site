@@ -2,7 +2,8 @@ import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { FAQSchema } from '@/components/StructuredData'
 import { getPageSeo } from '@/lib/seo'
-import { TroubleshootingContent, sections } from './TroubleshootingContent'
+import { TroubleshootingContent } from './TroubleshootingContent'
+import { sections } from './data'
 import type { Metadata } from 'next'
 
 export async function generateMetadata(): Promise<Metadata> {
