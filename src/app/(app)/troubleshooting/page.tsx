@@ -1,17 +1,16 @@
+'use client'
+
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { Icon } from '@/components/Icon'
+import { IconBox } from '@/components/ui/IconBox'
 import { PageHero } from '@/components/ui/PageHero'
 import { InfoBox } from '@/components/ui/InfoBox'
-import type { Metadata } from 'next'
-
-export const metadata: Metadata = {
-  title: 'Troubleshooting – Fehlerbehebung',
-  description: 'VCDS Troubleshooting: Lösungen für Verbindungsprobleme, Registrierung, Treiber-Installation und häufige Fehlermeldungen.',
-}
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/Accordion'
 
 const sections = [
   {
+    id: 'registrierung',
     title: 'Registrierung & Aktivierung',
     icon: 'shield',
     problems: [
@@ -30,6 +29,7 @@ const sections = [
     ],
   },
   {
+    id: 'verbindung',
     title: 'Verbindungsprobleme',
     icon: 'plug',
     problems: [
@@ -48,6 +48,7 @@ const sections = [
     ],
   },
   {
+    id: 'installation',
     title: 'Installation & Treiber',
     icon: 'download',
     problems: [
@@ -66,6 +67,7 @@ const sections = [
     ],
   },
   {
+    id: 'allgemein',
     title: 'Allgemeine Fehler',
     icon: 'search',
     problems: [
@@ -96,41 +98,38 @@ export default function Troubleshooting() {
           description="Lösungen für die häufigsten Probleme mit VCDS — von der Installation über Verbindungsfehler bis zu Registrierungsfragen."
         />
 
-        <div className="max-w-3xl mx-auto px-4 sm:px-5 py-12 space-y-12">
+        <div className="max-w-3xl mx-auto px-5 py-12 space-y-12">
 
           {/* Quick Links */}
-          <nav className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            {sections.map((s) => (
-              <a key={s.title} href={`#${s.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`} className="flex flex-col items-center gap-2 bg-white border border-slate-200 rounded-xl p-4 hover:border-blue-200 hover:shadow-sm transition-all text-center">
-                <div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center">
-                  <Icon name={s.icon} size={16} className="text-blue-600" />
-                </div>
-                <span className="text-xs font-semibold text-slate-700">{s.title}</span>
-              </a>
-            ))}
+          <nav aria-label="Kategorien">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {sections.map((s) => (
+                <a key={s.id} href={`#${s.id}`} className="flex flex-col items-center gap-2 bg-white border border-slate-200 rounded-xl p-4 hover:border-blue-200 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all text-center">
+                  <IconBox icon={s.icon} size="sm" />
+                  <span className="text-xs font-semibold text-slate-700">{s.title}</span>
+                </a>
+              ))}
+            </div>
           </nav>
 
           {/* Sections */}
           {sections.map((s) => (
-            <section key={s.title} id={s.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}>
+            <section key={s.id} id={s.id} aria-labelledby={`heading-${s.id}`}>
               <div className="flex items-center gap-3 mb-5">
                 <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0">
                   <Icon name={s.icon} size={18} />
                 </div>
-                <h2 className="text-xl font-bold text-slate-900">{s.title}</h2>
+                <h2 id={`heading-${s.id}`} className="text-xl font-bold text-slate-900">{s.title}</h2>
               </div>
-              <div className="space-y-3">
-                {s.problems.map((p) => (
-                  <details key={p.q} className="group bg-white border border-slate-200 rounded-xl overflow-hidden">
-                    <summary className="flex items-center gap-3 p-4 cursor-pointer hover:bg-slate-50 transition-colors [&::-webkit-details-marker]:hidden list-none">
-                      <Icon name="cog" size={14} className="text-blue-500 shrink-0 group-open:rotate-90 transition-transform" />
-                      <span className="font-semibold text-sm text-slate-900">{p.q}</span>
-                    </summary>
-                    <div className="px-4 pb-4 pt-1 text-sm text-slate-600 leading-relaxed border-t border-slate-100">
-                      {p.a}
-                    </div>
-                  </details>
-                ))}
+              <div className="bg-white border border-slate-200 rounded-xl overflow-hidden">
+                <Accordion type="multiple">
+                  {s.problems.map((p, i) => (
+                    <AccordionItem key={i} value={`${s.id}-${i}`}>
+                      <AccordionTrigger>{p.q}</AccordionTrigger>
+                      <AccordionContent>{p.a}</AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
               </div>
             </section>
           ))}
@@ -141,25 +140,19 @@ export default function Troubleshooting() {
           </InfoBox>
 
           <div className="grid sm:grid-cols-3 gap-3">
-            <a href="/fernwartung" className="flex flex-col items-center gap-2 bg-white border border-slate-200 rounded-xl p-5 hover:border-blue-200 hover:shadow-sm transition-all text-center">
-              <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center">
-                <Icon name="wifi" size={18} className="text-blue-600" />
-              </div>
+            <a href="/fernwartung" className="flex flex-col items-center gap-2 bg-white border border-slate-200 rounded-xl p-5 hover:border-blue-200 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all text-center">
+              <IconBox icon="wifi" />
               <h3 className="font-bold text-sm text-slate-900">Fernwartung</h3>
               <p className="text-xs text-slate-500">Remote-Support via AnyDesk</p>
             </a>
-            <a href="/faq" className="flex flex-col items-center gap-2 bg-white border border-slate-200 rounded-xl p-5 hover:border-blue-200 hover:shadow-sm transition-all text-center">
-              <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center">
-                <Icon name="chat" size={18} className="text-blue-600" />
-              </div>
+            <a href="/faq" className="flex flex-col items-center gap-2 bg-white border border-slate-200 rounded-xl p-5 hover:border-blue-200 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all text-center">
+              <IconBox icon="chat" />
               <h3 className="font-bold text-sm text-slate-900">FAQ</h3>
               <p className="text-xs text-slate-500">Häufig gestellte Fragen</p>
             </a>
-            <a href="https://forum.vcds.de" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 bg-white border border-slate-200 rounded-xl p-5 hover:border-blue-200 hover:shadow-sm transition-all text-center">
-              <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center">
-                <Icon name="globe" size={18} className="text-blue-600" />
-              </div>
-              <h3 className="font-bold text-sm text-slate-900">Forum</h3>
+            <a href="https://forum.vcds.de" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 bg-white border border-slate-200 rounded-xl p-5 hover:border-blue-200 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all text-center">
+              <IconBox icon="globe" />
+              <h3 className="font-bold text-sm text-slate-900">Forum <span className="sr-only">(öffnet neuen Tab)</span></h3>
               <p className="text-xs text-slate-500">Community-Hilfe</p>
             </a>
           </div>

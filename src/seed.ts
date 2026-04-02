@@ -708,6 +708,36 @@ export async function seed(payload: Payload): Promise<void> {
     },
     { title: 'Impressum', slug: 'impressum', template: 'info' as const, status: 'published' as const },
     { title: 'Datenschutzerklärung', slug: 'datenschutz', template: 'info' as const, status: 'published' as const },
+    {
+      title: 'AHK Codieren – Anhängerkupplung freischalten',
+      slug: 'ahk-codieren',
+      template: 'default' as const,
+      status: 'published' as const,
+      seo: {
+        metaTitle: 'AHK Codieren – Anhängerkupplung freischalten mit VCDS',
+        metaDescription: 'Übersicht aller Anleitungen zur Codierung einer nachgerüsteten Anhängerkupplung (AHK) mit VCDS — sortiert nach Fahrzeugplattform.',
+      },
+    },
+    {
+      title: 'VCDS User Map',
+      slug: 'usermap',
+      template: 'default' as const,
+      status: 'published' as const,
+      seo: {
+        metaTitle: 'VCDS User Map – Nutzer & Werkstätten in Ihrer Nähe',
+        metaDescription: 'Die VCDS.de User Map vernetzt Werkstätten, Diagnosetechniker und VCDS-Nutzer. Finden Sie Hilfe in Ihrer Nähe.',
+      },
+    },
+    {
+      title: 'Troubleshooting – Fehlerbehebung',
+      slug: 'troubleshooting',
+      template: 'default' as const,
+      status: 'published' as const,
+      seo: {
+        metaTitle: 'VCDS Troubleshooting – Lösungen für häufige Probleme',
+        metaDescription: 'VCDS Troubleshooting: Lösungen für Verbindungsprobleme, Registrierung, Treiber-Installation und häufige Fehlermeldungen.',
+      },
+    },
   ]
 
   for (const page of pages) {

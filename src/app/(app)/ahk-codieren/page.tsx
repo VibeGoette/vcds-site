@@ -1,6 +1,7 @@
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { Icon } from '@/components/Icon'
+import { IconBox } from '@/components/ui/IconBox'
 import { PageHero } from '@/components/ui/PageHero'
 import { InfoBox } from '@/components/ui/InfoBox'
 import type { Metadata } from 'next'
@@ -60,12 +61,15 @@ export default function AhkCodieren() {
           description="Übersicht der Anleitungen zum Freischalten einer nachgerüsteten Anhängerkupplung mit VCDS — sortiert nach Fahrzeugplattform."
         />
 
-        <div className="max-w-4xl mx-auto px-4 sm:px-5 py-12 space-y-10">
+        <div className="max-w-3xl mx-auto px-5 py-12 space-y-10">
 
           <InfoBox variant="warning" title="Wichtiger Hinweis">
-            Diese Anleitungen dienen als <strong>Orientierung</strong>. Einzelne Bits &amp; Bytes können je nach Modell, Baujahr und Ausstattung abweichen.
+            Diese Anleitungen dienen als <strong>Orientierung</strong>. Einzelne Bits & Bytes können je nach Modell, Baujahr und Ausstattung abweichen.
             Wählen Sie immer die Anleitung Ihrer <strong>passenden Plattform</strong>, um fahrzeugspezifische Informationen zu erhalten.
-            Im Zweifel hilft unser <a href="https://forum.vcds.de/c/codierung-anpassung/21" target="_blank" rel="noopener noreferrer" className="underline font-semibold hover:text-amber-900">Forum</a>.
+            Im Zweifel hilft unser{' '}
+            <a href="https://forum.vcds.de/c/codierung-anpassung/21" target="_blank" rel="noopener noreferrer" className="underline font-semibold hover:text-amber-900">
+              Forum<span className="sr-only"> (öffnet neuen Tab)</span>
+            </a>.
           </InfoBox>
 
           {/* Platform Grid */}
@@ -78,7 +82,8 @@ export default function AhkCodieren() {
                   href={p.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group block bg-white border border-slate-200 rounded-xl p-5 hover:border-blue-300 hover:shadow-md transition-all"
+                  aria-label={`${p.name} – Wiki-Anleitung öffnen (neuer Tab)`}
+                  className="group block bg-white border border-slate-200 rounded-xl p-5 hover:border-blue-300 hover:shadow-md focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:rounded-xl transition-all"
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
@@ -87,18 +92,16 @@ export default function AhkCodieren() {
                         <Icon name="globe" size={14} className="text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity" />
                       </div>
                       <p className="text-sm text-slate-500 mb-3">{p.desc}</p>
-                      <ul className="space-y-1">
+                      <ol className="space-y-1">
                         {p.steps.map((step, i) => (
                           <li key={i} className="flex items-start gap-2 text-xs text-slate-600">
-                            <span className="inline-flex items-center justify-center w-4 h-4 rounded bg-blue-50 text-blue-600 text-[10px] font-bold shrink-0 mt-0.5">{i + 1}</span>
+                            <span className="inline-flex items-center justify-center w-5 h-5 rounded bg-blue-50 text-blue-600 text-xs font-bold shrink-0 mt-0.5">{i + 1}</span>
                             {step}
                           </li>
                         ))}
-                      </ul>
+                      </ol>
                     </div>
-                    <div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center shrink-0 group-hover:bg-blue-100 transition-colors">
-                      <Icon name="cog" size={16} className="text-blue-600" />
-                    </div>
+                    <IconBox icon="cog" size="sm" />
                   </div>
                 </a>
               ))}
@@ -118,45 +121,56 @@ export default function AhkCodieren() {
                   href="https://www.vcds.de/wp-content/uploads/2024/09/VCDS-Nachruestung-AHK.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 text-white text-sm font-bold rounded-lg hover:bg-blue-500 active:bg-blue-700 transition-colors"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 text-white text-sm font-bold rounded-lg hover:bg-blue-500 active:bg-blue-700 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-colors"
                 >
                   <Icon name="download" size={14} />
                   PDF herunterladen
+                  <span className="sr-only"> (öffnet neuen Tab)</span>
                 </a>
               </div>
             </div>
           </section>
 
-          {/* Forum + Support */}
+          {/* Cross-links */}
           <section>
             <h2 className="text-xl font-bold text-slate-900 mb-4">Hilfe bei Fragen</h2>
-            <div className="grid sm:grid-cols-2 gap-4">
+            <div className="grid sm:grid-cols-2 gap-3">
+              <a href="/troubleshooting" className="flex items-center gap-3 bg-white border border-slate-200 rounded-xl p-4 hover:border-blue-200 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all">
+                <IconBox icon="search" size="sm" />
+                <div>
+                  <h3 className="font-bold text-slate-900 text-sm">Troubleshooting</h3>
+                  <p className="text-xs text-slate-500">Codierung klappt nicht?</p>
+                </div>
+              </a>
+              <a href="/kaufberatung" className="flex items-center gap-3 bg-white border border-slate-200 rounded-xl p-4 hover:border-blue-200 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all">
+                <IconBox icon="search" size="sm" />
+                <div>
+                  <h3 className="font-bold text-slate-900 text-sm">Kaufberatung</h3>
+                  <p className="text-xs text-slate-500">Noch kein VCDS?</p>
+                </div>
+              </a>
               <a
                 href="https://forum.vcds.de/c/codierung-anpassung/21"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 bg-white border border-slate-200 rounded-xl p-4 hover:border-blue-200 hover:shadow-sm transition-all"
+                className="flex items-center gap-3 bg-white border border-slate-200 rounded-xl p-4 hover:border-blue-200 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all"
               >
-                <div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center shrink-0">
-                  <Icon name="chat" size={16} className="text-blue-600" />
-                </div>
+                <IconBox icon="chat" size="sm" />
                 <div>
-                  <h3 className="font-bold text-slate-900 text-sm">VCDS Forum</h3>
-                  <p className="text-xs text-slate-500">Codierung &amp; Anpassung</p>
+                  <h3 className="font-bold text-slate-900 text-sm">VCDS Forum <span className="sr-only">(öffnet neuen Tab)</span></h3>
+                  <p className="text-xs text-slate-500">Codierung & Anpassung</p>
                 </div>
               </a>
               <a
                 href="https://wiki-online.vcds.de"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 bg-white border border-slate-200 rounded-xl p-4 hover:border-blue-200 hover:shadow-sm transition-all"
+                className="flex items-center gap-3 bg-white border border-slate-200 rounded-xl p-4 hover:border-blue-200 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all"
               >
-                <div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center shrink-0">
-                  <Icon name="globe" size={16} className="text-blue-600" />
-                </div>
+                <IconBox icon="globe" size="sm" />
                 <div>
-                  <h3 className="font-bold text-slate-900 text-sm">VCDS Wiki</h3>
-                  <p className="text-xs text-slate-500">Alle Codierungen &amp; Plattformen</p>
+                  <h3 className="font-bold text-slate-900 text-sm">VCDS Wiki <span className="sr-only">(öffnet neuen Tab)</span></h3>
+                  <p className="text-xs text-slate-500">Alle Codierungen & Plattformen</p>
                 </div>
               </a>
             </div>

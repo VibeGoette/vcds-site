@@ -1,6 +1,7 @@
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { Icon } from '@/components/Icon'
+import { IconBox } from '@/components/ui/IconBox'
 import { PageHero } from '@/components/ui/PageHero'
 import { InfoBox } from '@/components/ui/InfoBox'
 import type { Metadata } from 'next'
@@ -28,7 +29,7 @@ export default function UserMap() {
           description="Die VCDS.de User Map ist mehr als nur eine Karte — sie vernetzt die VCDS-Community. Werkstätten, Diagnosetechniker und Hobby-Schrauber finden hier den direkten Draht zueinander."
         />
 
-        <div className="max-w-3xl mx-auto px-4 sm:px-5 py-12 space-y-12">
+        <div className="max-w-3xl mx-auto px-5 py-12 space-y-12">
 
           {/* Was ist die User Map */}
           <section>
@@ -48,9 +49,7 @@ export default function UserMap() {
             <div className="grid sm:grid-cols-2 gap-3">
               {benefits.map((b) => (
                 <div key={b.title} className="bg-white border border-slate-200 rounded-xl p-4 flex gap-3">
-                  <div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center shrink-0">
-                    <Icon name={b.icon} size={16} className="text-blue-600" />
-                  </div>
+                  <IconBox icon={b.icon} size="sm" />
                   <div>
                     <h3 className="font-bold text-slate-900 text-sm mb-1">{b.title}</h3>
                     <p className="text-xs text-slate-600 leading-relaxed">{b.desc}</p>
@@ -63,13 +62,13 @@ export default function UserMap() {
           {/* Wie eintragen */}
           <section>
             <h2 className="text-2xl font-bold text-slate-900 mb-4">So werden Sie eingetragen</h2>
-            <div className="space-y-3">
+            <ol className="space-y-3">
               {[
                 { step: 1, title: 'Forum-Konto erstellen', desc: 'Registrieren Sie sich kostenlos im VCDS.de Forum.' },
                 { step: 2, title: 'Eintrag vornehmen', desc: 'Tragen Sie Ihren Standort und Ihre Dienstleistungen in der User Map des Forums ein.' },
                 { step: 3, title: 'Sichtbar werden', desc: 'Ihr Eintrag wird auf der Karte veröffentlicht und ist für die gesamte Community sichtbar.' },
               ].map((s) => (
-                <div key={s.step} className="flex gap-4 items-start bg-white border border-slate-200 rounded-xl p-5">
+                <li key={s.step} className="flex gap-4 items-start bg-white border border-slate-200 rounded-xl p-5">
                   <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-sm shrink-0">
                     {s.step}
                   </div>
@@ -77,9 +76,9 @@ export default function UserMap() {
                     <h3 className="font-bold text-slate-900 mb-0.5">{s.title}</h3>
                     <p className="text-sm text-slate-600">{s.desc}</p>
                   </div>
-                </div>
+                </li>
               ))}
-            </div>
+            </ol>
           </section>
 
           <InfoBox variant="info" title="Hinweis">
@@ -92,13 +91,35 @@ export default function UserMap() {
               href="https://forum.vcds.de"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 px-8 py-4 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-500 active:bg-blue-700 transition-colors text-base shadow-sm shadow-blue-200"
+              className="inline-flex items-center gap-2.5 px-8 py-4 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-500 active:bg-blue-700 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-colors text-base shadow-sm shadow-blue-200"
             >
               <Icon name="chat" size={20} />
               Zum VCDS Forum
+              <span className="sr-only"> (öffnet neuen Tab)</span>
             </a>
-            <span className="text-xs text-slate-400">Kostenlose Registrierung · User Map im Forum</span>
+            <span className="text-xs text-slate-500">Kostenlose Registrierung</span>
           </div>
+
+          {/* Cross-links */}
+          <section>
+            <h2 className="text-xl font-bold text-slate-900 mb-4">Weitere Hilfsangebote</h2>
+            <div className="grid sm:grid-cols-2 gap-3">
+              <a href="/fernwartung" className="flex items-center gap-3 bg-white border border-slate-200 rounded-xl p-4 hover:border-blue-200 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all">
+                <IconBox icon="wifi" size="sm" />
+                <div>
+                  <h3 className="font-bold text-slate-900 text-sm">Fernwartung</h3>
+                  <p className="text-xs text-slate-500">Remote-Support via AnyDesk</p>
+                </div>
+              </a>
+              <a href="/troubleshooting" className="flex items-center gap-3 bg-white border border-slate-200 rounded-xl p-4 hover:border-blue-200 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all">
+                <IconBox icon="search" size="sm" />
+                <div>
+                  <h3 className="font-bold text-slate-900 text-sm">Troubleshooting</h3>
+                  <p className="text-xs text-slate-500">Lösungen für häufige Probleme</p>
+                </div>
+              </a>
+            </div>
+          </section>
 
         </div>
       </main>
