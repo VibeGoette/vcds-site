@@ -5,11 +5,14 @@ import { getPosts } from '@/lib/payload'
 import { calculateReadingTime } from '@/lib/blog-utils'
 import Link from 'next/link'
 import Image from 'next/image'
+import { getPageSeo } from '@/lib/seo'
 import type { Metadata } from 'next'
 
-export const metadata: Metadata = {
+export async function generateMetadata(): Promise<Metadata> {
+  return getPageSeo('blog', {
   title: 'Blog',
   description: 'VCDS Blog: Kaufberatung, Versionshistorie, Anleitungen und Tipps rund um VCDS, HEX-V2 und HEX-NET.',
+})
 }
 
 const cats: Record<string, { label: string; bg: string; text: string; border: string }> = {

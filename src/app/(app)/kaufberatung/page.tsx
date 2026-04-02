@@ -3,11 +3,14 @@ import { Footer } from '@/components/Footer'
 import { Icon } from '@/components/Icon'
 import { PageHero } from '@/components/ui/PageHero'
 import { InfoBox } from '@/components/ui/InfoBox'
+import { getPageSeo } from '@/lib/seo'
 import type { Metadata } from 'next'
 
-export const metadata: Metadata = {
+export async function generateMetadata(): Promise<Metadata> {
+  return getPageSeo('kaufberatung', {
   title: 'Kaufberatung – Welches VCDS ist das richtige?',
   description: 'HEX-V2 vs HEX-NET: Preise, Funktionen, FIN-Verbrauch, SFD-Status und Empfehlung. Welches VCDS Interface passt zu Ihnen?',
+})
 }
 
 export default function Kaufberatung() {

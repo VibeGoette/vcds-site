@@ -4,9 +4,12 @@ import { Icon } from '@/components/Icon'
 import { PageHero } from '@/components/ui/PageHero'
 import { IconBox } from '@/components/ui/IconBox'
 import { getDealers } from '@/lib/payload'
+import { getPageSeo } from '@/lib/seo'
 import type { Metadata } from 'next'
 
-export const metadata: Metadata = { title: 'Fachhändler', description: 'Autorisierte VCDS Fachhändler in Deutschland, Österreich und der Schweiz.' }
+export async function generateMetadata(): Promise<Metadata> {
+  return getPageSeo('fachhaendler', { title: 'Fachhändler', description: 'Autorisierte VCDS Fachhändler in Deutschland, Österreich und der Schweiz.' })
+}
 
 const fallbackDealers = [
   { name:'CCD Car Diagnostics', city:'Bochum', country:'DE', url:'https://car-diagnostics.eu' },

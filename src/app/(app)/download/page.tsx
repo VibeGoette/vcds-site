@@ -4,11 +4,14 @@ import { Footer } from '@/components/Footer'
 import { PageHero } from '@/components/ui/PageHero'
 import { getDownloads } from '@/lib/payload'
 import { DownloadTabs, type DLItem } from './DownloadTabs'
+import { getPageSeo } from '@/lib/seo'
 import type { Metadata } from 'next'
 
-export const metadata: Metadata = {
+export async function generateMetadata(): Promise<Metadata> {
+  return getPageSeo('download', {
   title: 'Download',
   description: 'Aktuelle VCDS-Software, Support-Tools und Treiber herunterladen.',
+})
 }
 
 const fallbackVcds: DLItem[] = [

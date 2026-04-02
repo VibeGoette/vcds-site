@@ -7,11 +7,14 @@ import { IconBox } from '@/components/ui/IconBox'
 import { Section } from '@/components/ui/Section'
 import { getTeamMembers, getSiteSettings } from '@/lib/payload'
 import { ContactForm } from './ContactForm'
+import { getPageSeo } from '@/lib/seo'
 import type { Metadata } from 'next'
 
-export const metadata: Metadata = {
+export async function generateMetadata(): Promise<Metadata> {
+  return getPageSeo('kontakt', {
   title: 'Kontakt',
   description: 'Kontaktieren Sie das VCDS Support-Team der Auto-Intern GmbH in Bochum.',
+})
 }
 
 const fallbackTeam = [

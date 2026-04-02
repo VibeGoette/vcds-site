@@ -4,11 +4,14 @@ import { Icon } from '@/components/Icon'
 import { IconBox } from '@/components/ui/IconBox'
 import { PageHero } from '@/components/ui/PageHero'
 import { InfoBox } from '@/components/ui/InfoBox'
+import { getPageSeo } from '@/lib/seo'
 import type { Metadata } from 'next'
 
-export const metadata: Metadata = {
+export async function generateMetadata(): Promise<Metadata> {
+  return getPageSeo('usermap', {
   title: 'VCDS User Map',
   description: 'Die VCDS.de User Map vernetzt Werkstätten, Diagnosetechniker und VCDS-Nutzer. Finden Sie Hilfe in Ihrer Nähe oder lassen Sie sich selbst eintragen.',
+})
 }
 
 const benefits = [

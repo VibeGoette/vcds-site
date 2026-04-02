@@ -2,11 +2,14 @@ import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { Icon } from '@/components/Icon'
 import { PageHero } from '@/components/ui/PageHero'
+import { getPageSeo } from '@/lib/seo'
 import type { Metadata } from 'next'
 
-export const metadata: Metadata = {
+export async function generateMetadata(): Promise<Metadata> {
+  return getPageSeo('upgrade', {
   title: 'Upgrades',
   description: 'VCDS Interface upgraden: 3 auf 10 FIN, 10 auf Unlimited, Hardware-Upgrade. Meist innerhalb von 24h bearbeitet.',
+})
 }
 
 const upgrades = [
