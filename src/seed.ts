@@ -728,7 +728,9 @@ export async function seed(payload: Payload): Promise<void> {
           href: '/',
           children: [
             { label: 'VCDS Fachhändler', href: '/fachhaendler' },
+            { label: 'VCDS User Map', href: '/usermap' },
             { label: 'Registrierung', href: '/quickstart' },
+            { label: 'AHK Codieren', href: '/ahk-codieren' },
             { label: 'Wiki', href: 'https://wiki.vcds.de/de/home', isExternal: true },
             { label: 'Forum', href: 'https://forum.vcds.de/', isExternal: true },
             { label: 'VCDS Blog', href: '/blog' },
@@ -755,8 +757,8 @@ export async function seed(payload: Payload): Promise<void> {
           href: '/faq',
           children: [
             { label: 'Fernwartung', href: '/fernwartung' },
+            { label: 'Troubleshooting', href: '/troubleshooting' },
             { label: 'Quickstart', href: '/quickstart' },
-            { label: 'VCDS User Map', href: '/usermap' },
             { label: 'FAQ', href: '/faq' },
           ],
         },

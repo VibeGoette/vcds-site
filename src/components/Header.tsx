@@ -27,13 +27,18 @@ const navMeta: Record<string, { icon: string; desc: string }> = {
   'FAQ': { icon: 'chat', desc: 'Häufig gestellte Fragen' },
   'Quickstart': { icon: 'bolt', desc: 'In 5 Minuten startklar' },
   'Fernwartung': { icon: 'wifi', desc: 'Remote-Support erhalten' },
+  'Troubleshooting': { icon: 'search', desc: 'Lösungen für häufige Probleme' },
+  'VCDS User Map': { icon: 'map', desc: 'Nutzer & Werkstätten finden' },
+  'AHK Codieren': { icon: 'cog', desc: 'Anhängerkupplung freischalten' },
 }
 
 /** Hardcoded fallback navigation in case CMS has no data yet */
 const fallbackNav = [
   { label: 'Start', href: '/', children: [
     { label: 'Fachhändler', href: '/fachhaendler' },
+    { label: 'VCDS User Map', href: '/usermap' },
     { label: 'Blog', href: '/blog' },
+    { label: 'AHK Codieren', href: '/ahk-codieren' },
     { label: 'Wiki', href: 'https://wiki.vcds.de', isExternal: true },
     { label: 'Forum', href: 'https://forum.vcds.de', isExternal: true },
   ]},
@@ -46,6 +51,7 @@ const fallbackNav = [
   { label: 'Kontakt', href: '/kontakt' },
   { label: 'Hilfe & FAQ', href: '/faq', children: [
     { label: 'FAQ', href: '/faq' },
+    { label: 'Troubleshooting', href: '/troubleshooting' },
     { label: 'Quickstart', href: '/quickstart' },
     { label: 'Fernwartung', href: '/fernwartung' },
   ]},

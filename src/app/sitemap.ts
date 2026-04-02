@@ -29,6 +29,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/fachhaendler`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE}/upgrade`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${BASE}/fernwartung`, lastModified: now, changeFrequency: 'yearly', priority: 0.4 },
+    { url: `${BASE}/ahk-codieren`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE}/usermap`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${BASE}/troubleshooting`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE}/impressum`, lastModified: now, changeFrequency: 'yearly', priority: 0.2 },
     { url: `${BASE}/datenschutz`, lastModified: now, changeFrequency: 'yearly', priority: 0.2 },
   ]
