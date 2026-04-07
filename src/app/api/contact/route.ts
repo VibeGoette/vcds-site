@@ -91,12 +91,12 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success: true })
   }
 
-  // Time-based bot detection — form submitted faster than a human can type
+  // Time-based bot signal — log suspicious fast submissions but don't block
+  // (client-side timestamp is spoofable, autofill can trigger false positives)
+  let isSuspiciouslyFast = false
   if (formLoadedAt && typeof formLoadedAt === 'number') {
     const elapsed = Date.now() - formLoadedAt
-    if (elapsed < MIN_SUBMISSION_TIME_MS) {
-      return NextResponse.json({ success: true }) // Silent reject for bots
-    }
+    isSuspiciouslyFast = elapsed < MIN_SUBMISSION_TIME_MS
   }
 
   // Cloudflare Turnstile verification (optional — only if configured)
@@ -133,7 +133,11 @@ export async function POST(request: NextRequest) {
     const payload = await getPayloadClient()
     await payload.create({
       collection: 'contact-submissions',
-      data: { name: safeName, email: safeEmail, phone: safePhone, adapterNr: safeAdapter, message: safeMessage, submittedAt: new Date().toISOString() },
+      data: {
+        name: safeName, email: safeEmail, phone: safePhone, adapterNr: safeAdapter,
+        message: isSuspiciouslyFast ? `[FAST SUBMIT] ${safeMessage}` : safeMessage,
+        submittedAt: new Date().toISOString(),
+      },
     })
   } catch (err) {
     console.error('[Contact] CMS-Speicherung fehlgeschlagen:', err)

@@ -6,10 +6,10 @@ import { ThemeProvider } from '@/components/ThemeProvider'
 import { AnimateOnScroll } from '@/components/AnimateOnScroll'
 import '../globals.css'
 
-const inter = Inter({ subsets: ['latin'], weight: ['400','600','700'], display: 'swap', variable: '--font-inter' })
-const dmSans = DM_Sans({ subsets: ['latin'], weight: ['400','600','700'], display: 'swap', variable: '--font-dm-sans' })
-const sourceSans3 = Source_Sans_3({ subsets: ['latin'], weight: ['400','600','700'], display: 'swap', variable: '--font-source-sans-3' })
-const quicksand = Quicksand({ subsets: ['latin'], weight: ['400','600','700'], display: 'swap', variable: '--font-quicksand' })
+const inter = Inter({ subsets: ['latin'], weight: ['400','500','600','700'], display: 'swap', variable: '--font-inter' })
+const dmSans = DM_Sans({ subsets: ['latin'], weight: ['400','500','600','700'], display: 'swap', variable: '--font-dm-sans' })
+const sourceSans3 = Source_Sans_3({ subsets: ['latin'], weight: ['400','500','600','700'], display: 'swap', variable: '--font-source-sans-3' })
+const quicksand = Quicksand({ subsets: ['latin'], weight: ['400','500','600','700'], display: 'swap', variable: '--font-quicksand' })
 
 export const metadata: Metadata = {
   title: { default: 'VCDS – Diagnosegerät für VW, Audi, Skoda & Seat', template: '%s | VCDS.de' },
