@@ -138,6 +138,16 @@ export async function getNavigation() {
   return payload.findGlobal({ slug: 'navigation' })
 }
 
+/** Fetch style settings global */
+export async function getStyleSettings() {
+  try {
+    const payload = await getPayloadClient()
+    return await payload.findGlobal({ slug: 'style-settings' })
+  } catch {
+    return null
+  }
+}
+
 /** Fetch theme settings global */
 export async function getThemeSettings() {
   try {

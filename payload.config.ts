@@ -22,6 +22,7 @@ import { ContactSubmissions } from '@/collections/ContactSubmissions'
 import { SiteSettings } from '@/globals/SiteSettings'
 import { Navigation } from '@/globals/Navigation'
 import { ThemeSettings } from '@/globals/ThemeSettings'
+import { StyleSettings } from '@/globals/StyleSettings'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -63,6 +64,7 @@ export default buildConfig({
     SiteSettings,
     Navigation,
     ThemeSettings,
+    StyleSettings,
   ],
 
   editor: lexicalEditor(),

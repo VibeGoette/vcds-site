@@ -36,6 +36,7 @@ export const Users: CollectionConfig = {
       required: true,
       defaultValue: 'editor',
       options: [
+        { label: 'Super-Philipp (Vollzugriff + CSS)', value: 'super-philipp' },
         { label: 'Admin (Vollzugriff)', value: 'admin' },
         { label: 'Marketing (Posts, FAQ, SEO, Keywords)', value: 'marketing' },
         { label: 'Editor (Seiten & Produkte)', value: 'editor' },

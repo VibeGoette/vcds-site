@@ -3,6 +3,7 @@ import { Inter, DM_Sans, Source_Sans_3, Quicksand } from 'next/font/google'
 import Script from 'next/script'
 import { getGlobalSeo } from '@/lib/seo'
 import { ThemeProvider } from '@/components/ThemeProvider'
+import { StyleProvider } from '@/components/StyleProvider'
 import { AnimateOnScroll } from '@/components/AnimateOnScroll'
 import '../globals.css'
 
@@ -52,6 +53,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   return (
     <div className={`${inter.variable} ${dmSans.variable} ${sourceSans3.variable} ${quicksand.variable} font-sans antialiased min-h-screen flex flex-col`}>
       <ThemeProvider>
+        <StyleProvider>
         <AnimateOnScroll />
         {/* Google / Bing Site Verification (from Admin Panel) */}
         {globalSeo.googleSiteVerification && (
@@ -82,6 +84,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
           window.__lc.license = 17285498;
           ;(function(n,t,c){function i(n){return e._h?e._h.apply(null,n):e._q.push(n)}var e={_q:[],_h:null,_v:"2.0",on:function(){i(["on",c.call(arguments)])},once:function(){i(["once",c.call(arguments)])},off:function(){i(["off",c.call(arguments)])},get:function(){if(!e._h)throw new Error("[LiveChatWidget] You can't use getters before load.");return i(["get",c.call(arguments)])},call:function(){i(["call",c.call(arguments)])}};window.LiveChatWidget=window.LiveChatWidget||e;var s=t.createElement("script");s.async=!0;s.type="text/javascript";s.src="https://cdn.livechatinc.com/tracking.js";t.head.appendChild(s)})(window,document,[].slice)
         `}</Script>
+        </StyleProvider>
       </ThemeProvider>
     </div>
   )

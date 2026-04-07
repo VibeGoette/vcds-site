@@ -2,25 +2,30 @@ import type { Access, FieldAccess } from 'payload'
 
 /**
  * Access Control for VCDS.de
- * 
+ *
  * Roles:
- *   - admin:     Full access to everything
- *   - marketing: Posts, FAQ, Testimonials, SEO fields, Keywords
- *   - editor:    Pages, Posts, Products (read + update, no delete)
+ *   - super-philipp: Full access + Custom CSS editing
+ *   - admin:         Full access to everything
+ *   - marketing:     Posts, FAQ, Testimonials, SEO fields, Keywords
+ *   - editor:        Pages, Posts, Products (read + update, no delete)
  */
+
+function hasAdminRole(role?: string): boolean {
+  return role === 'super-philipp' || role === 'admin'
+}
 
 // ── Collection-Level Access ──
 
 export const isAdmin: Access = ({ req: { user } }) => {
-  return user?.role === 'admin'
+  return hasAdminRole(user?.role)
 }
 
 export const isAdminOrMarketing: Access = ({ req: { user } }) => {
-  return user?.role === 'admin' || user?.role === 'marketing'
+  return hasAdminRole(user?.role) || user?.role === 'marketing'
 }
 
 export const isAdminOrEditor: Access = ({ req: { user } }) => {
-  return user?.role === 'admin' || user?.role === 'editor'
+  return hasAdminRole(user?.role) || user?.role === 'editor'
 }
 
 export const isLoggedIn: Access = ({ req: { user } }) => {
@@ -54,5 +59,9 @@ export const adminOnly = {
 // ── Field-Level Access ──
 
 export const adminFieldAccess: FieldAccess = ({ req: { user } }) => {
-  return user?.role === 'admin'
+  return hasAdminRole(user?.role)
+}
+
+export const superPhilippOnly: FieldAccess = ({ req: { user } }) => {
+  return user?.role === 'super-philipp'
 }

@@ -112,5 +112,16 @@ export const Pages: CollectionConfig = {
       ],
       admin: { position: 'sidebar' },
     },
+    // ── Seiten-spezifisches CSS (nur Super-Philipp) ──
+    {
+      name: 'customCss',
+      type: 'textarea',
+      label: 'Seiten-spezifisches CSS',
+      admin: {
+        description: 'CSS das nur auf dieser Seite geladen wird. Nur fuer erfahrene Nutzer.',
+        rows: 8,
+        condition: (_data, _siblingData, { user }) => user?.role === 'super-philipp',
+      },
+    },
   ],
 }
