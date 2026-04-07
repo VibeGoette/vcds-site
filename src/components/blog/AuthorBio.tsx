@@ -9,7 +9,7 @@ export function AuthorBio({ name, role }: AuthorBioProps) {
 
   return (
     <div className="flex items-center gap-4 p-5 rounded-xl bg-slate-50 border border-slate-200 my-10">
-      <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-sm font-bold text-blue-700 shrink-0">
+      <div className="w-12 h-12 rounded-full bg-primary-100 flex items-center justify-center text-sm font-bold text-primary-700 shrink-0">
         {initials}
       </div>
       <div>

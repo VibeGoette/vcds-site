@@ -14,8 +14,8 @@ const iconBoxVariants = cva('flex items-center justify-center shrink-0', {
       circle: 'rounded-full',
     },
     color: {
-      blue: 'bg-blue-50',
-      red: 'bg-red-50',
+      blue: 'bg-primary-50',
+      red: 'bg-accent-50',
       amber: 'bg-amber-50',
       green: 'bg-green-50',
       slate: 'bg-slate-100',
@@ -29,7 +29,7 @@ const iconBoxVariants = cva('flex items-center justify-center shrink-0', {
 })
 
 const iconSizeMap = { sm: 16, default: 20, lg: 24 } as const
-const iconColorMap = { blue: 'text-blue-600', red: 'text-red-600', amber: 'text-amber-600', green: 'text-green-600', slate: 'text-slate-600' } as const
+const iconColorMap = { blue: 'text-primary-600', red: 'text-accent-600', amber: 'text-amber-600', green: 'text-green-600', slate: 'text-slate-600' } as const
 
 interface IconBoxProps extends VariantProps<typeof iconBoxVariants> {
   icon: string

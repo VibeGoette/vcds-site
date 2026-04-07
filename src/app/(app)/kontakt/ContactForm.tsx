@@ -72,26 +72,26 @@ export function ContactForm() {
       <div>
         <label htmlFor="contact-name" className="block text-sm font-medium text-slate-700 mb-1.5">Name <span aria-hidden="true">*</span></label>
         <input id="contact-name" type="text" name="name" required aria-required="true" minLength={2}
-          className="w-full px-4 py-3 border min-h-[48px] border-slate-200 rounded-xl text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all"
+          className="w-full px-4 py-3 border min-h-[48px] border-slate-200 rounded-xl text-sm outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all"
           placeholder="Ihr Name" />
       </div>
       <div>
         <label htmlFor="contact-email" className="block text-sm font-medium text-slate-700 mb-1.5">E-Mail <span aria-hidden="true">*</span></label>
         <input id="contact-email" type="email" name="email" required aria-required="true"
-          className="w-full px-4 py-3 border min-h-[48px] border-slate-200 rounded-xl text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all"
+          className="w-full px-4 py-3 border min-h-[48px] border-slate-200 rounded-xl text-sm outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all"
           placeholder="ihre@email.de" />
       </div>
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
           <label htmlFor="contact-adapter" className="block text-sm font-medium text-slate-700 mb-1.5">Adapter-Nr</label>
           <input id="contact-adapter" type="text" name="adapterNr"
-            className="w-full px-4 py-3 border min-h-[48px] border-slate-200 rounded-xl text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all"
+            className="w-full px-4 py-3 border min-h-[48px] border-slate-200 rounded-xl text-sm outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all"
             placeholder="z.B. HEX-V2-12345" />
         </div>
         <div>
           <label htmlFor="contact-phone" className="block text-sm font-medium text-slate-700 mb-1.5">Telefon</label>
           <input id="contact-phone" type="tel" name="phone"
-            className="w-full px-4 py-3 border min-h-[48px] border-slate-200 rounded-xl text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all"
+            className="w-full px-4 py-3 border min-h-[48px] border-slate-200 rounded-xl text-sm outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all"
             placeholder="+49 ..." />
         </div>
       </div>
@@ -99,7 +99,7 @@ export function ContactForm() {
         <label htmlFor="contact-message" className="block text-sm font-medium text-slate-700 mb-1.5">Nachricht <span aria-hidden="true">*</span></label>
         <textarea id="contact-message" name="message" required aria-required="true" minLength={10} rows={4}
           aria-describedby={status === 'error' ? 'contact-error' : undefined}
-          className="w-full px-4 py-3 border min-h-[48px] border-slate-200 rounded-xl text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all resize-y"
+          className="w-full px-4 py-3 border min-h-[48px] border-slate-200 rounded-xl text-sm outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all resize-y"
           placeholder="Ihre Nachricht..." />
       </div>
 

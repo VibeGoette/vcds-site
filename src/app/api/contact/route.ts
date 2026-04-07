@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
+import { getPayloadClient } from '@/lib/payload'
 
 const rateLimit = new Map<string, { count: number; resetAt: number }>()
 const RATE_LIMIT_MAX = 3
@@ -89,6 +90,17 @@ export async function POST(request: NextRequest) {
   // Check if Resend is configured
   const apiKey = process.env.RESEND_API_KEY
   const toEmail = process.env.CONTACT_EMAIL_TO ?? 'support@vcds.de'
+
+  // Save to CMS
+  try {
+    const payload = await getPayloadClient()
+    await payload.create({
+      collection: 'contact-submissions',
+      data: { name: safeName, email: safeEmail, phone: safePhone, adapterNr: safeAdapter, message: safeMessage, submittedAt: new Date().toISOString() },
+    })
+  } catch (err) {
+    console.error('[Contact] CMS-Speicherung fehlgeschlagen:', err)
+  }
 
   if (!apiKey) {
     console.warn('[Contact] RESEND_API_KEY nicht konfiguriert. Nachricht geloggt:')

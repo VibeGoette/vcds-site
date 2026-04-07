@@ -49,7 +49,7 @@ export function HeaderClient({ navItems }: { navItems: NavItem[] }) {
     <header className={`sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b transition-all duration-200 ${scrolled ? 'h-14 shadow-sm border-slate-100' : 'h-16 border-slate-200'}`}>
       <div className="max-w-6xl mx-auto px-4 sm:px-5 h-full flex items-center justify-between">
         <Link href="/" className="flex items-baseline gap-1 shrink-0" aria-label="VCDS.de Startseite">
-          <span className="text-lg font-bold text-blue-600">VCDS</span>
+          <span className="text-lg font-bold text-primary-600">VCDS</span>
           <span className="text-lg font-bold text-slate-300">.de</span>
         </Link>
 
@@ -60,14 +60,14 @@ export function HeaderClient({ navItems }: { navItems: NavItem[] }) {
               onMouseEnter={() => item.children && handleMouseEnter(item.label)}
               onMouseLeave={handleMouseLeave}>
               {item.children ? (
-                <button className={`px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-1 ${isActive(item.href) ? 'text-blue-600' : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'}`}
+                <button className={`px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-1 ${isActive(item.href) ? 'text-primary-600' : 'text-slate-700 hover:text-primary-600 hover:bg-primary-50'}`}
                   aria-expanded={activeDrop === item.label} aria-haspopup="true"
                   onClick={() => setActiveDrop(activeDrop === item.label ? null : item.label)}>
                   {item.label}
                   <Icon name="chevron" size={12} className={`text-slate-400 transition-transform duration-200 ${activeDrop === item.label ? 'rotate-180' : ''}`} />
                 </button>
               ) : (
-                <Link href={item.href} className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${isActive(item.href) ? 'text-blue-600' : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'}`}>
+                <Link href={item.href} className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${isActive(item.href) ? 'text-primary-600' : 'text-slate-700 hover:text-primary-600 hover:bg-primary-50'}`}>
                   {item.label}
                 </Link>
               )}
@@ -94,15 +94,15 @@ export function HeaderClient({ navItems }: { navItems: NavItem[] }) {
                           role="menuitem"
                           className={`group flex items-center gap-2.5 px-3 py-2 rounded-md transition-colors ${
                             active
-                              ? 'bg-slate-50 text-blue-600'
+                              ? 'bg-slate-50 text-primary-600'
                               : 'text-slate-700 hover:bg-slate-50'
                           }`}
                           {...(c.isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                         >
-                          <Icon name={c.icon ?? 'arrow'} size={14} className={active ? 'text-blue-500' : 'text-slate-400 group-hover:text-slate-600'} />
+                          <Icon name={c.icon ?? 'arrow'} size={14} className={active ? 'text-primary-500' : 'text-slate-400 group-hover:text-slate-600'} />
                           <div className="flex-1 min-w-0">
                             <span className={`text-[13px] font-medium ${
-                              active ? 'text-blue-600' : 'text-slate-700 group-hover:text-slate-900'
+                              active ? 'text-primary-600' : 'text-slate-700 group-hover:text-slate-900'
                             }`}>
                               {c.label}
                             </span>
@@ -124,7 +124,7 @@ export function HeaderClient({ navItems }: { navItems: NavItem[] }) {
             </div>
           ))}
           <a href="https://auto-intern.de/shop/" target="_blank" rel="noopener noreferrer"
-            className="ml-3 px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded-md hover:bg-red-500 active:bg-red-700 transition-colors">
+            className="ml-3 px-4 py-2 bg-accent-600 text-white text-sm font-semibold rounded-md hover:bg-accent-500 active:bg-accent-700 transition-colors">
             Zum Shop
           </a>
         </nav>
@@ -149,13 +149,13 @@ export function HeaderClient({ navItems }: { navItems: NavItem[] }) {
                   {item.children ? (
                     <>
                       <button
-                        className="flex items-center justify-between w-full py-3.5 text-[15px] font-semibold text-slate-800 hover:text-blue-600 transition-colors"
+                        className="flex items-center justify-between w-full py-3.5 text-[15px] font-semibold text-slate-800 hover:text-primary-600 transition-colors"
                         onClick={() => setMobileExpanded(mobileExpanded === item.label ? null : item.label)}
                         aria-expanded={mobileExpanded === item.label}
                       >
                         <span className="flex items-center gap-2">
                           {item.label}
-                          {isActive(item.href) && <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />}
+                          {isActive(item.href) && <span className="w-1.5 h-1.5 rounded-full bg-primary-500" />}
                         </span>
                         <Icon name="chevron" size={14} className={`text-slate-400 transition-transform duration-200 ${mobileExpanded === item.label ? 'rotate-180' : ''}`} />
                       </button>
@@ -165,12 +165,12 @@ export function HeaderClient({ navItems }: { navItems: NavItem[] }) {
                           return (
                             <Link key={c.href} href={c.href}
                               className={`flex items-center gap-3 pl-2 pr-3 py-3 rounded-lg transition-colors min-h-[48px] ${
-                                active ? 'bg-blue-50 text-blue-600' : 'text-slate-600 hover:bg-slate-50 hover:text-blue-600'
+                                active ? 'bg-primary-50 text-primary-600' : 'text-slate-600 hover:bg-slate-50 hover:text-primary-600'
                               }`}
                               onClick={() => setMobileOpen(false)}
                               {...(c.isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
                               <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
-                                active ? 'bg-blue-100 text-blue-600' : 'bg-slate-100 text-slate-500'
+                                active ? 'bg-primary-100 text-primary-600' : 'bg-slate-100 text-slate-500'
                               }`}>
                                 <Icon name={c.icon ?? 'arrow'} size={14} />
                               </div>
@@ -190,11 +190,11 @@ export function HeaderClient({ navItems }: { navItems: NavItem[] }) {
                     </>
                   ) : (
                     <Link href={item.href}
-                      className="flex items-center justify-between py-3.5 text-[15px] font-semibold text-slate-800 hover:text-blue-600 active:text-blue-700 transition-colors"
+                      className="flex items-center justify-between py-3.5 text-[15px] font-semibold text-slate-800 hover:text-primary-600 active:text-primary-700 transition-colors"
                       onClick={() => setMobileOpen(false)}>
                       <span className="flex items-center gap-2">
                         {item.label}
-                        {isActive(item.href) && <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />}
+                        {isActive(item.href) && <span className="w-1.5 h-1.5 rounded-full bg-primary-500" />}
                       </span>
                     </Link>
                   )}
@@ -202,7 +202,7 @@ export function HeaderClient({ navItems }: { navItems: NavItem[] }) {
               ))}
               <div className="pt-3 pb-2">
                 <a href="https://auto-intern.de/shop/" target="_blank" rel="noopener noreferrer"
-                  className="flex items-center justify-center py-3.5 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-500 active:bg-red-700 transition-colors min-h-[48px] text-sm">
+                  className="flex items-center justify-center py-3.5 bg-accent-600 text-white font-semibold rounded-lg hover:bg-accent-500 active:bg-accent-700 transition-colors min-h-[48px] text-sm">
                   Zum Shop
                   <Icon name="arrow" size={14} className="ml-2" />
                 </a>

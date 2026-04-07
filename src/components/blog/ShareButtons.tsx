@@ -30,14 +30,14 @@ export function ShareButtons({ title, slug }: ShareButtonsProps) {
         <a
           href={`mailto:?subject=${mailSubject}&body=${mailBody}`}
           aria-label="Artikel per E-Mail teilen"
-          className="px-4 py-2 text-xs font-semibold bg-slate-100 text-slate-600 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors min-h-[44px] border border-slate-200/50 inline-flex items-center"
+          className="px-4 py-2 text-xs font-semibold bg-slate-100 text-slate-600 rounded-lg hover:bg-primary-50 hover:text-primary-600 transition-colors min-h-[44px] border border-slate-200/50 inline-flex items-center"
         >
           E-Mail
         </a>
         <button
           onClick={handleCopy}
           aria-label={copied ? 'Link wurde kopiert' : 'Artikel-Link in Zwischenablage kopieren'}
-          className="px-4 py-2 text-xs font-semibold bg-slate-100 text-slate-600 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors min-h-[44px] border border-slate-200/50"
+          className="px-4 py-2 text-xs font-semibold bg-slate-100 text-slate-600 rounded-lg hover:bg-primary-50 hover:text-primary-600 transition-colors min-h-[44px] border border-slate-200/50"
         >
           {copied ? 'Kopiert!' : 'Link kopieren'}
         </button>

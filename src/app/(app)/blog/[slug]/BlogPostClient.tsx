@@ -136,7 +136,7 @@ const P: Record<string,Post> = {
     related:['qual-der-wahl-vcds','vorsicht-vor-gefaelschten-vcds-interfaces'],
   },
   'qual-der-wahl-vcds': {
-    slug:'qual-der-wahl-vcds', title:'HEX-V2 vs. HEX-NET', subtitle:'Der grosse Vergleich — welcher Adapter passt zu Ihnen?', cat:'beratung', catLabel:'Beratung', date:'22. Mai 2025', reading:'5 Min', gradient:'from-blue-700 via-blue-600 to-cyan-500', gradientCSS:'#1d4ed8,#06b6d4', icon:'bolt', visual:<VisualComparison/>,
+    slug:'qual-der-wahl-vcds', title:'HEX-V2 vs. HEX-NET', subtitle:'Der grosse Vergleich — welcher Adapter passt zu Ihnen?', cat:'beratung', catLabel:'Beratung', date:'22. Mai 2025', reading:'5 Min', gradient:'from-primary-700 via-primary-600 to-cyan-500', gradientCSS:'#1d4ed8,#06b6d4', icon:'bolt', visual:<VisualComparison/>,
     sections:[
       {text:'Die Wahl zwischen HEX-V2 und HEX-NET ist die haeufigste Frage an unser Support-Team. Die Antwort: Beide bieten den identischen Funktionsumfang — der Unterschied liegt ausschliesslich in der Hardware.'},
       {text:'Gleiche Software. Gleicher Support. Nur die Verbindung ist anders.', type:'pullquote'},
@@ -200,7 +200,7 @@ const P: Record<string,Post> = {
     related:['warum-kein-vcds-crack','gute-wahl-vcds'],
   },
   'zugriffsberechtigungscodes-was-man-wissen-sollte': {
-    slug:'zugriffsberechtigungscodes-was-man-wissen-sollte', title:'Zugriffsberechtigungscodes', subtitle:'PDF kaufen? Nicht mit VCDS.', cat:'beratung', catLabel:'Beratung', date:'21. Oktober 2024', reading:'3 Min', gradient:'from-indigo-700 via-indigo-600 to-blue-500', gradientCSS:'#4338ca,#3b82f6', icon:'cog', visual:null,
+    slug:'zugriffsberechtigungscodes-was-man-wissen-sollte', title:'Zugriffsberechtigungscodes', subtitle:'PDF kaufen? Nicht mit VCDS.', cat:'beratung', catLabel:'Beratung', date:'21. Oktober 2024', reading:'3 Min', gradient:'from-indigo-700 via-indigo-600 to-primary-500', gradientCSS:'#4338ca,#3b82f6', icon:'cog', visual:null,
     sections:[
       {text:'Zugriffsberechtigungscodes werden von manchen Anbietern als separate PDF-Dokumente verkauft. Bei VCDS ist das unnoetig — die Software zeigt Codes automatisch an, genau dann wenn sie benoetigt werden.'},
       {text:'Just-in-Time. Kein Nachschlagen. Keine PDF. Kein Zusatzkauf.', type:'pullquote'},
@@ -213,7 +213,7 @@ const P: Record<string,Post> = {
 /* ═══ SECTION RENDERER — Editorial typography ═══ */
 function Section({ s }: { s: Sec }) {
   if (s.type === 'pullquote') return (
-    <blockquote className="pull-quote relative my-12 ml-6 sm:ml-10 pl-6 sm:pl-8 border-l-[3px] border-blue-500 py-3">
+    <blockquote className="pull-quote relative my-12 ml-6 sm:ml-10 pl-6 sm:pl-8 border-l-[3px] border-primary-500 py-3">
       <p className="text-xl sm:text-2xl font-extrabold text-slate-800 leading-snug tracking-tight">{s.text}</p>
     </blockquote>
   )
@@ -322,7 +322,7 @@ export function BlogPostClient({ slug }: { slug: string }) {
               <h3 className="text-xl font-extrabold mb-2 tracking-tight">Interesse geweckt?</h3>
               <p className="text-sm text-slate-400 mb-6 max-w-md mx-auto">Alle VCDS Diagnoseadapter erhaeltlich im Auto-Intern Shop — mit kostenlosem Support aus Bochum.</p>
               <a href="https://auto-intern.de/shop/" target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-7 py-3.5 bg-red-600 text-white font-bold rounded-md hover:bg-red-500 active:bg-red-700 transition-colors text-sm">
+                className="inline-flex items-center gap-2 px-7 py-3.5 bg-accent-600 text-white font-bold rounded-md hover:bg-accent-500 active:bg-accent-700 transition-colors text-sm">
                 Im Shop bestellen <Icon name="arrow" size={14} />
               </a>
             </div>
@@ -333,7 +333,7 @@ export function BlogPostClient({ slug }: { slug: string }) {
             <span className="text-sm font-bold text-slate-500 tracking-wide uppercase text-[11px]">Teilen</span>
             <div className="flex gap-2">
               {['Forum','E-Mail','Link kopieren'].map(s => (
-                <button key={s} className="px-4 py-2 text-xs font-semibold bg-slate-100 text-slate-600 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors min-h-[40px] border border-slate-200/50">{s}</button>
+                <button key={s} className="px-4 py-2 text-xs font-semibold bg-slate-100 text-slate-600 rounded-lg hover:bg-primary-50 hover:text-primary-600 transition-colors min-h-[40px] border border-slate-200/50">{s}</button>
               ))}
             </div>
           </div>
@@ -351,9 +351,9 @@ export function BlogPostClient({ slug }: { slug: string }) {
                       <Icon name={rp.icon} size={28} className="text-white/70 relative z-10 group-hover:scale-110 transition-transform duration-500" />
                     </div>
                     <div className="p-4 flex-1 flex flex-col">
-                      <h3 className="font-extrabold text-slate-900 text-sm mb-1 group-hover:text-blue-600 transition-colors tracking-tight">{rp.title}</h3>
+                      <h3 className="font-extrabold text-slate-900 text-sm mb-1 group-hover:text-primary-600 transition-colors tracking-tight">{rp.title}</h3>
                       <p className="text-xs text-slate-500 flex-1 line-clamp-2">{rp.subtitle}</p>
-                      <span className="mt-3 text-xs font-bold text-blue-600 flex items-center gap-1.5">
+                      <span className="mt-3 text-xs font-bold text-primary-600 flex items-center gap-1.5">
                         Lesen <Icon name="arrow" size={10} className="group-hover:translate-x-1 transition-transform duration-300" />
                       </span>
                     </div>

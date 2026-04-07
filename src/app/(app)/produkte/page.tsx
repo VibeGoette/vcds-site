@@ -133,7 +133,7 @@ export default async function Produkte() {
                   <p className="text-sm text-slate-500">{c.d}</p>
                 </div>
                 <div className="shrink-0 flex items-center gap-3">
-                  {c.p && <span className="font-bold text-blue-600">{c.p}</span>}
+                  {c.p && <span className="font-bold text-primary-600">{c.p}</span>}
                   <Button variant="primary" size="sm" href={c.url} external>Zum Shop</Button>
                 </div>
               </Card>

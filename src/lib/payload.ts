@@ -17,12 +17,13 @@ export async function getPages() {
 }
 
 /** Fetch a single page by slug */
-export async function getPageBySlug(slug: string) {
+export async function getPageBySlug(slug: string, draft = false) {
   const payload = await getPayloadClient()
   const { docs } = await payload.find({
     collection: 'pages',
     where: { slug: { equals: slug } },
     limit: 1,
+    draft,
   })
   return docs[0] || null
 }
@@ -40,13 +41,14 @@ export async function getPosts() {
 }
 
 /** Fetch a single post by slug (depth:2 for populated relationships) */
-export async function getPostBySlug(slug: string) {
+export async function getPostBySlug(slug: string, draft = false) {
   const payload = await getPayloadClient()
   const { docs } = await payload.find({
     collection: 'posts',
     where: { slug: { equals: slug } },
     limit: 1,
     depth: 2,
+    draft,
   })
   return docs[0] || null
 }
@@ -81,7 +83,7 @@ export async function getFAQs() {
   const payload = await getPayloadClient()
   const { docs } = await payload.find({
     collection: 'faqs',
-    where: { isPublished: { equals: true } },
+    where: { status: { equals: 'published' } },
     sort: 'sortOrder',
     limit: 200,
   })
@@ -134,4 +136,15 @@ export async function getSiteSettings() {
 export async function getNavigation() {
   const payload = await getPayloadClient()
   return payload.findGlobal({ slug: 'navigation' })
+}
+
+/** Fetch theme settings global */
+export async function getThemeSettings() {
+  try {
+    const payload = await getPayloadClient()
+    return await payload.findGlobal({ slug: 'theme-settings' })
+  } catch {
+    // Return null if theme-settings global doesn't exist yet (first run)
+    return null
+  }
 }

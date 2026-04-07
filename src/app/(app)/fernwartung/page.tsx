@@ -70,9 +70,9 @@ export default function Fernwartung() {
               {/* Steps */}
               <div className="space-y-3">
                 {anydeskSteps.map((s, i) => (
-                  <div key={i} className="group flex gap-4 items-start bg-white border border-slate-200 rounded-xl p-5 hover:border-blue-200 hover:shadow-sm transition-all">
+                  <div key={i} className="group flex gap-4 items-start bg-white border border-slate-200 rounded-xl p-5 hover:border-primary-200 hover:shadow-sm transition-all">
                     <div className="relative">
-                      <div className="w-11 h-11 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-sm shrink-0">
+                      <div className="w-11 h-11 rounded-xl bg-primary-600 text-white flex items-center justify-center font-bold text-sm shrink-0">
                         {i + 1}
                       </div>
                       {i < anydeskSteps.length - 1 && (
@@ -82,7 +82,7 @@ export default function Fernwartung() {
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
                         <h3 className="font-bold text-slate-900">{s.title}</h3>
-                        <Icon name={s.icon} size={14} className="text-blue-500" />
+                        <Icon name={s.icon} size={14} className="text-primary-500" />
                       </div>
                       <p className="text-sm text-slate-600 leading-relaxed">{s.desc}</p>
                       <p className="text-xs text-slate-400 mt-2 font-medium">{s.detail}</p>
@@ -97,7 +97,7 @@ export default function Fernwartung() {
                   href="https://www.vcds.de/wp-content/uploads/2024/08/AnyDesk_VCDSde_Client.zip"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2.5 px-8 py-4 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-500 active:bg-blue-700 transition-colors text-base shadow-sm shadow-blue-200"
+                  className="inline-flex items-center gap-2.5 px-8 py-4 bg-primary-600 text-white font-bold rounded-lg hover:bg-primary-500 active:bg-primary-700 transition-colors text-base shadow-sm shadow-primary-200"
                 >
                   <Icon name="download" size={20} />
                   AnyDesk herunterladen
@@ -121,8 +121,8 @@ export default function Fernwartung() {
               {/* Phone Support */}
               <Card variant="muted">
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="w-9 h-9 rounded-lg bg-blue-100 flex items-center justify-center">
-                    <Icon name="phone" size={16} className="text-blue-600" />
+                  <div className="w-9 h-9 rounded-lg bg-primary-100 flex items-center justify-center">
+                    <Icon name="phone" size={16} className="text-primary-600" />
                   </div>
                   <div>
                     <h3 className="font-bold text-slate-900 text-sm">Telefon-Support</h3>
@@ -131,7 +131,7 @@ export default function Fernwartung() {
                 </div>
                 <a
                   href="tel:+4923458545800"
-                  className="flex items-center justify-center gap-2 w-full py-3 bg-white border border-slate-200 rounded-lg text-sm font-semibold text-blue-600 hover:bg-blue-50 hover:border-blue-200 transition-colors"
+                  className="flex items-center justify-center gap-2 w-full py-3 bg-white border border-slate-200 rounded-lg text-sm font-semibold text-primary-600 hover:bg-primary-50 hover:border-primary-200 transition-colors"
                 >
                   <Icon name="phone" size={14} />
                   +49 (0) 234 58 545 800

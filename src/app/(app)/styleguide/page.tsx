@@ -35,10 +35,10 @@ export default function StyleGuide() {
           <h2 className="text-2xl font-bold text-slate-900 mb-6">Farben</h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3">
             {[
-              { name: 'Blue 600', class: 'bg-blue-600', hex: '#2563eb' },
-              { name: 'Blue 400', class: 'bg-blue-400', hex: '#60a5fa' },
-              { name: 'Blue 50', class: 'bg-blue-50 border', hex: '#eff6ff' },
-              { name: 'Red 600', class: 'bg-red-600', hex: '#dc2626' },
+              { name: 'Primary 600', class: 'bg-primary-600', hex: 'var(--color-primary-600)' },
+              { name: 'Primary 400', class: 'bg-primary-400', hex: 'var(--color-primary-400)' },
+              { name: 'Primary 50', class: 'bg-primary-50 border', hex: 'var(--color-primary-50)' },
+              { name: 'Accent 600', class: 'bg-accent-600', hex: 'var(--color-accent-600)' },
               { name: 'Slate 900', class: 'bg-slate-900', hex: '#0f172a' },
               { name: 'Slate 700', class: 'bg-slate-700', hex: '#334155' },
               { name: 'Slate 500', class: 'bg-slate-500', hex: '#64748b' },
@@ -182,7 +182,7 @@ export default function StyleGuide() {
           <h2 className="text-2xl font-bold text-slate-900 mb-6">Icons ({iconNames.length})</h2>
           <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-3">
             {iconNames.map(name => (
-              <div key={name} className="bg-white border border-slate-200 rounded-xl p-3 text-center hover:border-blue-200 transition-colors">
+              <div key={name} className="bg-white border border-slate-200 rounded-xl p-3 text-center hover:border-primary-200 transition-colors">
                 <Icon name={name} size={20} className="text-slate-600 mx-auto mb-2" />
                 <p className="text-[10px] text-slate-400 font-mono">{name}</p>
               </div>

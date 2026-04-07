@@ -43,7 +43,7 @@ export function ProductGridBlockComponent({ heading, products, columns = '3' }: 
             <Link
               key={product.id ?? product.slug}
               href={product.slug ? `/produkte#${product.slug}` : '/produkte'}
-              className="group flex flex-col rounded-xl border border-slate-200 overflow-hidden hover:shadow-md hover:border-blue-200 transition-all"
+              className="group flex flex-col rounded-xl border border-slate-200 overflow-hidden hover:shadow-md hover:border-primary-200 transition-all"
             >
               {cardUrl ? (
                 <div className="relative h-36 bg-slate-50">
@@ -61,9 +61,9 @@ export function ProductGridBlockComponent({ heading, products, columns = '3' }: 
                 </div>
               )}
               <div className="p-4">
-                <h4 className="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition-colors">{name}</h4>
+                <h4 className="font-bold text-slate-900 text-sm group-hover:text-primary-600 transition-colors">{name}</h4>
                 {product.shortDescription && <p className="text-xs text-slate-500 mt-1 line-clamp-2">{product.shortDescription}</p>}
-                {product.price && <p className="text-sm font-bold text-blue-600 mt-2">{product.price}</p>}
+                {product.price && <p className="text-sm font-bold text-primary-600 mt-2">{product.price}</p>}
               </div>
             </Link>
           )

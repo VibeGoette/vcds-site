@@ -16,7 +16,7 @@ export function StatsBlockComponent({ items }: StatsBlockProps) {
       <div className={`grid gap-6 sm:grid-cols-${Math.min(items.length, 3)}`}>
         {items.map((item) => (
           <div key={item.label} className="text-center p-4 rounded-xl border border-white/10">
-            <p className="text-3xl md:text-4xl font-extrabold text-blue-400 mb-1">
+            <p className="text-3xl md:text-4xl font-extrabold text-primary-400 mb-1">
               {item.value}{item.suffix}
             </p>
             <p className="text-sm text-slate-400">{item.label}</p>

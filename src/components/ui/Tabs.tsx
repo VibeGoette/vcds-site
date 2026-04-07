@@ -30,7 +30,7 @@ const TabsTrigger = forwardRef<
     className={cn(
       'px-4 py-2.5 text-sm font-semibold text-slate-500 border-b-2 border-transparent transition-colors -mb-px min-h-[44px]',
       'hover:text-slate-700',
-      'data-[state=active]:text-blue-600 data-[state=active]:border-blue-600',
+      'data-[state=active]:text-primary-600 data-[state=active]:border-primary-600',
       className
     )}
     {...props}

@@ -3,6 +3,7 @@ import { slugField } from '@/fields/slug'
 import { seoFields } from '@/fields/seo'
 import { publicReadAdminWrite } from '@/access'
 import { contentBlocks } from '@/blocks'
+import { revalidateCollection } from '@/hooks/revalidate'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -12,10 +13,13 @@ export const Pages: CollectionConfig = {
     defaultColumns: ['title', 'slug', 'status', 'updatedAt'],
     group: 'Inhalt',
     livePreview: {
-      url: ({ data }) => `${process.env.NEXT_PUBLIC_SITE_URL}/${data?.slug === 'startseite' ? '' : data?.slug}`,
+      url: ({ data }) => `/api/draft?secret=${process.env.PAYLOAD_SECRET}&slug=${data?.slug}&collection=pages`,
     },
   },
   access: publicReadAdminWrite,
+  hooks: {
+    afterChange: [revalidateCollection],
+  },
   versions: {
     drafts: true,
   },

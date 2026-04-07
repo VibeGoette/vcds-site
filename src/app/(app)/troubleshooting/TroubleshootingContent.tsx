@@ -21,7 +21,7 @@ export function TroubleshootingContent() {
         <nav aria-label="Kategorien">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {sections.map((s) => (
-              <a key={s.id} href={`#${s.id}`} className="flex flex-col items-center gap-2 bg-white border border-slate-200 rounded-xl p-4 hover:border-blue-200 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all text-center">
+              <a key={s.id} href={`#${s.id}`} className="flex flex-col items-center gap-2 bg-white border border-slate-200 rounded-xl p-4 hover:border-primary-200 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 transition-all text-center">
                 <IconBox icon={s.icon} size="sm" />
                 <span className="text-xs font-semibold text-slate-700">{s.title}</span>
               </a>
@@ -32,7 +32,7 @@ export function TroubleshootingContent() {
         {sections.map((s) => (
           <section key={s.id} id={s.id} aria-labelledby={`heading-${s.id}`}>
             <div className="flex items-center gap-3 mb-5">
-              <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-primary-600 text-white flex items-center justify-center shrink-0">
                 <Icon name={s.icon} size={18} />
               </div>
               <h2 id={`heading-${s.id}`} className="text-xl font-bold text-slate-900">{s.title}</h2>
@@ -55,17 +55,17 @@ export function TroubleshootingContent() {
         </InfoBox>
 
         <div className="grid sm:grid-cols-3 gap-3">
-          <a href="/fernwartung" className="flex flex-col items-center gap-2 bg-white border border-slate-200 rounded-xl p-5 hover:border-blue-200 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all text-center">
+          <a href="/fernwartung" className="flex flex-col items-center gap-2 bg-white border border-slate-200 rounded-xl p-5 hover:border-primary-200 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 transition-all text-center">
             <IconBox icon="wifi" />
             <h3 className="font-bold text-sm text-slate-900">Fernwartung</h3>
             <p className="text-xs text-slate-500">Remote-Support via AnyDesk</p>
           </a>
-          <a href="/faq" className="flex flex-col items-center gap-2 bg-white border border-slate-200 rounded-xl p-5 hover:border-blue-200 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all text-center">
+          <a href="/faq" className="flex flex-col items-center gap-2 bg-white border border-slate-200 rounded-xl p-5 hover:border-primary-200 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 transition-all text-center">
             <IconBox icon="chat" />
             <h3 className="font-bold text-sm text-slate-900">FAQ</h3>
             <p className="text-xs text-slate-500">Häufig gestellte Fragen</p>
           </a>
-          <a href="https://forum.vcds.de" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 bg-white border border-slate-200 rounded-xl p-5 hover:border-blue-200 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all text-center">
+          <a href="https://forum.vcds.de" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 bg-white border border-slate-200 rounded-xl p-5 hover:border-primary-200 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 transition-all text-center">
             <IconBox icon="globe" />
             <h3 className="font-bold text-sm text-slate-900">Forum <span className="sr-only">(öffnet neuen Tab)</span></h3>
             <p className="text-xs text-slate-500">Community-Hilfe</p>

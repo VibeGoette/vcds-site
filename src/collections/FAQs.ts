@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { publicReadMarketingWrite } from '@/access'
+import { revalidateCollection } from '@/hooks/revalidate'
 
 export const FAQs: CollectionConfig = {
   slug: 'faqs',
@@ -11,6 +12,9 @@ export const FAQs: CollectionConfig = {
     listSearchableFields: ['question', 'category'],
   },
   access: publicReadMarketingWrite,
+  hooks: {
+    afterChange: [revalidateCollection],
+  },
   fields: [
     {
       name: 'question',
@@ -52,10 +56,15 @@ export const FAQs: CollectionConfig = {
       },
     },
     {
-      name: 'isPublished',
-      type: 'checkbox',
-      label: 'Veröffentlicht',
-      defaultValue: true,
+      name: 'status',
+      type: 'select',
+      required: true,
+      defaultValue: 'draft',
+      label: 'Status',
+      options: [
+        { label: 'Entwurf', value: 'draft' },
+        { label: 'Veröffentlicht', value: 'published' },
+      ],
       admin: { position: 'sidebar' },
     },
   ],

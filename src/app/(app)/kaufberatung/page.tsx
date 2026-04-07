@@ -64,7 +64,7 @@ export default function Kaufberatung() {
                       <td className="py-3 pr-3 font-medium text-slate-700">{row[0]}</td>
                       <td className="py-3 px-3 text-center text-slate-600">{row[1]}</td>
                       <td className="py-3 px-3 text-center text-slate-600">{row[2]}</td>
-                      <td className="py-3 px-3 text-center font-bold text-blue-600">{row[3]}</td>
+                      <td className="py-3 px-3 text-center font-bold text-primary-600">{row[3]}</td>
                       <td className="py-3 pl-3 text-center text-slate-500">{row[4]}</td>
                     </tr>
                   ))}
@@ -83,12 +83,12 @@ export default function Kaufberatung() {
                     <th className="text-left py-3 pr-4 font-semibold text-slate-500">Eigenschaft</th>
                     <th className="text-center py-3 px-4 font-bold text-slate-900">
                       <div className="flex items-center justify-center gap-2">
-                        <Icon name="usb" size={16} className="text-blue-600" />HEX-V2
+                        <Icon name="usb" size={16} className="text-primary-600" />HEX-V2
                       </div>
                     </th>
                     <th className="text-center py-3 pl-4 font-bold text-slate-900">
                       <div className="flex items-center justify-center gap-2">
-                        <Icon name="wifi" size={16} className="text-blue-600" />HEX-NET
+                        <Icon name="wifi" size={16} className="text-primary-600" />HEX-NET
                       </div>
                     </th>
                   </tr>
@@ -171,15 +171,15 @@ export default function Kaufberatung() {
                 { name: '10 VIN – Enthusiast', price: 'ab 364 € (V2) / ab 514 € (NET)', desc: 'Für den erfahrenen Hobbyschrauber. Bis zu zehn Fahrzeuge. Gut wenn Sie auch Freunden und Familie helfen. Zehn FINs sollten für den eigenen Fuhrpark langfristig reichen.', icon: 'users' },
                 { name: 'Unlimited – Professional', price: 'ab 594 € (V2) / ab 794 € (NET)', desc: 'Für Werkstätten und Service-Dienstleister. Unbegrenzt viele Fahrzeuge. Keine Einschränkung. Die einzige Option für professionelle Werkstätten.', icon: 'shield' },
               ].map((v) => (
-                <div key={v.name} className="bg-white border border-slate-200 rounded-2xl p-5 hover:border-blue-200 transition-colors">
+                <div key={v.name} className="bg-white border border-slate-200 rounded-2xl p-5 hover:border-primary-200 transition-colors">
                   <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center shrink-0">
-                      <Icon name={v.icon} size={18} className="text-blue-600" />
+                    <div className="w-10 h-10 rounded-xl bg-primary-50 flex items-center justify-center shrink-0">
+                      <Icon name={v.icon} size={18} className="text-primary-600" />
                     </div>
                     <div>
                       <div className="flex items-baseline gap-3 mb-1">
                         <h3 className="font-bold text-slate-900">{v.name}</h3>
-                        <span className="text-sm text-blue-600 font-semibold">{v.price}</span>
+                        <span className="text-sm text-primary-600 font-semibold">{v.price}</span>
                       </div>
                       <p className="text-sm text-slate-600 leading-relaxed">{v.desc}</p>
                     </div>
@@ -246,21 +246,21 @@ export default function Kaufberatung() {
           <section>
             <h2 className="text-2xl font-bold text-slate-900 mb-6">Unsere Empfehlung</h2>
             <div className="grid sm:grid-cols-2 gap-4">
-              <div className="bg-blue-50 border border-blue-100 rounded-2xl p-6">
+              <div className="bg-primary-50 border border-primary-100 rounded-2xl p-6">
                 <div className="flex items-center gap-2 mb-3">
-                  <Icon name="usb" size={18} className="text-blue-600" />
+                  <Icon name="usb" size={18} className="text-primary-600" />
                   <h3 className="font-bold text-slate-900">HEX-V2</h3>
                 </div>
                 <p className="text-sm text-slate-600 leading-relaxed mb-3">Wenn Sie hauptsächlich in der Garage arbeiten, ein festes Budget haben und nicht mehr als 3-10 Fahrzeuge diagnostizieren. Stabile, kabelgebundene Diagnose zum besten Preis.</p>
-                <p className="text-xs text-blue-700 font-semibold">Bestes Preis-Leistungs-Verhältnis</p>
+                <p className="text-xs text-primary-700 font-semibold">Bestes Preis-Leistungs-Verhältnis</p>
               </div>
-              <div className="bg-blue-50 border border-blue-100 rounded-2xl p-6">
+              <div className="bg-primary-50 border border-primary-100 rounded-2xl p-6">
                 <div className="flex items-center gap-2 mb-3">
-                  <Icon name="wifi" size={18} className="text-blue-600" />
+                  <Icon name="wifi" size={18} className="text-primary-600" />
                   <h3 className="font-bold text-slate-900">HEX-NET</h3>
                 </div>
                 <p className="text-sm text-slate-600 leading-relaxed mb-3">Wenn Sie eine professionelle Werkstatt betreiben, Messwerte während der Fahrt aufnehmen, die VCDS-Mobile App nutzen oder kabellos arbeiten möchten.</p>
-                <p className="text-xs text-blue-700 font-semibold">Must-Have für Werkstätten</p>
+                <p className="text-xs text-primary-700 font-semibold">Must-Have für Werkstätten</p>
               </div>
             </div>
           </section>
@@ -268,11 +268,11 @@ export default function Kaufberatung() {
           {/* CTA */}
           <div className="text-center pt-6 border-t border-slate-200 space-y-4">
             <a href="https://auto-intern.de/shop/" target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-red-600 text-white font-semibold rounded-md hover:bg-red-500 transition-colors text-lg">
+              className="inline-flex items-center gap-2 px-8 py-4 bg-accent-600 text-white font-semibold rounded-md hover:bg-accent-500 transition-colors text-lg">
               Im Auto-Intern Shop bestellen <Icon name="arrow" size={18} className="text-white" />
             </a>
             <p className="text-sm text-slate-500">
-              Noch unsicher? Rufen Sie uns an: <a href="tel:+4923458545800" className="text-blue-600 font-semibold hover:underline">+49 (0) 234 58 545 800</a>
+              Noch unsicher? Rufen Sie uns an: <a href="tel:+4923458545800" className="text-primary-600 font-semibold hover:underline">+49 (0) 234 58 545 800</a>
             </p>
           </div>
         </div>

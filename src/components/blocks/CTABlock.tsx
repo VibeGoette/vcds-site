@@ -17,7 +17,7 @@ export function CTABlockComponent({ heading, text, buttonLabel, buttonLink, isEx
   const bgClass = isDark
     ? 'bg-slate-950 text-white'
     : isPrimary
-    ? 'bg-blue-600 text-white'
+    ? 'bg-primary-600 text-white'
     : 'bg-slate-50 text-slate-900 border border-slate-200'
 
   const linkProps = isExternal ? { target: '_blank' as const, rel: 'noopener noreferrer' } : {}
@@ -36,7 +36,7 @@ export function CTABlockComponent({ heading, text, buttonLabel, buttonLink, isEx
         <a
           href={buttonLink}
           {...linkProps}
-          className="inline-flex items-center gap-2 px-7 py-3.5 bg-red-600 text-white font-bold rounded-md hover:bg-red-500 active:bg-red-700 transition-colors text-sm"
+          className="inline-flex items-center gap-2 px-7 py-3.5 bg-accent-600 text-white font-bold rounded-md hover:bg-accent-500 active:bg-accent-700 transition-colors text-sm"
         >
           {buttonLabel} <Icon name="arrow" size={14} />
         </a>

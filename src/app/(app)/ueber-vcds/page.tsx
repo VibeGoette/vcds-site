@@ -18,9 +18,9 @@ export default function UeberVCDS() {
 
         <div className="max-w-3xl mx-auto px-5 py-12 space-y-16">
           <section>
-            <div className="bg-blue-50 border border-blue-100 rounded-2xl p-6 flex items-center gap-5">
-              <div className="w-14 h-14 rounded-md bg-blue-600 flex items-center justify-center shrink-0"><Icon name="search" size={24} className="text-white" /></div>
-              <div><p className="text-3xl font-bold text-blue-600">32.445</p><p className="text-sm text-blue-800">Fehlercodes werden aktuell im Klartext unterstützt. Auch die neuesten Fahrzeuge bis Modelljahr 2025.</p></div>
+            <div className="bg-primary-50 border border-primary-100 rounded-2xl p-6 flex items-center gap-5">
+              <div className="w-14 h-14 rounded-md bg-primary-600 flex items-center justify-center shrink-0"><Icon name="search" size={24} className="text-white" /></div>
+              <div><p className="text-3xl font-bold text-primary-600">32.445</p><p className="text-sm text-primary-800">Fehlercodes werden aktuell im Klartext unterstützt. Auch die neuesten Fahrzeuge bis Modelljahr 2025.</p></div>
             </div>
           </section>
 
@@ -43,8 +43,8 @@ export default function UeberVCDS() {
                 { icon: 'plug', title: 'Stellglied-Diagnose', desc: 'Einzelne Aktoren direkt ansteuern und testen. Fensterheber, Lüfter, Injektoren und mehr.' },
               ].map(f => (
                 <div key={f.title} className="bg-white border border-slate-200 rounded-xl p-4 flex gap-3">
-                  <div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center shrink-0">
-                    <Icon name={f.icon} size={16} className="text-blue-600" />
+                  <div className="w-9 h-9 rounded-lg bg-primary-50 flex items-center justify-center shrink-0">
+                    <Icon name={f.icon} size={16} className="text-primary-600" />
                   </div>
                   <div>
                     <h3 className="font-bold text-slate-900 text-sm mb-1">{f.title}</h3>
@@ -64,10 +64,10 @@ export default function UeberVCDS() {
               ].map(p => (
                 <div key={p.name} className="bg-white border border-slate-200 rounded-2xl p-5">
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center"><Icon name={p.ic} size={18} className="text-blue-600" /></div>
+                    <div className="w-9 h-9 rounded-lg bg-primary-50 flex items-center justify-center"><Icon name={p.ic} size={18} className="text-primary-600" /></div>
                     <h3 className="font-bold text-lg text-slate-900">{p.name}</h3>
                   </div>
-                  <div className="space-y-2 mb-3">{p.feats.map(f => <div key={f} className="flex gap-2 text-sm text-slate-600"><Icon name="check" size={14} className="text-blue-500 shrink-0 mt-0.5" />{f}</div>)}</div>
+                  <div className="space-y-2 mb-3">{p.feats.map(f => <div key={f} className="flex gap-2 text-sm text-slate-600"><Icon name="check" size={14} className="text-primary-500 shrink-0 mt-0.5" />{f}</div>)}</div>
                   <p className="text-xs text-slate-400">Lizenzmodelle: {p.sub}</p>
                 </div>
               ))}
@@ -100,7 +100,7 @@ export default function UeberVCDS() {
           </section>
 
           <div className="text-center pt-4">
-            <a href="https://auto-intern.de/shop/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-8 py-4 bg-red-600 text-white font-semibold rounded-md hover:bg-red-500 transition-colors text-lg">
+            <a href="https://auto-intern.de/shop/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-8 py-4 bg-accent-600 text-white font-semibold rounded-md hover:bg-accent-500 transition-colors text-lg">
               Im Auto-Intern Shop bestellen <Icon name="arrow" size={18} className="text-white" />
             </a>
           </div>

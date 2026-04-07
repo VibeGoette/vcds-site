@@ -53,13 +53,13 @@ export default async function Fachhaendler() {
           <div className="space-y-3">
             {dealers.map(d => (
               <a key={d.name} href={d.url} target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-4 bg-white border border-slate-200 rounded-xl p-4 sm:p-5 hover:border-blue-200 transition-colors group">
+                className="flex items-center gap-4 bg-white border border-slate-200 rounded-xl p-4 sm:p-5 hover:border-primary-200 transition-colors group">
                 <IconBox icon="map" size="sm" />
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-bold text-slate-900 group-hover:text-blue-600 transition-colors">{d.name}</h3>
+                  <h3 className="font-bold text-slate-900 group-hover:text-primary-600 transition-colors">{d.name}</h3>
                   <p className="text-sm text-slate-500">{d.city}{d.city && d.country ? ' · ' : ''}{d.country}</p>
                 </div>
-                <Icon name="arrow" size={16} className="text-slate-300 group-hover:text-blue-500 transition-colors shrink-0" />
+                <Icon name="arrow" size={16} className="text-slate-300 group-hover:text-primary-500 transition-colors shrink-0" />
               </a>
             ))}
           </div>

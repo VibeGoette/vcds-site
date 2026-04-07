@@ -50,18 +50,18 @@ export default async function Home() {
       <ProductSchema name="Ross-Tech HEX-NET" description="WLAN Diagnoseadapter fuer VW, Audi, Skoda, Seat. Kabellose Diagnose." price="514" sku="HEX-NET" url="https://www.auto-intern.de/shop/diagnose-adapter/199/hex-net-wifi-inkl.-vcds-lizenz" />
       <main id="main">
         {/* Hero */}
-        <section className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-blue-900 text-white px-5 py-16 md:py-24 overflow-hidden">
+        <section className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-primary-900 text-white px-5 py-16 md:py-24 overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(37,99,235,0.08),transparent_60%)]" />
           <div className="relative max-w-6xl mx-auto">
             <div className="max-w-2xl">
               <div className="flex items-center gap-2 mb-5">
-                <span className="text-xs text-blue-400 font-semibold tracking-[0.12em] uppercase">Ross-Tech VCDS</span>
+                <span className="text-xs text-primary-400 font-semibold tracking-[0.12em] uppercase">Ross-Tech VCDS</span>
                 <span className="w-px h-3 bg-slate-600" />
                 <span className="text-xs text-slate-400">Vertrieb: Auto-Intern GmbH, Bochum</span>
               </div>
               <h1 className="text-3xl md:text-5xl font-bold leading-tight mb-6">
                 Ihr Partner für schnelle{' '}
-                <span className="text-blue-400">Fahrzeugdiagnose</span>
+                <span className="text-primary-400">Fahrzeugdiagnose</span>
               </h1>
               <p className="text-slate-300 text-base leading-relaxed mb-8 max-w-xl">
                 Bestellen Sie Ihren passenden Diagnoseadapter oder informieren Sie sich
@@ -70,7 +70,7 @@ export default async function Home() {
               </p>
               <div className="flex flex-col sm:flex-row gap-3 mb-8 w-full sm:w-auto">
                 <a href="https://auto-intern.de/shop/" target="_blank" rel="noopener noreferrer"
-                  className="px-6 py-3 bg-red-600 text-white font-semibold rounded-md hover:bg-red-500 transition-colors text-center">
+                  className="px-6 py-3 bg-accent-600 text-white font-semibold rounded-md hover:bg-accent-500 transition-colors text-center">
                   Im Shop bestellen
                 </a>
                 <Link href="/kaufberatung"
@@ -99,7 +99,7 @@ export default async function Home() {
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-8">
               {['Fehlercodes auslesen und löschen','Messwerte aufzeichnen und grafisch darstellen','Codierungen und Grundeinstellungen','Auto-Scan aller Steuergeräte','Kostenloser Telefon-Support','Made in Germany (Bochum)'].map(f => (
                 <div key={f} className="flex gap-2 text-sm text-slate-600">
-                  <Icon name="check" size={16} className="text-blue-500 shrink-0 mt-0.5" />{f}
+                  <Icon name="check" size={16} className="text-primary-500 shrink-0 mt-0.5" />{f}
                 </div>
               ))}
             </div>
@@ -127,7 +127,7 @@ export default async function Home() {
             </p>
             <div className="grid md:grid-cols-2 gap-6">
               {homeProducts.map(p => (
-                <div key={p.name} className="bg-white border border-slate-200 rounded-2xl p-6 hover:border-blue-200 hover:shadow-md transition-all">
+                <div key={p.name} className="bg-white border border-slate-200 rounded-2xl p-6 hover:border-primary-200 hover:shadow-md transition-all">
                   {p.img ? (
                     <div className="relative w-full h-40 mb-4 rounded-xl overflow-hidden bg-slate-50">
                       <Image src={p.img.url} alt={p.img.alt ?? p.name} fill className="object-contain p-3" sizes="(max-width: 768px) 100vw, 50vw" />
@@ -135,27 +135,27 @@ export default async function Home() {
                   ) : (
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
-                          <Icon name={p.icon} size={20} className="text-blue-600" />
+                        <div className="w-10 h-10 rounded-xl bg-primary-50 flex items-center justify-center">
+                          <Icon name={p.icon} size={20} className="text-primary-600" />
                         </div>
-                        <span className="px-2.5 py-0.5 text-xs font-semibold rounded-md bg-blue-50 text-blue-700 border border-blue-200">{p.badge}</span>
+                        <span className="px-2.5 py-0.5 text-xs font-semibold rounded-md bg-primary-50 text-primary-700 border border-primary-200">{p.badge}</span>
                       </div>
                     </div>
                   )}
                   <div className="flex items-center justify-between mb-1">
                     <h3 className="text-xl font-bold text-slate-900">{p.name}</h3>
-                    <span className="text-lg font-bold text-blue-600">{p.price}</span>
+                    <span className="text-lg font-bold text-primary-600">{p.price}</span>
                   </div>
-                  <p className="text-sm text-blue-600 font-medium mb-4">{p.sub}</p>
+                  <p className="text-sm text-primary-600 font-medium mb-4">{p.sub}</p>
                   <div className="space-y-2 mb-6">
                     {p.feats.map(f => (
                       <div key={f} className="flex gap-2 text-sm text-slate-600">
-                        <Icon name="check" size={14} className="text-blue-500 shrink-0 mt-0.5" />{f}
+                        <Icon name="check" size={14} className="text-primary-500 shrink-0 mt-0.5" />{f}
                       </div>
                     ))}
                   </div>
                   <a href={p.url} target="_blank" rel="noopener noreferrer"
-                    className="block w-full py-3 bg-red-600 text-white text-center font-semibold rounded-md hover:bg-red-500 transition-colors">
+                    className="block w-full py-3 bg-accent-600 text-white text-center font-semibold rounded-md hover:bg-accent-500 transition-colors">
                     Im Auto-Intern Shop bestellen
                   </a>
                 </div>
@@ -170,13 +170,13 @@ export default async function Home() {
             <h2 className="text-center text-xl font-bold mb-10">Vorteile von VCDS</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center mb-12">
               {[{v:'1000+',l:'Zufriedene Kunden'},{v:'15+',l:'Jahre Erfahrung'},{v:'32.445',l:'Fehlercodes im Klartext'}].map(s => (
-                <div key={s.l}><p className="text-3xl md:text-4xl font-bold text-blue-400">{s.v}</p><p className="text-xs text-slate-400 mt-2">{s.l}</p></div>
+                <div key={s.l}><p className="text-3xl md:text-4xl font-bold text-primary-400">{s.v}</p><p className="text-xs text-slate-400 mt-2">{s.l}</p></div>
               ))}
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
               {[{n:'HEX-NET',ic:'wifi'},{n:'HEX-V2',ic:'usb'},{n:'Diagnose-Adapter',ic:'plug'},{n:'Komplettsysteme',ic:'shield'},{n:'Upgrades',ic:'bolt'},{n:'Zubehör',ic:'cog'}].map(c => (
                 <div key={c.n} className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 flex items-center gap-3 hover:bg-white/10 transition-colors">
-                  <Icon name={c.ic} size={16} className="text-blue-400" />
+                  <Icon name={c.ic} size={16} className="text-primary-400" />
                   <span className="text-sm font-medium">{c.n}</span>
                 </div>
               ))}
@@ -194,12 +194,12 @@ export default async function Home() {
                 {t:'Community',d:'forum.vcds.de · wiki.vcds.de',s:'Kostenlos für alle VCDS-Nutzer',ic:'chat'},
                 {t:'E-Mail',d:'support@vcds.de',s:'Bitte Auto-Scan vorab senden',ic:'mail'},
               ].map(s => (
-                <div key={s.t} className="bg-white border border-slate-200 rounded-2xl p-6 text-center hover:border-blue-200 transition-colors">
-                  <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center mx-auto mb-4">
-                    <Icon name={s.ic} size={20} className="text-blue-600" />
+                <div key={s.t} className="bg-white border border-slate-200 rounded-2xl p-6 text-center hover:border-primary-200 transition-colors">
+                  <div className="w-12 h-12 rounded-full bg-primary-50 flex items-center justify-center mx-auto mb-4">
+                    <Icon name={s.ic} size={20} className="text-primary-600" />
                   </div>
                   <h3 className="font-bold text-slate-900 mb-1">{s.t}</h3>
-                  <p className="text-sm text-blue-600 font-semibold">{s.d}</p>
+                  <p className="text-sm text-primary-600 font-semibold">{s.d}</p>
                   <p className="text-xs text-slate-400 mt-1">{s.s}</p>
                 </div>
               ))}
@@ -213,8 +213,8 @@ export default async function Home() {
             <h2 className="text-2xl font-bold text-slate-900 mb-8">Das sagen unsere Kunden</h2>
             <div className="grid md:grid-cols-3 gap-4">
               {testimonials.map((t) => (
-                <div key={t.id} className="bg-white border border-slate-200 rounded-2xl p-5 hover:border-blue-200 transition-colors">
-                  <Icon name="quote" size={16} className="text-blue-300 mb-3" />
+                <div key={t.id} className="bg-white border border-slate-200 rounded-2xl p-5 hover:border-primary-200 transition-colors">
+                  <Icon name="quote" size={16} className="text-primary-300 mb-3" />
                   <p className="text-sm text-slate-700 italic leading-relaxed mb-4">{t.quote}</p>
                   <p className="text-xs font-semibold text-slate-400">{t.authorName}{t.company ? ` — ${t.company}` : ''}</p>
                 </div>

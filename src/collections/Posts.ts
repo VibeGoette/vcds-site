@@ -3,6 +3,7 @@ import { slugField } from '@/fields/slug'
 import { seoFields } from '@/fields/seo'
 import { publicReadMarketingWrite } from '@/access'
 import { contentBlocks } from '@/blocks'
+import { revalidateCollection } from '@/hooks/revalidate'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -12,7 +13,7 @@ export const Posts: CollectionConfig = {
     defaultColumns: ['title', 'category', 'status', 'publishedAt', 'author'],
     group: 'Inhalt',
     livePreview: {
-      url: ({ data }) => `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${data?.slug}`,
+      url: ({ data }) => `/api/draft?secret=${process.env.PAYLOAD_SECRET}&slug=${data?.slug}&collection=posts`,
     },
   },
   access: {
@@ -25,6 +26,9 @@ export const Posts: CollectionConfig = {
     create: publicReadMarketingWrite.create,
     update: publicReadMarketingWrite.update,
     delete: publicReadMarketingWrite.delete,
+  },
+  hooks: {
+    afterChange: [revalidateCollection],
   },
   versions: {
     drafts: true,
@@ -144,14 +148,8 @@ export const Posts: CollectionConfig = {
       type: 'blocks',
       label: 'Beitragsinhalt',
       blocks: contentBlocks,
-    },
-    // ── Fallback Rich-Text ──
-    {
-      name: 'content',
-      type: 'richText',
-      label: 'Einfacher Inhalt',
       admin: {
-        condition: (data) => !data?.layout?.length,
+        description: 'Füge Inhaltsblöcke hinzu: Text, Bilder, Videos, CTAs und mehr.',
       },
     },
     // ── Related Posts ──

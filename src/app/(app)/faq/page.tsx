@@ -151,8 +151,8 @@ export default async function FAQ() {
             </section>
           ))}
 
-          <Card variant="muted" className="mt-10 text-center bg-blue-50 border-blue-100 p-8">
-            <IconBox icon="chat" shape="circle" size="lg" className="mx-auto mb-4 bg-blue-100" />
+          <Card variant="muted" className="mt-10 text-center bg-primary-50 border-primary-100 p-8">
+            <IconBox icon="chat" shape="circle" size="lg" className="mx-auto mb-4 bg-primary-100" />
             <h2 className="text-lg font-bold text-slate-900 mb-2">Ihre Frage ist nicht dabei?</h2>
             <p className="text-sm text-slate-600 mb-5">Unser Support-Team der Auto-Intern GmbH hilft Ihnen gerne weiter.</p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">

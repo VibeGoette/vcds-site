@@ -33,11 +33,11 @@ export default function Upgrade() {
             <div className="space-y-3">
               {upgrades.map(function(u) {
                 return (
-                  <div key={u.from + u.to} className="bg-white border border-slate-200 rounded-2xl p-5 hover:border-blue-200 transition-colors">
+                  <div key={u.from + u.to} className="bg-white border border-slate-200 rounded-2xl p-5 hover:border-primary-200 transition-colors">
                     <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
                       <span className="px-2.5 py-1 text-xs font-semibold rounded-lg bg-slate-100 text-slate-600">{u.from}</span>
-                      <Icon name="arrow" size={16} className="text-blue-500" />
-                      <span className="px-2.5 py-1 text-xs font-semibold rounded-lg bg-blue-50 text-blue-700 border border-blue-200">{u.to}</span>
+                      <Icon name="arrow" size={16} className="text-primary-500" />
+                      <span className="px-2.5 py-1 text-xs font-semibold rounded-lg bg-primary-50 text-primary-700 border border-primary-200">{u.to}</span>
                     </div>
                     <p className="text-sm text-slate-600 leading-relaxed">{u.desc}</p>
                   </div>
@@ -58,7 +58,7 @@ export default function Upgrade() {
               ].map(function(s, i) {
                 return (
                   <div key={i} className="flex gap-4 items-start">
-                    <div className="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm shrink-0">{i + 1}</div>
+                    <div className="w-9 h-9 rounded-full bg-primary-600 text-white flex items-center justify-center font-bold text-sm shrink-0">{i + 1}</div>
                     <div className="pt-1">
                       <h3 className="font-bold text-slate-900 text-sm mb-1">{s.t}</h3>
                       <p className="text-sm text-slate-600 leading-relaxed">{s.d}</p>
@@ -72,11 +72,11 @@ export default function Upgrade() {
           {/* CTA */}
           <div className="text-center pt-6 border-t border-slate-200 space-y-4">
             <a href="https://www.auto-intern.de/shop/upgrades-erweiterungsmodule/" target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-red-600 text-white font-semibold rounded-md hover:bg-red-500 transition-colors text-lg">
+              className="inline-flex items-center gap-2 px-8 py-4 bg-accent-600 text-white font-semibold rounded-md hover:bg-accent-500 transition-colors text-lg">
               Upgrades im Shop ansehen <Icon name="arrow" size={18} className="text-white" />
             </a>
             <p className="text-sm text-slate-500">
-              Fragen? <a href="tel:+4923458545800" className="text-blue-600 font-semibold hover:underline">+49 (0) 234 58 545 800</a>
+              Fragen? <a href="tel:+4923458545800" className="text-primary-600 font-semibold hover:underline">+49 (0) 234 58 545 800</a>
             </p>
           </div>
         </div>

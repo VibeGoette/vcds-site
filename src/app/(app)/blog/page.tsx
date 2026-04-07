@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const cats: Record<string, { label: string; bg: string; text: string; border: string }> = {
-  beratung: { label: 'Beratung', bg: 'bg-blue-500/10', text: 'text-blue-600', border: 'border-blue-200' },
+  beratung: { label: 'Beratung', bg: 'bg-primary-500/10', text: 'text-primary-600', border: 'border-primary-200' },
   versionshistorie: { label: 'Release', bg: 'bg-emerald-500/10', text: 'text-emerald-600', border: 'border-emerald-200' },
   anleitungen: { label: 'Anleitung', bg: 'bg-purple-500/10', text: 'text-purple-600', border: 'border-purple-200' },
   news: { label: 'News', bg: 'bg-amber-500/10', text: 'text-amber-600', border: 'border-amber-200' },
@@ -26,18 +26,18 @@ const cats: Record<string, { label: string; bg: string; text: string; border: st
 /** Visual styles per slug — gradient, icon, tag for blog cards */
 const cardStyles: Record<string, { icon: string; gradient: string; tag?: string }> = {
   'warum-kein-vcds-crack': { icon: 'warning', gradient: 'from-red-600 via-red-500 to-orange-500', tag: 'Wichtig' },
-  'qual-der-wahl-vcds': { icon: 'bolt', gradient: 'from-blue-600 via-blue-500 to-cyan-500' },
+  'qual-der-wahl-vcds': { icon: 'bolt', gradient: 'from-primary-600 via-primary-500 to-cyan-500' },
   'fin-verbrauch-bei-vcds': { icon: 'shield', gradient: 'from-emerald-600 via-emerald-500 to-teal-500' },
   'welches-vcds-kaufen': { icon: 'search', gradient: 'from-violet-600 via-violet-500 to-purple-500' },
   'gute-wahl-vcds': { icon: 'check', gradient: 'from-slate-800 via-slate-700 to-slate-600' },
   'update-25-3-1': { icon: 'download', gradient: 'from-emerald-600 via-green-500 to-lime-500' },
   'vorsicht-vor-gefaelschten-vcds-interfaces': { icon: 'warning', gradient: 'from-amber-600 via-amber-500 to-yellow-500' },
-  'zugriffsberechtigungscodes-was-man-wissen-sollte': { icon: 'cog', gradient: 'from-indigo-700 via-indigo-600 to-blue-500' },
+  'zugriffsberechtigungscodes-was-man-wissen-sollte': { icon: 'cog', gradient: 'from-indigo-700 via-indigo-600 to-primary-500' },
 }
 
 /** Fallback gradients by category */
 const categoryGradients: Record<string, { icon: string; gradient: string }> = {
-  beratung: { icon: 'info', gradient: 'from-blue-600 via-blue-500 to-cyan-500' },
+  beratung: { icon: 'info', gradient: 'from-primary-600 via-primary-500 to-cyan-500' },
   versionshistorie: { icon: 'download', gradient: 'from-emerald-600 via-green-500 to-lime-500' },
   anleitungen: { icon: 'book', gradient: 'from-purple-600 via-purple-500 to-pink-500' },
   news: { icon: 'bolt', gradient: 'from-amber-600 via-amber-500 to-yellow-500' },
@@ -105,8 +105,8 @@ export default async function Blog() {
           <div className="max-w-6xl mx-auto px-4 sm:px-5 pt-12 pb-14 md:pt-16 md:pb-20 relative">
             {/* Section label */}
             <div className="flex items-center gap-4 mb-10">
-              <div className="h-px w-12 bg-blue-500" />
-              <span className="text-[11px] font-bold tracking-[0.25em] uppercase text-blue-400">VCDS Blog</span>
+              <div className="h-px w-12 bg-primary-500" />
+              <span className="text-[11px] font-bold tracking-[0.25em] uppercase text-primary-400">VCDS Blog</span>
               <div className="h-px flex-1 bg-slate-800" />
             </div>
 
@@ -137,12 +137,12 @@ export default async function Blog() {
                       {featured.tag && <span className="px-2.5 py-1 text-[10px] font-bold tracking-wider uppercase rounded bg-red-500 text-white">{featured.tag}</span>}
                       <span className="text-[11px] text-white/60">{featured.date} · {featured.reading}</span>
                     </div>
-                    <h2 className="text-xl md:text-3xl font-extrabold mb-2 leading-tight group-hover:text-blue-300 transition-colors duration-300">
+                    <h2 className="text-xl md:text-3xl font-extrabold mb-2 leading-tight group-hover:text-primary-300 transition-colors duration-300">
                       {featured.title}
                     </h2>
                     <p className="text-sm md:text-base text-white/60 max-w-lg leading-relaxed hidden sm:block">{featured.excerpt}</p>
-                    <span className="inline-flex items-center gap-2 mt-4 text-sm font-semibold text-blue-400 group-hover:gap-3 transition-all duration-300">
-                      Artikel lesen <Icon name="arrow" size={14} className="text-blue-400" />
+                    <span className="inline-flex items-center gap-2 mt-4 text-sm font-semibold text-primary-400 group-hover:gap-3 transition-all duration-300">
+                      Artikel lesen <Icon name="arrow" size={14} className="text-primary-400" />
                     </span>
                   </div>
                 </div>
@@ -164,7 +164,7 @@ export default async function Blog() {
                             <span className={`px-2 py-0.5 text-[9px] font-bold rounded border ${cat.border} ${cat.bg} ${cat.text}`}>{cat.label}</span>
                             <span className="text-[10px] text-white/50">{post.reading}</span>
                           </div>
-                          <h3 className="text-base md:text-lg font-bold leading-snug group-hover:text-blue-300 transition-colors duration-300">{post.title}</h3>
+                          <h3 className="text-base md:text-lg font-bold leading-snug group-hover:text-primary-300 transition-colors duration-300">{post.title}</h3>
                         </div>
                       </div>
                     </Link>
@@ -226,12 +226,12 @@ export default async function Blog() {
                       </span>
                       <span className="text-[10px] text-slate-400 font-medium">{post.date}</span>
                     </div>
-                    <h3 className="font-extrabold text-slate-900 text-[15px] mb-2 group-hover:text-blue-600 transition-colors duration-300 leading-snug tracking-tight">
+                    <h3 className="font-extrabold text-slate-900 text-[15px] mb-2 group-hover:text-primary-600 transition-colors duration-300 leading-snug tracking-tight">
                       {post.title}
                     </h3>
                     <p className="text-[13px] text-slate-500 leading-relaxed flex-1 line-clamp-2">{post.excerpt}</p>
                     <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
-                      <span className="text-xs font-bold text-blue-600 group-hover:text-blue-700 transition-colors flex items-center gap-1.5">
+                      <span className="text-xs font-bold text-primary-600 group-hover:text-primary-700 transition-colors flex items-center gap-1.5">
                         Weiterlesen
                         <Icon name="arrow" size={12} className="group-hover:translate-x-1.5 transition-transform duration-300" />
                       </span>
@@ -248,14 +248,14 @@ export default async function Blog() {
             <div className="absolute inset-0 circuit-pattern opacity-50" />
             <div className="absolute inset-0 grain" />
             <div className="relative flex flex-col sm:flex-row items-center gap-6">
-              <div className="w-14 h-14 rounded-xl bg-blue-600/20 flex items-center justify-center border border-blue-500/30 shrink-0">
-                <Icon name="mail" size={24} className="text-blue-400" />
+              <div className="w-14 h-14 rounded-xl bg-primary-600/20 flex items-center justify-center border border-primary-500/30 shrink-0">
+                <Icon name="mail" size={24} className="text-primary-400" />
               </div>
               <div className="text-center sm:text-left flex-1">
                 <p className="text-lg font-bold text-white mb-1">Neue Artikel erhalten</p>
                 <p className="text-sm text-slate-400">Updates zu VCDS, neue Blog-Beitraege und Release-Notes — kostenlos, kein Spam.</p>
               </div>
-              <span className="px-6 py-3 bg-blue-600 text-white text-sm font-bold rounded-md hover:bg-blue-500 active:bg-blue-700 transition-colors cursor-pointer shrink-0 min-h-[44px] flex items-center">
+              <span className="px-6 py-3 bg-primary-600 text-white text-sm font-bold rounded-md hover:bg-primary-500 active:bg-primary-700 transition-colors cursor-pointer shrink-0 min-h-[44px] flex items-center">
                 Abonnieren
               </span>
             </div>

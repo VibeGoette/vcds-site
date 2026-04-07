@@ -89,7 +89,10 @@ export const Dealers: CollectionConfig = {
       type: 'number',
       label: 'Sortierung',
       defaultValue: 0,
-      admin: { position: 'sidebar' },
+      admin: {
+        position: 'sidebar',
+        description: 'Niedrigere Zahl = weiter oben in der Liste. Standard: 0',
+      },
     },
   ],
 }

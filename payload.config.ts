@@ -16,10 +16,12 @@ import { FAQs } from '@/collections/FAQs'
 import { Downloads } from '@/collections/Downloads'
 import { TeamMembers } from '@/collections/TeamMembers'
 import { Testimonials } from '@/collections/Testimonials'
+import { ContactSubmissions } from '@/collections/ContactSubmissions'
 
 // Globals
 import { SiteSettings } from '@/globals/SiteSettings'
 import { Navigation } from '@/globals/Navigation'
+import { ThemeSettings } from '@/globals/ThemeSettings'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -32,6 +34,14 @@ export default buildConfig({
     },
     importMap: {
       baseDir: path.resolve(dirname, 'src'),
+    },
+    components: {
+      views: {
+        bulkUpload: {
+          Component: '/components/admin/BulkUploadView',
+          path: '/bulk-upload',
+        },
+      },
     },
   },
 
@@ -46,11 +56,13 @@ export default buildConfig({
     Downloads,
     TeamMembers,
     Testimonials,
+    ContactSubmissions,
   ],
 
   globals: [
     SiteSettings,
     Navigation,
+    ThemeSettings,
   ],
 
   editor: lexicalEditor(),

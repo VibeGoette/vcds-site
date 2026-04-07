@@ -70,48 +70,51 @@ export async function Footer() {
   }
 
   return (
-    <footer className="bg-slate-900 text-slate-400">
-      <div className="max-w-6xl mx-auto px-5 pt-12 pb-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+    <footer className="relative bg-slate-900 text-slate-400 overflow-hidden">
+      {/* Subtle circuit pattern in footer */}
+      <div className="absolute inset-0 circuit-pattern opacity-30" aria-hidden="true" />
+
+      <div className="max-w-6xl mx-auto px-5 pt-14 pb-10 relative">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mb-10">
           <div>
-            <div className="flex items-baseline gap-1 mb-3">
-              <span className="font-bold text-white text-base">VCDS</span>
-              <span className="text-slate-600 font-bold text-base">.de</span>
+            <div className="flex items-baseline gap-1 mb-4">
+              <span className="font-bold text-white text-lg tracking-tight">VCDS</span>
+              <span className="text-primary-500 font-bold text-lg">.de</span>
             </div>
-            <p className="text-xs leading-relaxed">Betrieben von Auto-Intern GmbH</p>
-            <p className="text-xs">VCDS Software von Ross-Tech, LLC</p>
-            <address className="text-xs not-italic mt-3 text-slate-500">
+            <p className="text-sm leading-relaxed">Betrieben von Auto-Intern GmbH</p>
+            <p className="text-sm text-slate-500">VCDS Software von Ross-Tech, LLC</p>
+            <address className="text-sm not-italic mt-4 text-slate-500 leading-relaxed">
               {company.street}<br />{company.zipCode} {company.city}
             </address>
           </div>
           <div>
-            <p className="font-semibold text-slate-300 text-xs mb-3">Kontakt & Support</p>
-            <div className="space-y-2">
-              <div className="flex items-center gap-2"><Icon name="phone" size={12} className="text-slate-500" /><span className="text-xs">{company.phone}</span></div>
-              <div className="flex items-center gap-2"><Icon name="mail" size={12} className="text-slate-500" /><span className="text-xs">{company.email}</span></div>
-              <div className="flex items-center gap-2"><Icon name="clock" size={12} className="text-slate-500" /><span className="text-xs">{hours}</span></div>
+            <p className="font-semibold text-white text-sm mb-4">Kontakt & Support</p>
+            <div className="space-y-3">
+              <div className="flex items-center gap-2.5"><Icon name="phone" size={14} className="text-primary-400" /><span className="text-sm">{company.phone}</span></div>
+              <div className="flex items-center gap-2.5"><Icon name="mail" size={14} className="text-primary-400" /><span className="text-sm">{company.email}</span></div>
+              <div className="flex items-center gap-2.5"><Icon name="clock" size={14} className="text-primary-400" /><span className="text-sm">{hours}</span></div>
             </div>
           </div>
           <div>
-            <p className="font-semibold text-slate-300 text-xs mb-3">Community</p>
-            <div className="space-y-2">
+            <p className="font-semibold text-white text-sm mb-4">Community</p>
+            <div className="space-y-3">
               {community.map(c => (
-                <div key={c.url} className="flex items-center gap-2">
-                  <Icon name={c.icon} size={12} className="text-slate-500" />
-                  <a href={c.url} target="_blank" rel="noopener noreferrer" className="text-xs hover:text-white transition-colors">{c.label}</a>
+                <div key={c.url} className="flex items-center gap-2.5">
+                  <Icon name={c.icon} size={14} className="text-primary-400" />
+                  <a href={c.url} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-white transition-colors duration-200 link-underline">{c.label}</a>
                 </div>
               ))}
             </div>
           </div>
         </div>
-        <div className="border-t border-white/5 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
-          <p className="text-[10px] text-slate-600">© {new Date().getFullYear()} Auto-Intern GmbH · Ross-Tech VCDS</p>
-          <nav className="flex gap-4 text-[10px]" aria-label="Rechtliche Links">
+        <div className="border-t border-white/8 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
+          <p className="text-xs text-slate-600">© {new Date().getFullYear()} Auto-Intern GmbH · Ross-Tech VCDS</p>
+          <nav className="flex gap-5 text-xs" aria-label="Rechtliche Links">
             {footerNav.map(item => (
               'isExternal' in item && item.isExternal ? (
-                <a key={item.href} href={item.href} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">{item.label}</a>
+                <a key={item.href} href={item.href} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors duration-200">{item.label}</a>
               ) : (
-                <Link key={item.href} href={item.href} className="hover:text-white transition-colors">{item.label}</Link>
+                <Link key={item.href} href={item.href} className="hover:text-white transition-colors duration-200">{item.label}</Link>
               )
             ))}
           </nav>

@@ -19,12 +19,12 @@ export default function Error({
         <p className="text-sm text-slate-500 mb-6">
           Bitte versuchen Sie es erneut. Falls das Problem bestehen bleibt,
           kontaktieren Sie uns unter{' '}
-          <a href="mailto:support@vcds.de" className="text-blue-600 hover:underline">support@vcds.de</a>.
+          <a href="mailto:support@vcds.de" className="text-primary-600 hover:underline">support@vcds.de</a>.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <button
             onClick={reset}
-            className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-500 transition-colors text-sm"
+            className="px-6 py-3 bg-primary-600 text-white font-semibold rounded-md hover:bg-primary-500 transition-colors text-sm"
           >
             Erneut versuchen
           </button>

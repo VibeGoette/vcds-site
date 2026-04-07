@@ -1,11 +1,12 @@
 import { cn } from '@/lib/utils'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-const cardVariants = cva('bg-white border rounded-2xl transition-colors', {
+const cardVariants = cva('bg-white border rounded-2xl transition-all duration-300 ease-out', {
   variants: {
     variant: {
       default: 'border-slate-200',
-      interactive: 'border-slate-200 hover:border-blue-200 hover:shadow-md',
+      interactive: 'border-slate-200 hover:border-primary-200 hover:shadow-lg hover:shadow-primary-900/5 hover:translate-y-[-2px]',
+      elevated: 'border-slate-200 shadow-md shadow-slate-900/5 hover:shadow-xl hover:shadow-slate-900/8 hover:translate-y-[-3px]',
       muted: 'bg-slate-50 border-slate-200',
     },
     padding: {

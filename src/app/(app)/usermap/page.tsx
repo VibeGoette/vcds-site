@@ -72,7 +72,7 @@ export default function UserMap() {
                 { step: 3, title: 'Sichtbar werden', desc: 'Ihr Eintrag wird auf der Karte veröffentlicht und ist für die gesamte Community sichtbar.' },
               ].map((s) => (
                 <li key={s.step} className="flex gap-4 items-start bg-white border border-slate-200 rounded-xl p-5">
-                  <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-sm shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-primary-600 text-white flex items-center justify-center font-bold text-sm shrink-0">
                     {s.step}
                   </div>
                   <div>
@@ -94,7 +94,7 @@ export default function UserMap() {
               href="https://forum.vcds.de"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 px-8 py-4 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-500 active:bg-blue-700 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-colors text-base shadow-sm shadow-blue-200"
+              className="inline-flex items-center gap-2.5 px-8 py-4 bg-primary-600 text-white font-bold rounded-lg hover:bg-primary-500 active:bg-primary-700 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 transition-colors text-base shadow-sm shadow-primary-200"
             >
               <Icon name="chat" size={20} />
               Zum VCDS Forum
@@ -107,14 +107,14 @@ export default function UserMap() {
           <section>
             <h2 className="text-xl font-bold text-slate-900 mb-4">Weitere Hilfsangebote</h2>
             <div className="grid sm:grid-cols-2 gap-3">
-              <a href="/fernwartung" className="flex items-center gap-3 bg-white border border-slate-200 rounded-xl p-4 hover:border-blue-200 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all">
+              <a href="/fernwartung" className="flex items-center gap-3 bg-white border border-slate-200 rounded-xl p-4 hover:border-primary-200 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 transition-all">
                 <IconBox icon="wifi" size="sm" />
                 <div>
                   <h3 className="font-bold text-slate-900 text-sm">Fernwartung</h3>
                   <p className="text-xs text-slate-500">Remote-Support via AnyDesk</p>
                 </div>
               </a>
-              <a href="/troubleshooting" className="flex items-center gap-3 bg-white border border-slate-200 rounded-xl p-4 hover:border-blue-200 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all">
+              <a href="/troubleshooting" className="flex items-center gap-3 bg-white border border-slate-200 rounded-xl p-4 hover:border-primary-200 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 transition-all">
                 <IconBox icon="search" size="sm" />
                 <div>
                   <h3 className="font-bold text-slate-900 text-sm">Troubleshooting</h3>

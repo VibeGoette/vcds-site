@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 import { slugField } from '@/fields/slug'
 import { seoFields } from '@/fields/seo'
 import { publicReadAdminWrite } from '@/access'
+import { revalidateCollection } from '@/hooks/revalidate'
 
 export const Products: CollectionConfig = {
   slug: 'products',
@@ -12,6 +13,9 @@ export const Products: CollectionConfig = {
     group: 'Inhalt',
   },
   access: publicReadAdminWrite,
+  hooks: {
+    afterChange: [revalidateCollection],
+  },
   fields: [
     {
       name: 'name',
@@ -41,7 +45,7 @@ export const Products: CollectionConfig = {
       type: 'text',
       label: 'Preis (Anzeige)',
       admin: {
-        description: 'Freitext für flexible Darstellung, z.B. "ab 294 €", "ab 514 €", "auf Anfrage"',
+        description: 'Wird auf der Website angezeigt. Varianten-Preise separat pflegen. Freitext, z.B. "ab 294 €", "ab 514 €", "auf Anfrage"',
       },
     },
     {

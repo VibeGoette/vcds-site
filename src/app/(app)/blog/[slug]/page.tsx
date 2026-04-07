@@ -12,7 +12,7 @@ import { ShareButtons } from '@/components/blog/ShareButtons'
 import { AuthorBio } from '@/components/blog/AuthorBio'
 import { RelatedPosts } from '@/components/blog/RelatedPosts'
 import { ArticleSchema } from '@/components/StructuredData'
-import { lexicalToHtml, extractLexicalHeadings } from '@/lib/serializeLexical'
+import { extractLexicalHeadings } from '@/lib/serializeLexical'
 import { extractMarkdownHeadings } from '@/lib/markdown'
 import { calculateReadingTime } from '@/lib/blog-utils'
 import Link from 'next/link'
@@ -28,7 +28,7 @@ const catLabels: Record<string, string> = {
 }
 
 const catGradients: Record<string, string> = {
-  beratung: 'from-blue-700 via-blue-600 to-cyan-500',
+  beratung: 'from-primary-700 via-primary-600 to-cyan-500',
   versionshistorie: 'from-emerald-700 via-green-600 to-lime-500',
   anleitungen: 'from-purple-700 via-purple-600 to-pink-500',
   news: 'from-amber-700 via-amber-600 to-yellow-500',
@@ -98,7 +98,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   // Determine content type and extract headings
   const hasBlocks = Array.isArray(post.layout) && post.layout.length > 0
   const hasChangelog = !!post.changelog
-  const hasRichText = !!post.content
 
   let headings: Array<{ id: string; text: string; level: number }> = []
   if (hasBlocks) {
@@ -110,8 +109,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     }
   } else if (hasChangelog) {
     headings = extractMarkdownHeadings(post.changelog as string)
-  } else if (hasRichText) {
-    headings = extractLexicalHeadings(post.content as Parameters<typeof extractLexicalHeadings>[0])
   }
 
   // Featured image
@@ -213,8 +210,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 <BlockRenderer blocks={post.layout as Parameters<typeof BlockRenderer>[0]['blocks']} />
               ) : hasChangelog ? (
                 <Markdown content={post.changelog as string} />
-              ) : hasRichText ? (
-                <div dangerouslySetInnerHTML={{ __html: lexicalToHtml(post.content as Parameters<typeof lexicalToHtml>[0]) }} />
               ) : post.excerpt ? (
                 <p className="text-[17px] text-slate-600 leading-[1.85] my-4">{post.excerpt}</p>
               ) : null}
@@ -238,7 +233,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 <h3 className="text-xl font-extrabold mb-2 tracking-tight">Interesse geweckt?</h3>
                 <p className="text-sm text-slate-400 mb-6 max-w-md mx-auto">Alle VCDS Diagnoseadapter erhaeltlich im Auto-Intern Shop — mit kostenlosem Support aus Bochum.</p>
                 <a href="https://auto-intern.de/shop/" target="_blank" rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 bg-red-600 text-white font-bold rounded-md hover:bg-red-500 active:bg-red-700 transition-colors text-sm">
+                  className="inline-flex items-center gap-2 px-7 py-3.5 bg-accent-600 text-white font-bold rounded-md hover:bg-accent-500 active:bg-accent-700 transition-colors text-sm">
                   Im Shop bestellen <Icon name="arrow" size={14} />
                 </a>
               </div>
@@ -252,7 +247,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
             {/* Back to blog */}
             <div className="text-center mt-12">
-              <Link href="/blog" className="inline-flex items-center gap-2 text-sm font-bold text-blue-600 hover:text-blue-700 transition-colors">
+              <Link href="/blog" className="inline-flex items-center gap-2 text-sm font-bold text-primary-600 hover:text-primary-700 transition-colors">
                 <Icon name="arrow" size={12} className="rotate-180" /> Zurück zum Blog
               </Link>
             </div>

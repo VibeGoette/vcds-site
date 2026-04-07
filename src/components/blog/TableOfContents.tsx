@@ -61,7 +61,7 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
                     href={`#${h.id}`}
                     onClick={() => setIsOpen(false)}
                     className={`text-sm transition-colors block py-0.5 ${
-                      activeId === h.id ? 'text-blue-600 font-semibold' : 'text-slate-500 hover:text-slate-700'
+                      activeId === h.id ? 'text-primary-600 font-semibold' : 'text-slate-500 hover:text-slate-700'
                     }`}
                   >
                     {h.text}
@@ -85,7 +85,7 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
                   h.level === 3 ? 'pl-6' : 'pl-4'
                 } ${
                   activeId === h.id
-                    ? 'border-blue-500 text-blue-600 font-semibold'
+                    ? 'border-primary-500 text-primary-600 font-semibold'
                     : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300'
                 }`}
               >

@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { Icon } from '@/components/Icon'
 
 const catGradients: Record<string, string> = {
-  beratung: 'from-blue-700 via-blue-600 to-cyan-500',
+  beratung: 'from-primary-700 via-primary-600 to-cyan-500',
   versionshistorie: 'from-emerald-700 via-green-600 to-lime-500',
   anleitungen: 'from-purple-700 via-purple-600 to-pink-500',
   news: 'from-amber-700 via-amber-600 to-yellow-500',
@@ -51,11 +51,11 @@ export function RelatedPosts({ posts }: RelatedPostsProps) {
                 <Icon name={icon} size={28} className="text-white/70 relative z-10 group-hover:scale-110 transition-transform duration-500" />
               </div>
               <div className="p-4 flex-1 flex flex-col">
-                <h3 className="font-extrabold text-slate-900 text-sm mb-1 group-hover:text-blue-600 transition-colors tracking-tight">
+                <h3 className="font-extrabold text-slate-900 text-sm mb-1 group-hover:text-primary-600 transition-colors tracking-tight">
                   {rp.title}
                 </h3>
                 {rp.excerpt && <p className="text-xs text-slate-500 flex-1 line-clamp-2">{rp.excerpt}</p>}
-                <span className="mt-3 text-xs font-bold text-blue-600 flex items-center gap-1.5">
+                <span className="mt-3 text-xs font-bold text-primary-600 flex items-center gap-1.5">
                   Lesen <Icon name="arrow" size={10} className="group-hover:translate-x-1 transition-transform duration-300" />
                 </span>
               </div>

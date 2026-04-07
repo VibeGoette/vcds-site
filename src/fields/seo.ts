@@ -14,9 +14,19 @@ export const seoFields: Field = {
   },
   fields: [
     {
+      name: 'seoPreview',
+      type: 'ui',
+      label: 'Google-Vorschau',
+      admin: {
+        components: {
+          Field: '/components/admin/SEOPreview',
+        },
+      },
+    },
+    {
       name: 'metaTitle',
       type: 'text',
-      label: 'Meta Title',
+      label: 'Google-Suchtitel',
       maxLength: 70,
       admin: {
         description: 'Max. 70 Zeichen. Wird im Browser-Tab und in Google angezeigt.',
@@ -25,7 +35,7 @@ export const seoFields: Field = {
     {
       name: 'metaDescription',
       type: 'textarea',
-      label: 'Meta Description',
+      label: 'Google-Beschreibung',
       maxLength: 160,
       admin: {
         description: 'Max. 160 Zeichen. Wird in Google-Suchergebnissen angezeigt.',

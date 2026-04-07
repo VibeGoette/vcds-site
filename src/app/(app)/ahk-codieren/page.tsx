@@ -86,19 +86,19 @@ export default function AhkCodieren() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`${p.name} – Wiki-Anleitung öffnen (neuer Tab)`}
-                  className="group block bg-white border border-slate-200 rounded-xl p-5 hover:border-blue-300 hover:shadow-md focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:rounded-xl transition-all"
+                  className="group block bg-white border border-slate-200 rounded-xl p-5 hover:border-primary-300 hover:shadow-md focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:rounded-xl transition-all"
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
-                        <h3 className="text-lg font-bold text-slate-900 group-hover:text-blue-600 transition-colors">{p.name}</h3>
-                        <Icon name="globe" size={14} className="text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <h3 className="text-lg font-bold text-slate-900 group-hover:text-primary-600 transition-colors">{p.name}</h3>
+                        <Icon name="globe" size={14} className="text-primary-400 opacity-0 group-hover:opacity-100 transition-opacity" />
                       </div>
                       <p className="text-sm text-slate-500 mb-3">{p.desc}</p>
                       <ol className="space-y-1">
                         {p.steps.map((step, i) => (
                           <li key={i} className="flex items-start gap-2 text-xs text-slate-600">
-                            <span className="inline-flex items-center justify-center w-5 h-5 rounded bg-blue-50 text-blue-600 text-xs font-bold shrink-0 mt-0.5">{i + 1}</span>
+                            <span className="inline-flex items-center justify-center w-5 h-5 rounded bg-primary-50 text-primary-600 text-xs font-bold shrink-0 mt-0.5">{i + 1}</span>
                             {step}
                           </li>
                         ))}
@@ -114,7 +114,7 @@ export default function AhkCodieren() {
           {/* PDF Download */}
           <section className="bg-slate-50 border border-slate-200 rounded-xl p-6">
             <div className="flex items-start gap-4">
-              <div className="w-11 h-11 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0">
+              <div className="w-11 h-11 rounded-xl bg-primary-600 text-white flex items-center justify-center shrink-0">
                 <Icon name="download" size={20} />
               </div>
               <div>
@@ -124,7 +124,7 @@ export default function AhkCodieren() {
                   href="https://www.vcds.de/wp-content/uploads/2024/09/VCDS-Nachruestung-AHK.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 text-white text-sm font-bold rounded-lg hover:bg-blue-500 active:bg-blue-700 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-colors"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary-600 text-white text-sm font-bold rounded-lg hover:bg-primary-500 active:bg-primary-700 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 transition-colors"
                 >
                   <Icon name="download" size={14} />
                   PDF herunterladen
@@ -138,14 +138,14 @@ export default function AhkCodieren() {
           <section>
             <h2 className="text-xl font-bold text-slate-900 mb-4">Hilfe bei Fragen</h2>
             <div className="grid sm:grid-cols-2 gap-3">
-              <a href="/troubleshooting" className="flex items-center gap-3 bg-white border border-slate-200 rounded-xl p-4 hover:border-blue-200 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all">
+              <a href="/troubleshooting" className="flex items-center gap-3 bg-white border border-slate-200 rounded-xl p-4 hover:border-primary-200 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 transition-all">
                 <IconBox icon="search" size="sm" />
                 <div>
                   <h3 className="font-bold text-slate-900 text-sm">Troubleshooting</h3>
                   <p className="text-xs text-slate-500">Codierung klappt nicht?</p>
                 </div>
               </a>
-              <a href="/kaufberatung" className="flex items-center gap-3 bg-white border border-slate-200 rounded-xl p-4 hover:border-blue-200 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all">
+              <a href="/kaufberatung" className="flex items-center gap-3 bg-white border border-slate-200 rounded-xl p-4 hover:border-primary-200 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 transition-all">
                 <IconBox icon="search" size="sm" />
                 <div>
                   <h3 className="font-bold text-slate-900 text-sm">Kaufberatung</h3>
@@ -156,7 +156,7 @@ export default function AhkCodieren() {
                 href="https://forum.vcds.de/c/codierung-anpassung/21"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 bg-white border border-slate-200 rounded-xl p-4 hover:border-blue-200 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all"
+                className="flex items-center gap-3 bg-white border border-slate-200 rounded-xl p-4 hover:border-primary-200 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 transition-all"
               >
                 <IconBox icon="chat" size="sm" />
                 <div>
@@ -168,7 +168,7 @@ export default function AhkCodieren() {
                 href="https://wiki-online.vcds.de"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 bg-white border border-slate-200 rounded-xl p-4 hover:border-blue-200 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all"
+                className="flex items-center gap-3 bg-white border border-slate-200 rounded-xl p-4 hover:border-primary-200 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 transition-all"
               >
                 <IconBox icon="globe" size="sm" />
                 <div>
