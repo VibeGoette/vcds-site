@@ -11,7 +11,18 @@ export function ContactForm() {
   const [errorMsg, setErrorMsg] = useState('')
   const [formLoadedAt] = useState(() => Date.now())
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
+  const [turnstileError, setTurnstileError] = useState(false)
   const turnstileRef = useRef<HTMLDivElement>(null)
+
+  function resetTurnstile() {
+    setTurnstileToken(null)
+    const turnstile = (window as unknown as Record<string, unknown>).turnstile as {
+      reset: (el: HTMLElement | null) => void
+    } | undefined
+    if (turnstile && turnstileRef.current) {
+      turnstile.reset(turnstileRef.current)
+    }
+  }
 
   // Load Turnstile script and render widget (only if site key is configured)
   useEffect(() => {
@@ -21,7 +32,12 @@ export function ContactForm() {
     script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onTurnstileLoad'
     script.async = true
 
+    // Graceful degradation: if script fails to load, allow form submission without Turnstile
+    script.onerror = () => setTurnstileError(true)
+    const timeout = setTimeout(() => setTurnstileError(true), 10000)
+
     ;(window as unknown as Record<string, unknown>).onTurnstileLoad = () => {
+      clearTimeout(timeout)
       const turnstile = (window as unknown as Record<string, unknown>).turnstile as {
         render: (el: HTMLElement, opts: Record<string, unknown>) => void
       } | undefined
@@ -37,7 +53,7 @@ export function ContactForm() {
     }
 
     document.head.appendChild(script)
-    return () => { script.remove() }
+    return () => { clearTimeout(timeout); script.remove() }
   }, [])
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -71,9 +87,11 @@ export function ContactForm() {
 
       setStatus('success')
       form.reset()
+      if (TURNSTILE_SITE_KEY) resetTurnstile()
     } catch (err) {
       setStatus('error')
       setErrorMsg(err instanceof Error ? err.message : 'Ein Fehler ist aufgetreten.')
+      if (TURNSTILE_SITE_KEY) resetTurnstile()
     }
   }
 
@@ -147,7 +165,7 @@ export function ContactForm() {
       {/* Cloudflare Turnstile — only rendered if NEXT_PUBLIC_TURNSTILE_SITE_KEY is set */}
       {TURNSTILE_SITE_KEY && <div ref={turnstileRef} className="mb-4" />}
 
-      <Button type="submit" variant="secondary" disabled={status === 'loading' || (!!TURNSTILE_SITE_KEY && !turnstileToken)} className="min-h-[48px]">
+      <Button type="submit" variant="secondary" disabled={status === 'loading' || (!!TURNSTILE_SITE_KEY && !turnstileToken && !turnstileError)} className="min-h-[48px]">
         {status === 'loading' ? 'Wird gesendet...' : 'Nachricht senden'}
       </Button>
     </form>
