@@ -874,8 +874,8 @@ export async function seed(payload: Payload): Promise<void> {
         backgroundColor: '#ffffff',
       },
       typography: {
-        headingFont: 'inter',
-        bodyFont: 'inter',
+        headingFont: 'quicksand',
+        bodyFont: 'quicksand',
       },
       layout: {
         buttonRadius: 'md',

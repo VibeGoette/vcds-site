@@ -145,10 +145,10 @@ Farben, Fonts und Layout werden in `ThemeSettings` Global gespeichert und als CS
 
 ### Fonts
 
-4 Google Fonts geladen (Inter, DM Sans, Source Sans 3, Quicksand), aktiv per CSS Variable:
+4 Google Fonts geladen (Quicksand, Inter, DM Sans, Source Sans 3), aktiv per CSS Variable:
 - `font-sans` → Body-Font
 - `font-heading` → Heading-Font
-- Standard: Inter fuer beides
+- Standard: Quicksand fuer beides (VCDS Corporate Font)
 
 ### Animationen
 
