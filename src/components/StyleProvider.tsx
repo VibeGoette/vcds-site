@@ -42,7 +42,7 @@ export async function StyleProvider({ children, pageCss }: { children: React.Rea
   }
 
   return (
-    <div style={cssVars as React.CSSProperties}>
+    <div style={cssVars as React.CSSProperties} className="flex flex-col flex-1">
       {/* Global custom CSS — only editable by super-philipp, sanitized as defense-in-depth */}
       {globalCss && <style dangerouslySetInnerHTML={{ __html: sanitizeCss(globalCss) }} />}
       {pageCss && <style dangerouslySetInnerHTML={{ __html: sanitizeCss(pageCss) }} />}

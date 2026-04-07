@@ -1,7 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import { slugField } from '@/fields/slug'
 import { seoFields } from '@/fields/seo'
-import { publicReadAdminWrite } from '@/access'
+import { publicReadAdminWrite, superPhilippOnly } from '@/access'
 import { contentBlocks } from '@/blocks'
 import { revalidateCollection } from '@/hooks/revalidate'
 
@@ -117,6 +117,10 @@ export const Pages: CollectionConfig = {
       name: 'customCss',
       type: 'textarea',
       label: 'Seiten-spezifisches CSS',
+      access: {
+        read: superPhilippOnly,
+        update: superPhilippOnly,
+      },
       admin: {
         description: 'CSS das nur auf dieser Seite geladen wird. Nur fuer erfahrene Nutzer.',
         rows: 8,

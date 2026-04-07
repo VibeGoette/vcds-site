@@ -63,7 +63,7 @@ export async function ThemeProvider({ children }: { children: React.ReactNode })
   }
 
   return (
-    <div style={cssVars as React.CSSProperties}>
+    <div style={cssVars as React.CSSProperties} className="flex flex-col flex-1">
       {children}
     </div>
   )

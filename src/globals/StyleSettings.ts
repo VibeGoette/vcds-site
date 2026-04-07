@@ -1,5 +1,6 @@
 import type { GlobalConfig } from 'payload'
 import { revalidateGlobal } from '@/hooks/revalidate'
+import { superPhilippOnly } from '@/access'
 
 export const StyleSettings: GlobalConfig = {
   slug: 'style-settings',
@@ -148,6 +149,10 @@ export const StyleSettings: GlobalConfig = {
           name: 'globalCss',
           type: 'textarea',
           label: 'Globales CSS',
+          access: {
+            read: superPhilippOnly,
+            update: superPhilippOnly,
+          },
           admin: {
             description: 'CSS das auf ALLEN Seiten der Website eingefuegt wird. Beispiel: .my-class { color: red; }',
             rows: 12,
