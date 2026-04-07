@@ -76,44 +76,8 @@ export const ThemeSettings: GlobalConfig = {
         },
       ],
     },
-    // ── Typografie ──
-    {
-      name: 'typography',
-      type: 'group',
-      label: 'Schriftarten',
-      fields: [
-        {
-          name: 'headingFont',
-          type: 'select',
-          label: 'Überschriften-Schrift',
-          defaultValue: 'quicksand',
-          options: [
-            { label: 'Quicksand (VCDS Standard)', value: 'quicksand' },
-            { label: 'Inter (modern, professionell)', value: 'inter' },
-            { label: 'DM Sans (freundlich, klar)', value: 'dm-sans' },
-            { label: 'Source Sans 3 (technisch, neutral)', value: 'source-sans-3' },
-          ],
-          admin: {
-            description: 'Schriftart für Überschriften (H1–H6). Standard: Quicksand (VCDS Corporate Font).',
-          },
-        },
-        {
-          name: 'bodyFont',
-          type: 'select',
-          label: 'Fließtext-Schrift',
-          defaultValue: 'quicksand',
-          options: [
-            { label: 'Quicksand (VCDS Standard)', value: 'quicksand' },
-            { label: 'Inter (modern, professionell)', value: 'inter' },
-            { label: 'DM Sans (freundlich, klar)', value: 'dm-sans' },
-            { label: 'Source Sans 3 (technisch, neutral)', value: 'source-sans-3' },
-          ],
-          admin: {
-            description: 'Schriftart für normalen Text, Buttons und Formulare. Standard: Quicksand.',
-          },
-        },
-      ],
-    },
+    // Typografie: Quicksand ist die VCDS Corporate Font (fest, nicht aenderbar).
+    // Schriftgroessen werden ueber Style-Einstellungen gesteuert.
     // ── Layout ──
     {
       name: 'layout',

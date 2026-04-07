@@ -15,12 +15,8 @@ const SPACING_MAP: Record<string, { sectionY: string; sectionYLg: string }> = {
   spacious: { sectionY: '5.5rem', sectionYLg: '7rem' },
 }
 
-const FONT_MAP: Record<string, string> = {
-  inter: 'var(--font-inter)',
-  'dm-sans': 'var(--font-dm-sans)',
-  'source-sans-3': 'var(--font-source-sans-3)',
-  quicksand: 'var(--font-quicksand)',
-}
+// Only Quicksand is loaded — all font settings map to the same font (DSGVO-compliant, self-hosted)
+const FONT_VAR = 'var(--font-quicksand)'
 
 export async function ThemeProvider({ children }: { children: React.ReactNode }) {
   const settings = await getThemeSettings()
@@ -56,9 +52,9 @@ export async function ThemeProvider({ children }: { children: React.ReactNode })
     '--color-text': textColor,
     '--color-bg': backgroundColor,
 
-    // Typography
-    '--font-heading': `${FONT_MAP[headingFont] || FONT_MAP.inter}, system-ui, sans-serif`,
-    '--font-body': `${FONT_MAP[bodyFont] || FONT_MAP.inter}, system-ui, sans-serif`,
+    // Typography — Quicksand only (VCDS corporate font)
+    '--font-heading': `${FONT_VAR}, system-ui, sans-serif`,
+    '--font-body': `${FONT_VAR}, system-ui, sans-serif`,
 
     // Layout
     '--button-radius': RADIUS_MAP[buttonRadius] || RADIUS_MAP.md,

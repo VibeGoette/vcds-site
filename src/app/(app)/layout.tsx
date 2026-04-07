@@ -1,16 +1,16 @@
 import type { Metadata } from 'next'
-import { Inter, DM_Sans, Source_Sans_3, Quicksand } from 'next/font/google'
+import { Quicksand } from 'next/font/google'
 import Script from 'next/script'
 import { getGlobalSeo } from '@/lib/seo'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import { StyleProvider } from '@/components/StyleProvider'
 import { AnimateOnScroll } from '@/components/AnimateOnScroll'
+import { CookieBanner } from '@/components/CookieBanner'
+import { LiveChatLoader } from '@/components/LiveChatLoader'
 import '../globals.css'
 
-const inter = Inter({ subsets: ['latin'], weight: ['400','500','600','700'], display: 'swap', variable: '--font-inter' })
-const dmSans = DM_Sans({ subsets: ['latin'], weight: ['400','500','600','700'], display: 'swap', variable: '--font-dm-sans' })
-const sourceSans3 = Source_Sans_3({ subsets: ['latin'], weight: ['400','500','600','700'], display: 'swap', variable: '--font-source-sans-3' })
-const quicksand = Quicksand({ subsets: ['latin'], weight: ['400','500','600','700'], display: 'swap', variable: '--font-quicksand' })
+// Quicksand is the VCDS corporate font — self-hosted via next/font (DSGVO-compliant, no Google CDN requests)
+const quicksand = Quicksand({ subsets: ['latin'], weight: ['300','400','500','600','700'], display: 'swap', variable: '--font-quicksand' })
 
 export const metadata: Metadata = {
   title: { default: 'VCDS – Diagnosegerät für VW, Audi, Skoda & Seat', template: '%s | VCDS.de' },
@@ -51,7 +51,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   const globalSeo = await getGlobalSeo()
 
   return (
-    <div className={`${inter.variable} ${dmSans.variable} ${sourceSans3.variable} ${quicksand.variable} font-sans antialiased min-h-screen flex flex-col`}>
+    <div className={`${quicksand.variable} font-sans antialiased min-h-screen flex flex-col`}>
       <ThemeProvider>
         <StyleProvider>
         <AnimateOnScroll />
@@ -78,12 +78,10 @@ export default async function AppLayout({ children }: { children: React.ReactNod
           />
         )}
 
-        {/* LiveChat.com Widget */}
-        <Script id="livechat-widget" strategy="lazyOnload">{`
-          window.__lc = window.__lc || {};
-          window.__lc.license = 17285498;
-          ;(function(n,t,c){function i(n){return e._h?e._h.apply(null,n):e._q.push(n)}var e={_q:[],_h:null,_v:"2.0",on:function(){i(["on",c.call(arguments)])},once:function(){i(["once",c.call(arguments)])},off:function(){i(["off",c.call(arguments)])},get:function(){if(!e._h)throw new Error("[LiveChatWidget] You can't use getters before load.");return i(["get",c.call(arguments)])},call:function(){i(["call",c.call(arguments)])}};window.LiveChatWidget=window.LiveChatWidget||e;var s=t.createElement("script");s.async=!0;s.type="text/javascript";s.src="https://cdn.livechatinc.com/tracking.js";t.head.appendChild(s)})(window,document,[].slice)
-        `}</Script>
+        {/* LiveChat — only loaded after cookie consent (DSGVO) */}
+        <LiveChatLoader />
+        {/* Cookie Banner (DSGVO) */}
+        <CookieBanner />
         </StyleProvider>
       </ThemeProvider>
     </div>
