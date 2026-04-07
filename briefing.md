@@ -6,7 +6,7 @@ Eine komplett neue Website fuer VCDS.de mit einem eingebauten Content-Management
 
 ## Zugang zum Admin-Bereich
 
-1. Oeffne im Browser: **eure-domain.de/admin**
+1. Oeffne im Browser: **vcds-site.vercel.app/admin** (spaeter: vcds.de/admin)
 2. Beim allerersten Besuch: E-Mail und Passwort eingeben → das wird euer Admin-Konto
 3. **Wichtig**: Zugangsdaten in Bitwarden speichern!
 
@@ -28,7 +28,7 @@ Neue Benutzer anlegen: Admin-Bereich → System → Benutzer → Neu erstellen
 
 **Admin → Einstellungen → Design-Einstellungen**
 
-- **Farben**: Primaerfarbe (Blau) und Akzentfarbe (Rot) als Hex-Wert aendern. Alle Abstufungen werden automatisch erzeugt.
+- **Farben**: Primaerfarbe (Blau) und Akzentfarbe (Rot) aendern. Einfach den Farbcode eingeben (z.B. `#2563eb` fuer Blau — findet ihr auf Seiten wie htmlcolorcodes.com). Alle hellen und dunklen Abstufungen werden automatisch erzeugt.
 - **Schriftarten**: 4 Optionen fuer Ueberschriften und Fliesstext (Inter, DM Sans, Source Sans 3, Quicksand)
 - **Button-Ecken**: Von eckig bis rund (Pillenform)
 - **Abstaende**: Kompakt, Standard oder Grosszuegig
@@ -39,7 +39,7 @@ Aenderungen sind **sofort sichtbar** auf der Website.
 
 **Einzeln:** Admin → Medien → Erstellen → Datei waehlen
 
-**Mehrere gleichzeitig:** Admin → in der URL `/admin/bulk-upload` eingeben
+**Mehrere gleichzeitig:** Oeffne **vcds-site.vercel.app/admin/bulk-upload** (bzw. vcds.de/admin/bulk-upload)
 - Bilder per Drag & Drop oder Dateiauswahl
 - Alt-Texte werden automatisch aus dem Dateinamen erzeugt
 - Max. 10 MB pro Bild
@@ -54,7 +54,7 @@ Aenderungen sind **sofort sichtbar** auf der Website.
 
 **Admin → Inhalt → Blog-Beitraege → Erstellen**
 
-1. Titel und Slug eingeben (Slug wird automatisch erzeugt)
+1. Titel eingeben (die URL-Kurzform wird automatisch erzeugt, z.B. "VCDS Update 2026" wird zu `/blog/vcds-update-2026`)
 2. Kategorie waehlen
 3. Titelbild hochladen
 4. Inhaltsblöcke hinzufuegen:
@@ -115,6 +115,21 @@ Alle Anfragen ueber das Kontaktformular werden hier gespeichert. Zusaetzlich wir
 - Firmenname, Adresse, Kontakt, Logo
 - Land (DE/AT/CH)
 - Sortierung: Niedrigere Zahl = weiter oben in der Liste
+
+### Team-Mitglieder verwalten
+
+**Admin → Personen → Team-Mitglieder**
+
+- Name, Rolle, Beschreibung, Foto
+- Motto und Spezialgebiete
+- Aktiv/Inaktiv schalten (inaktive werden nicht auf der Website angezeigt)
+
+### Kundenstimmen (Testimonials)
+
+**Admin → Personen → Kundenstimmen**
+
+- Zitat, Name und Herkunft des Kunden
+- Aktiv/Inaktiv schalten und Reihenfolge aendern
 
 ### Website-Einstellungen
 
