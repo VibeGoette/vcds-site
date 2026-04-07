@@ -25,9 +25,18 @@ const BulkUploadView: React.FC = () => {
   const [uploadComplete, setUploadComplete] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
+  const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10 MB
+
   const addFiles = useCallback((newFiles: FileList | File[]) => {
-    const entries: FileEntry[] = Array.from(newFiles)
-      .filter((f) => f.type.startsWith('image/'))
+    const imageFiles = Array.from(newFiles).filter((f) => f.type.startsWith('image/'))
+    const tooLarge = imageFiles.filter((f) => f.size > MAX_FILE_SIZE)
+    if (tooLarge.length > 0) {
+      alert(
+        `${tooLarge.length} Datei(en) ueberschreiten das Limit von 10 MB und wurden nicht hinzugefuegt:\n${tooLarge.map((f) => `${f.name} (${(f.size / 1024 / 1024).toFixed(1)} MB)`).join('\n')}`,
+      )
+    }
+    const entries: FileEntry[] = imageFiles
+      .filter((f) => f.size <= MAX_FILE_SIZE)
       .map((file) => ({
         file,
         preview: URL.createObjectURL(file),
