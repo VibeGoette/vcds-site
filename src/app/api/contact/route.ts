@@ -2,9 +2,14 @@ import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 import { getPayloadClient } from '@/lib/payload'
 
+// In-memory rate limiter — works within a single serverless instance.
+// On Vercel (stateless), this resets on cold starts and cannot prevent
+// distributed attacks. For production hardening, add Cloudflare Turnstile
+// (NEXT_PUBLIC_TURNSTILE_SITE_KEY + TURNSTILE_SECRET_KEY) or Upstash Redis.
 const rateLimit = new Map<string, { count: number; resetAt: number }>()
 const RATE_LIMIT_MAX = 3
 const RATE_LIMIT_WINDOW = 15 * 60 * 1000 // 15 Minuten
+const MIN_SUBMISSION_TIME_MS = 3000 // Mensch braucht mind. 3s fuer ein Formular
 
 function cleanupExpiredEntries() {
   const now = Date.now()
@@ -15,7 +20,6 @@ function cleanupExpiredEntries() {
 
 function isRateLimited(ip: string): boolean {
   const now = Date.now()
-  // Cleanup expired entries every 100 requests to prevent memory leak
   if (rateLimit.size > 100) cleanupExpiredEntries()
   const entry = rateLimit.get(ip)
   if (!entry || now > entry.resetAt) {
@@ -24,6 +28,22 @@ function isRateLimited(ip: string): boolean {
   }
   entry.count++
   return entry.count >= RATE_LIMIT_MAX
+}
+
+async function verifyTurnstile(token: string): Promise<boolean> {
+  const secret = process.env.TURNSTILE_SECRET_KEY
+  if (!secret) return true // Turnstile not configured — skip verification
+  try {
+    const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ secret, response: token }),
+    })
+    const data = await res.json() as { success: boolean }
+    return data.success
+  } catch {
+    return true // On verification error, allow submission (fail open)
+  }
 }
 
 function sanitize(str: string): string {
@@ -53,6 +73,8 @@ export async function POST(request: NextRequest) {
     adapterNr?: unknown
     phone?: unknown
     honeypot?: unknown
+    formLoadedAt?: unknown
+    turnstileToken?: unknown
   }
 
   let body: ContactBody
@@ -62,12 +84,27 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Ungültige Anfrage.' }, { status: 400 })
   }
 
-  const { name, email, message, adapterNr, phone, honeypot } = body
+  const { name, email, message, adapterNr, phone, honeypot, formLoadedAt, turnstileToken } = body
 
   // Honeypot — bots fill hidden fields
   if (honeypot) {
-    // Silently accept to not reveal the trap
     return NextResponse.json({ success: true })
+  }
+
+  // Time-based bot detection — form submitted faster than a human can type
+  if (formLoadedAt && typeof formLoadedAt === 'number') {
+    const elapsed = Date.now() - formLoadedAt
+    if (elapsed < MIN_SUBMISSION_TIME_MS) {
+      return NextResponse.json({ success: true }) // Silent reject for bots
+    }
+  }
+
+  // Cloudflare Turnstile verification (optional — only if configured)
+  if (process.env.TURNSTILE_SECRET_KEY && turnstileToken && typeof turnstileToken === 'string') {
+    const valid = await verifyTurnstile(turnstileToken)
+    if (!valid) {
+      return NextResponse.json({ error: 'Bot-Schutz-Verifizierung fehlgeschlagen.' }, { status: 403 })
+    }
   }
 
   // Validation

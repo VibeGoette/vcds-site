@@ -7,6 +7,7 @@ import { Icon } from '@/components/Icon'
 export function ContactForm() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [errorMsg, setErrorMsg] = useState('')
+  const [formLoadedAt] = useState(() => Date.now())
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -26,7 +27,8 @@ export function ContactForm() {
           adapterNr: data.get('adapterNr'),
           phone: data.get('phone'),
           message: data.get('message'),
-          honeypot: data.get('website'), // honeypot field
+          honeypot: data.get('website'),
+          formLoadedAt,
         }),
       })
 
