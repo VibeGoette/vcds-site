@@ -21,7 +21,7 @@
 | Icons | Lucide React + eigene Icon-Komponente |
 | E-Mail | Resend SDK (Kontaktformular) |
 | Tests | Vitest + Testing Library + jsdom (99 Tests) |
-| Deployment | Vercel (auto-deploy auf main) |
+| Deployment | Docker Compose (Self-Hosted) |
 
 ## Befehle
 
@@ -230,9 +230,17 @@ Erreichbar unter `/admin`. Erster Besuch → Admin-User erstellen. Credentials i
 - **Einstellungen:** Website-Einstellungen, Navigation, Design-Einstellungen
 - **Custom Views:** Massenupload (/admin/bulk-upload)
 
+## Deployment
+
+- **Methode:** Docker Compose (`docker compose up -d`)
+- **Container:** Node 20 Alpine, Standalone-Build
+- **Datenbank:** SQLite (lokal im Container, keine externe DB)
+- **Volumes:** `vcds-data` (DB), `vcds-media` (Uploads)
+- **Reverse Proxy:** Caddy/Nginx/Traefik fuer HTTPS
+- **Anleitung:** Siehe `DEPLOYMENT.md`
+
 ## Git
 
-- **Main Branch:** `main` (Produktion auf Vercel)
-- **Feature Branches:** `claude/<feature-name>-<id>`
+- **Main Branch:** `main`
 - **Commits:** Conventional Commits (feat/fix/chore), Englisch
 - **Vor Push:** `npx tsc --noEmit` + `npm run test` + `npm run build`

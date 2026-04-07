@@ -20,7 +20,7 @@ VCDS.de ist die offizielle Website fuer VCDS (VAG-COM Diagnostic System), vertri
 | UI | Radix UI (Accordion, Tabs), Lucide Icons |
 | E-Mail | Resend SDK |
 | Tests | Vitest + Testing Library (99 Tests) |
-| Deployment | Vercel (auto-deploy auf main) |
+| Deployment | Docker Compose (Self-Hosted) |
 | Auth | Payload built-in (Admin/Marketing/Editor Rollen) |
 
 ## Aktueller Stand (April 2026)
@@ -75,17 +75,18 @@ Auto-Intern nutzt **Bitwarden** fuer Credential-Management — Payload-Zugangsda
 
 ## Deployment
 
-- **Plattform**: Vercel (Team: "max goettes projects")
-- **Trigger**: Auto-deploy bei Push auf `main`
-- **Datenbank lokal**: SQLite (`file:./data/database.db`)
-- **Datenbank prod**: Turso/LibSQL (`DATABASE_URI` + `TURSO_AUTH_TOKEN`)
-- **Domain**: vcds-site.vercel.app (spaeter: vcds.de)
+- **Methode**: Docker Compose (Self-Hosted)
+- **Container**: Node 20 Alpine, Standalone-Build
+- **Datenbank**: SQLite (`file:/app/data/database.db`)
+- **Volumes**: `vcds-data` (DB) + `vcds-media` (Uploads)
+- **Port**: 3000 (Reverse Proxy fuer HTTPS davor)
+- **Domain**: vcds.de
+- **Anleitung**: Siehe `DEPLOYMENT.md`
 
 ## Bekannte Limitierungen
 
-1. **Rate Limiter auf Kontaktformular** ist In-Memory und funktioniert nicht auf Vercel (Serverless = stateless). Fuer Production: Turnstile/hCaptcha oder Upstash Redis einsetzen.
-2. **Alle 4 Google Fonts werden geladen**, auch wenn nur 2 aktiv sind. Next.js erfordert statische Font-Deklaration — dynamisches Laden ist nicht trivial.
-3. **Vorbestehender TypeScript-Fehler** in `src/test/seo.test.ts` Zeile 18 (null-Parameter). Betrifft keine Runtime.
+1. **Alle 4 Google Fonts werden geladen**, auch wenn nur 2 aktiv sind. Next.js erfordert statische Font-Deklaration — dynamisches Laden ist nicht trivial.
+2. **Rate Limiter** ist In-Memory (reicht fuer Docker mit einer Instanz). Zusaetzlich: Turnstile Bot-Schutz aktivierbar via Env Vars.
 
 ## Wichtige Verzeichnisse
 

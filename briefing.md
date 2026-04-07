@@ -1,20 +1,40 @@
 # VCDS.de — Briefing fuer Auto-Intern GmbH
 
+Hallo Philipp,
+
+hier die Uebersicht zur neuen VCDS.de Website. Die Seite laeuft als Docker Container auf eurem eigenen Server — keine externen Abhaengigkeiten, alle Daten bleiben bei euch.
+
 ## Was wurde gebaut?
 
-Eine komplett neue Website fuer VCDS.de mit einem eingebauten Content-Management-System (CMS). Ihr koennt Texte, Bilder, Produkte, FAQs und mehr selbst bearbeiten — ohne Programmierkenntnisse.
+Eine komplett neue Website fuer VCDS.de mit eingebautem Content-Management-System (CMS). Ihr koennt Texte, Bilder, Produkte, FAQs und mehr selbst bearbeiten — ohne Programmierkenntnisse.
+
+**Technisch:** Next.js 15 + Payload CMS + SQLite (alles in einem Docker Container).
+
+## Installation
+
+Siehe **DEPLOYMENT.md** fuer die vollstaendige Anleitung. Kurzversion:
+
+```bash
+cp .env.example .env        # Konfiguration kopieren
+nano .env                    # PAYLOAD_SECRET setzen
+docker compose up -d         # Starten
+```
+
+Danach: `https://vcds.de/admin` oeffnen → ersten Admin-User anlegen.
+
+**Zugangsdaten in Bitwarden speichern!**
+
+---
 
 ## Zugang zum Admin-Bereich
 
-1. Oeffne im Browser: **vcds-site.vercel.app/admin** (spaeter: vcds.de/admin)
-2. Beim allerersten Besuch: E-Mail und Passwort eingeben → das wird euer Admin-Konto
-3. **Wichtig**: Zugangsdaten in Bitwarden speichern!
+Oeffne im Browser: **https://vcds.de/admin**
 
 ### Benutzerrollen
 
 | Rolle | Wer | Was darf man |
 |-------|-----|-------------|
-| **Admin** | Geschaeftsfuehrung, IT | Alles — auch Benutzer verwalten und Design aendern |
+| **Admin** | Philipp, IT | Alles — auch Benutzer verwalten und Design aendern |
 | **Marketing** | Marketing-Team | Blog-Posts, FAQs, SEO-Einstellungen |
 | **Editor** | Content-Team | Seiten und Produkte bearbeiten |
 
@@ -39,7 +59,7 @@ Aenderungen sind **sofort sichtbar** auf der Website.
 
 **Einzeln:** Admin → Medien → Erstellen → Datei waehlen
 
-**Mehrere gleichzeitig:** Oeffne **vcds-site.vercel.app/admin/bulk-upload** (bzw. vcds.de/admin/bulk-upload)
+**Mehrere gleichzeitig:** Oeffne **https://vcds.de/admin/bulk-upload**
 - Bilder per Drag & Drop oder Dateiauswahl
 - Alt-Texte werden automatisch aus dem Dateinamen erzeugt
 - Max. 10 MB pro Bild
@@ -48,7 +68,7 @@ Aenderungen sind **sofort sichtbar** auf der Website.
 **Bilder organisieren:**
 - Anzeigename vergeben (zum leichteren Finden)
 - Kategorien zuweisen: Produkt, Team, Blog, Screenshot, Icon
-- "Verwendet in" zeigt wo das Bild eingesetzt wird
+- "Verwendung" zeigt wo das Bild eingesetzt wird
 
 ### Blog-Posts schreiben
 
@@ -89,7 +109,7 @@ Jede Seite und jeder Blog-Post hat SEO-Felder:
 
 **Admin → System → Kontaktanfragen**
 
-Alle Anfragen ueber das Kontaktformular werden hier gespeichert. Zusaetzlich wird jede Anfrage per E-Mail an support@vcds.de geschickt.
+Alle Anfragen ueber das Kontaktformular werden hier gespeichert. Wenn Resend konfiguriert ist (siehe `.env`), wird zusaetzlich eine E-Mail an support@vcds.de geschickt.
 
 ### Navigation bearbeiten
 
@@ -104,9 +124,8 @@ Alle Anfragen ueber das Kontaktformular werden hier gespeichert. Zusaetzlich wir
 **Admin → Inhalt → Produkte**
 
 - Produktname, Beschreibung, Hauptbild bearbeiten
-- **Preis (Anzeige)**: Der Preis der auf der Website steht (z.B. "ab 294 EUR")
+- **Preis (Anzeige)**: Der Preis der auf der Website steht (z.B. "ab 294 EUR"). Wird auf der Website angezeigt. Varianten-Preise separat pflegen.
 - **Varianten**: Einzelne Lizenzmodelle mit eigenen Preisen (3 VIN, 10 VIN, Unlimited)
-- Wichtig: Varianten-Preise separat pflegen!
 
 ### Fachhaendler
 
@@ -145,10 +164,24 @@ Alle Anfragen ueber das Kontaktformular werden hier gespeichert. Zusaetzlich wir
 
 ## Technische Infos fuer die IT
 
-- **Framework**: Next.js 15 + Payload CMS 3 + Tailwind CSS
-- **Hosting**: Vercel (automatisches Deployment bei Push auf main)
-- **Datenbank**: Turso (LibSQL) in Produktion
-- **E-Mail**: Resend SDK fuer Kontaktformular
-- **Auth**: Payload-eigenes System (nicht SSO/SAML) — Credentials in Bitwarden speichern
-- **Backups**: Turso hat eingebaute Backups — zusaetzlich regelmaessige DB-Exports empfohlen
-- **Env Vars auf Vercel**: PAYLOAD_SECRET, DATABASE_URI, TURSO_AUTH_TOKEN, RESEND_API_KEY, DRAFT_SECRET
+- **Deployment**: Docker Compose (siehe DEPLOYMENT.md)
+- **Datenbank**: SQLite (lokal im Container, keine externe DB noetig)
+- **E-Mail**: Resend SDK (optional, konfigurierbar via `.env`)
+- **Bot-Schutz**: Honeypot + Timing + optional Cloudflare Turnstile
+- **Auth**: Payload-eigenes System — Credentials in Bitwarden speichern
+- **Backups**: SQLite-Datei + Media-Ordner sichern (Anleitung in DEPLOYMENT.md)
+- **Updates**: ZIP entpacken → `docker compose build && docker compose up -d`
+- **Monitoring**: Health-Check auf `/api/health`
+
+## Dateien in diesem Paket
+
+| Datei | Beschreibung |
+|-------|-------------|
+| `DEPLOYMENT.md` | Schritt-fuer-Schritt Installationsanleitung |
+| `briefing.md` | Dieses Dokument |
+| `vcds-info.md` | Produkt- und Firmen-Referenz |
+| `.env.example` | Vorlage fuer Umgebungsvariablen |
+| `docker-compose.yml` | Docker-Konfiguration |
+| `Dockerfile` | Container-Build-Anleitung |
+
+Bei Fragen: Max Goette — designedbygotti@gmail.com

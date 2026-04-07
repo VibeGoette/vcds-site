@@ -1,10 +1,13 @@
 node_modules
 .next
+.env
 .env.local
 .env*.local
 *.tsbuildinfo
 next-env.d.ts
 database.db
 database.db-journal
+data/
 media/
 src/payload-types.ts
+.vercel
