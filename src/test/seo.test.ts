@@ -15,7 +15,7 @@ describe('getPageSeo', () => {
   })
 
   it('returns fallback when CMS page is null', async () => {
-    vi.mocked(getPageBySlug).mockResolvedValue(null)
+    vi.mocked(getPageBySlug).mockResolvedValue(null as never)
     const result = await getPageSeo('test', { title: 'Fallback Title', description: 'Fallback desc' })
     expect(result.title).toBe('Fallback Title')
     expect(result.description).toBe('Fallback desc')

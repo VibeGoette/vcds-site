@@ -42,28 +42,35 @@ const MediaUsageField: React.FC = () => {
       const results: UsageEntry[] = []
 
       try {
-        for (const config of COLLECTION_CONFIG) {
-          for (const field of config.mediaFields) {
-            try {
-              const url = `/api/${config.slug}?where[${field}][equals]=${id}&limit=100&depth=0`
-              const res = await fetch(url, { credentials: 'include' })
-              if (!res.ok) continue
+        // Build all queries and run in parallel
+        const queries = COLLECTION_CONFIG.flatMap((config) =>
+          config.mediaFields.map((field) => ({
+            config,
+            url: `/api/${config.slug}?where[${field}][equals]=${id}&limit=100&depth=0`,
+          })),
+        )
 
+        const responses = await Promise.all(
+          queries.map(async ({ config, url }) => {
+            try {
+              const res = await fetch(url, { credentials: 'include' })
+              if (!res.ok) return []
               const data = await res.json()
-              if (data.docs && data.docs.length > 0) {
-                for (const doc of data.docs) {
-                  results.push({
-                    collection: config.slug,
-                    collectionLabel: config.label,
-                    id: doc.id,
-                    title: doc[config.titleField] || doc.id,
-                  })
-                }
-              }
+              if (!data.docs?.length) return []
+              return data.docs.map((doc: Record<string, string>) => ({
+                collection: config.slug,
+                collectionLabel: config.label,
+                id: doc.id,
+                title: doc[config.titleField] || doc.id,
+              }))
             } catch {
-              // Skip individual collection errors
+              return []
             }
-          }
+          }),
+        )
+
+        for (const entries of responses) {
+          results.push(...entries)
         }
 
         setUsages(results)

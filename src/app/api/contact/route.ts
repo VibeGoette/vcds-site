@@ -99,8 +99,11 @@ export async function POST(request: NextRequest) {
     isSuspiciouslyFast = elapsed < MIN_SUBMISSION_TIME_MS
   }
 
-  // Cloudflare Turnstile verification (optional — only if configured)
-  if (process.env.TURNSTILE_SECRET_KEY && turnstileToken && typeof turnstileToken === 'string') {
+  // Cloudflare Turnstile verification (optional — only active if TURNSTILE_SECRET_KEY is set)
+  if (process.env.TURNSTILE_SECRET_KEY) {
+    if (!turnstileToken || typeof turnstileToken !== 'string') {
+      return NextResponse.json({ error: 'Bot-Schutz-Verifizierung fehlt. Bitte laden Sie die Seite neu.' }, { status: 403 })
+    }
     const valid = await verifyTurnstile(turnstileToken)
     if (!valid) {
       return NextResponse.json({ error: 'Bot-Schutz-Verifizierung fehlgeschlagen.' }, { status: 403 })

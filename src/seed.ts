@@ -479,7 +479,7 @@ export async function seed(payload: Payload): Promise<void> {
             version: 1,
           },
         },
-        isPublished: true,
+        status: 'published',
       },
     })
   }
@@ -859,4 +859,29 @@ export async function seed(payload: Payload): Promise<void> {
   console.log(`   → ${pages.length} Seiten`)
   console.log('   → Navigation (Haupt + Footer)')
   console.log('   → Site-Settings')
+
+  // ════════════════════════════════════════
+  // THEME SETTINGS (Defaults)
+  // ════════════════════════════════════════
+  console.log('  → Theme-Settings...')
+  await payload.updateGlobal({
+    slug: 'theme-settings',
+    data: {
+      colors: {
+        primaryColor: '#2563eb',
+        accentColor: '#dc2626',
+        textColor: '#0f172a',
+        backgroundColor: '#ffffff',
+      },
+      typography: {
+        headingFont: 'inter',
+        bodyFont: 'inter',
+      },
+      layout: {
+        buttonRadius: 'md',
+        sectionSpacing: 'default',
+      },
+    },
+  })
+  console.log('   → Theme-Settings (Defaults)')
 }

@@ -1,13 +1,44 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { Button } from '@/components/ui/Button'
 import { Icon } from '@/components/Icon'
+
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
 
 export function ContactForm() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [errorMsg, setErrorMsg] = useState('')
   const [formLoadedAt] = useState(() => Date.now())
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
+  const turnstileRef = useRef<HTMLDivElement>(null)
+
+  // Load Turnstile script and render widget (only if site key is configured)
+  useEffect(() => {
+    if (!TURNSTILE_SITE_KEY || !turnstileRef.current) return
+
+    const script = document.createElement('script')
+    script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onTurnstileLoad'
+    script.async = true
+
+    ;(window as unknown as Record<string, unknown>).onTurnstileLoad = () => {
+      const turnstile = (window as unknown as Record<string, unknown>).turnstile as {
+        render: (el: HTMLElement, opts: Record<string, unknown>) => void
+      } | undefined
+      if (turnstile && turnstileRef.current) {
+        turnstile.render(turnstileRef.current, {
+          sitekey: TURNSTILE_SITE_KEY,
+          callback: (token: string) => setTurnstileToken(token),
+          'expired-callback': () => setTurnstileToken(null),
+          theme: 'light',
+          language: 'de',
+        })
+      }
+    }
+
+    document.head.appendChild(script)
+    return () => { script.remove() }
+  }, [])
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -29,6 +60,7 @@ export function ContactForm() {
           message: data.get('message'),
           honeypot: data.get('website'),
           formLoadedAt,
+          ...(turnstileToken ? { turnstileToken } : {}),
         }),
       })
 
@@ -112,7 +144,10 @@ export function ContactForm() {
         </div>
       )}
 
-      <Button type="submit" variant="secondary" disabled={status === 'loading'} className="min-h-[48px]">
+      {/* Cloudflare Turnstile — only rendered if NEXT_PUBLIC_TURNSTILE_SITE_KEY is set */}
+      {TURNSTILE_SITE_KEY && <div ref={turnstileRef} className="mb-4" />}
+
+      <Button type="submit" variant="secondary" disabled={status === 'loading' || (!!TURNSTILE_SITE_KEY && !turnstileToken)} className="min-h-[48px]">
         {status === 'loading' ? 'Wird gesendet...' : 'Nachricht senden'}
       </Button>
     </form>
