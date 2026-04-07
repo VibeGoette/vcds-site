@@ -14,6 +14,34 @@ export const SiteSettings: GlobalConfig = {
     afterChange: [revalidateGlobal],
   },
   fields: [
+    // ── Logo ──
+    {
+      name: 'branding',
+      type: 'group',
+      label: 'Logo & Branding',
+      fields: [
+        {
+          name: 'logo',
+          type: 'upload',
+          relationTo: 'media',
+          label: 'Logo',
+          admin: {
+            description: 'Logo fuer Header und Footer. Empfohlen: PNG oder WebP mit transparentem Hintergrund, max. 200x60px. Formate: PNG, JPEG, WebP. Wenn leer wird "VCDS.de" als Text angezeigt.',
+          },
+        },
+        {
+          name: 'logoHeight',
+          type: 'number',
+          label: 'Logo-Hoehe (px)',
+          defaultValue: 32,
+          min: 16,
+          max: 60,
+          admin: {
+            description: 'Hoehe des Logos im Header (16-60px). Standard: 32px.',
+          },
+        },
+      ],
+    },
     // ── Firmen-Daten ──
     {
       name: 'company',

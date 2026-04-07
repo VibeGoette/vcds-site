@@ -1,4 +1,4 @@
-import { getNavigation } from '@/lib/payload'
+import { getNavigation, getSiteSettings } from '@/lib/payload'
 import { HeaderClient } from './HeaderClient'
 
 interface CmsNavChild {
@@ -60,9 +60,21 @@ const fallbackNav = [
 
 export async function Header() {
   let navItems = fallbackNav
+  let logoUrl: string | null = null
+  let logoHeight = 32
 
   try {
-    const navigation = await getNavigation()
+    const [navigation, settings] = await Promise.all([getNavigation(), getSiteSettings()])
+
+    // Logo from CMS
+    if (settings?.branding?.logo) {
+      const logo = settings.branding.logo as { url?: string }
+      if (logo.url) logoUrl = logo.url
+    }
+    if (settings?.branding?.logoHeight) {
+      logoHeight = settings.branding.logoHeight as number
+    }
+
     if (navigation?.mainNav?.length) {
       navItems = (navigation.mainNav as CmsNavItem[]).map((item) => ({
         label: item.label,
@@ -91,5 +103,5 @@ export async function Header() {
     })),
   }))
 
-  return <HeaderClient navItems={enriched} />
+  return <HeaderClient navItems={enriched} logoUrl={logoUrl} logoHeight={logoHeight} />
 }

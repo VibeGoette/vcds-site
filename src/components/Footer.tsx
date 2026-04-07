@@ -29,12 +29,22 @@ export async function Footer() {
   let hours = fallbackHours
   let community = fallbackCommunity
   let footerNav = fallbackFooterNav
+  let logoUrl: string | null = null
+  let logoHeight = 32
 
   try {
     const [settings, navigation] = await Promise.all([
       getSiteSettings(),
       getNavigation(),
     ])
+
+    if (settings?.branding?.logo) {
+      const logo = settings.branding.logo as { url?: string }
+      if (logo.url) logoUrl = logo.url
+    }
+    if (settings?.branding?.logoHeight) {
+      logoHeight = settings.branding.logoHeight as number
+    }
 
     if (settings?.company) {
       company = {
@@ -77,9 +87,15 @@ export async function Footer() {
       <div className="max-w-6xl mx-auto px-5 pt-14 pb-10 relative">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mb-10">
           <div>
-            <div className="flex items-baseline gap-1 mb-4">
-              <span className="font-bold text-white text-lg tracking-tight">VCDS</span>
-              <span className="text-primary-500 font-bold text-lg">.de</span>
+            <div className="mb-4">
+              {logoUrl ? (
+                <img src={logoUrl} alt="VCDS.de" style={{ height: `${logoHeight}px` }} className="w-auto brightness-0 invert" />
+              ) : (
+                <div className="flex items-baseline gap-1">
+                  <span className="font-bold text-white text-lg tracking-tight">VCDS</span>
+                  <span className="text-primary-500 font-bold text-lg">.de</span>
+                </div>
+              )}
             </div>
             <p className="text-sm leading-relaxed">Betrieben von Auto-Intern GmbH</p>
             <p className="text-sm text-slate-500">VCDS Software von Ross-Tech, LLC</p>

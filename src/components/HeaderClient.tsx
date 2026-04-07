@@ -7,7 +7,7 @@ import { Icon } from './Icon'
 interface NavChild { label: string; href: string; isExternal?: boolean; icon?: string; desc?: string }
 interface NavItem { label: string; href: string; isExternal?: boolean; children?: NavChild[] }
 
-export function HeaderClient({ navItems }: { navItems: NavItem[] }) {
+export function HeaderClient({ navItems, logoUrl, logoHeight = 32 }: { navItems: NavItem[]; logoUrl?: string | null; logoHeight?: number }) {
   const pathname = usePathname()
   const [mobileOpen, setMobileOpen] = useState(false)
   const [activeDrop, setActiveDrop] = useState<string | null>(null)
@@ -48,9 +48,15 @@ export function HeaderClient({ navItems }: { navItems: NavItem[] }) {
   return (
     <header className={`sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b transition-all duration-200 ${scrolled ? 'h-14 shadow-sm border-slate-100' : 'h-16 border-slate-200'}`}>
       <div className="max-w-6xl mx-auto px-4 sm:px-5 h-full flex items-center justify-between">
-        <Link href="/" className="flex items-baseline gap-1 shrink-0" aria-label="VCDS.de Startseite">
-          <span className="text-lg font-bold text-primary-600">VCDS</span>
-          <span className="text-lg font-bold text-slate-300">.de</span>
+        <Link href="/" className="flex items-center shrink-0" aria-label="VCDS.de Startseite">
+          {logoUrl ? (
+            <img src={logoUrl} alt="VCDS.de" style={{ height: `${logoHeight}px` }} className="w-auto" />
+          ) : (
+            <span className="flex items-baseline gap-1">
+              <span className="text-lg font-bold text-primary-600">VCDS</span>
+              <span className="text-lg font-bold text-slate-300">.de</span>
+            </span>
+          )}
         </Link>
 
         {/* ═══ DESKTOP NAV ═══ */}
