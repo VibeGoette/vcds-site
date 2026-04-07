@@ -15,8 +15,8 @@ const SPACING_MAP: Record<string, { sectionY: string; sectionYLg: string }> = {
   spacious: { sectionY: '5.5rem', sectionYLg: '7rem' },
 }
 
-// Only Quicksand is loaded — all font settings map to the same font (DSGVO-compliant, self-hosted)
-const FONT_VAR = 'var(--font-quicksand)'
+// Font is handled via CSS (globals.css + Tailwind), not inline styles.
+// Inline style var() nesting doesn't work reliably across browsers.
 
 export async function ThemeProvider({ children }: { children: React.ReactNode }) {
   const settings = await getThemeSettings()
@@ -52,9 +52,7 @@ export async function ThemeProvider({ children }: { children: React.ReactNode })
     '--color-text': textColor,
     '--color-bg': backgroundColor,
 
-    // Typography — Quicksand only (VCDS corporate font)
-    '--font-heading': `${FONT_VAR}, system-ui, sans-serif`,
-    '--font-body': `${FONT_VAR}, system-ui, sans-serif`,
+    // Font is set via globals.css (--font-heading, --font-body reference --font-quicksand directly)
 
     // Layout
     '--button-radius': RADIUS_MAP[buttonRadius] || RADIUS_MAP.md,

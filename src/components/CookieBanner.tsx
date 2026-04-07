@@ -50,8 +50,8 @@ export function CookieBanner() {
         <div className="flex-1">
           <p className="text-sm text-slate-700 font-medium mb-1">Cookie-Einstellungen</p>
           <p className="text-xs text-slate-500 leading-relaxed">
-            Wir verwenden technisch notwendige Cookies fuer den Betrieb der Website.
-            Fuer den LiveChat-Support werden zusaetzliche Cookies von Drittanbietern gesetzt.
+            Wir verwenden technisch notwendige Cookies für den Betrieb der Website.
+            Für den LiveChat-Support werden zusätzliche Cookies von Drittanbietern gesetzt.
             Unsere Webanalyse (Umami) ist cookieless und DSGVO-konform.{' '}
             <a href="/datenschutz" className="underline hover:text-primary-600 transition-colors">
               Mehr erfahren

@@ -33,8 +33,7 @@
   --color-text: #0f172a;
   --color-bg: #ffffff;
 
-  --font-heading: var(--font-quicksand), system-ui, sans-serif;
-  --font-body: var(--font-quicksand), system-ui, sans-serif;
+  /* Font: Quicksand is set directly via var(--font-quicksand) from next/font */
 
   --button-radius: 0.5rem;
   --section-y: 4rem;
@@ -51,9 +50,10 @@
   --style-container-max-width: 72rem;
 }
 
-/* Base typography */
-body { font-family: var(--font-body); font-size: var(--body-size); letter-spacing: 0.1px; line-height: var(--line-height); -webkit-font-smoothing: antialiased; color: var(--color-text); background-color: var(--color-bg); }
-h1,h2,h3,h4,h5,h6 { letter-spacing: 0.02em; text-wrap: balance; font-family: var(--font-heading); }
+/* Base typography — Quicksand everywhere (VCDS Corporate Font, sans-serif) */
+body { font-family: var(--font-quicksand), system-ui, sans-serif; font-size: var(--body-size); letter-spacing: 0.1px; line-height: var(--line-height); -webkit-font-smoothing: antialiased; color: var(--color-text); background-color: var(--color-bg); }
+h1,h2,h3,h4,h5,h6 { letter-spacing: 0.02em; text-wrap: balance; font-family: var(--font-quicksand), system-ui, sans-serif; }
+p, span, button, input, textarea, select, a, li, td, th, label { font-family: inherit; }
 h1 { font-size: var(--h1-size); letter-spacing: -0.01em; }
 h2 { font-size: var(--h2-size); }
 h3 { font-size: var(--h3-size); }
@@ -132,7 +132,7 @@ main { overflow-x: hidden; }
 .pull-quote::before {
   content: '\201C'; position: absolute; top: -0.25rem; left: 0;
   font-size: 4rem; line-height: 1; font-weight: 800; color: var(--color-primary-500); opacity: 0.15;
-  font-family: var(--font-body), system-ui, sans-serif;
+  font-family: var(--font-quicksand), system-ui, sans-serif;
 }
 
 /* Hero SVG hover lift */
