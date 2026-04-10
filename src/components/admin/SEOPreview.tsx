@@ -12,7 +12,7 @@ function CharCount({ current, greenMax, yellowMax }: { current: number; greenMax
   const label =
     current === 0 ? '' :
     current <= greenMax ? ' — OK' :
-    current <= yellowMax ? ' — Zu lang' :
+    current <= yellowMax ? ' — Grenzwertig' :
     ' — Zu lang'
 
   return (

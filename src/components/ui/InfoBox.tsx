@@ -28,22 +28,23 @@ interface InfoBoxProps extends VariantProps<typeof infoBoxVariants> {
   icon?: string
   children: React.ReactNode
   className?: string
+  /**
+   * Explicit ARIA role override. Use this for InfoBoxes that appear dynamically
+   * (e.g. form validation errors) — pass "alert" for critical announcements or
+   * "status" for polite updates. Default is no role: static InfoBoxes rendered
+   * at page load don't need a live-region role (screen readers either ignore
+   * them or spam the user on re-renders), and the visual variant already
+   * conveys the semantic meaning.
+   */
   role?: string
-}
-
-function getDefaultRole(variant: string): string {
-  if (variant === 'warning' || variant === 'danger') return 'alert'
-  if (variant === 'info' || variant === 'success') return 'status'
-  return 'status'
 }
 
 export function InfoBox({ variant = 'info', title, icon, children, className, role }: InfoBoxProps) {
   const config = iconConfig[variant!]
   const iconName = icon ?? config.name
-  const ariaRole = role !== undefined ? role : getDefaultRole(variant!)
 
   return (
-    <div role={ariaRole || undefined} className={cn(infoBoxVariants({ variant }), className)}>
+    <div role={role} className={cn(infoBoxVariants({ variant }), className)}>
       <div className={cn('w-9 h-9 rounded-lg flex items-center justify-center shrink-0', config.bg)}>
         <Icon name={iconName} size={18} className={config.color} />
       </div>
