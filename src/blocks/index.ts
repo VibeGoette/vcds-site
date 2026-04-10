@@ -133,6 +133,10 @@ export const CTABlock: Block = {
       admin: { description: 'Interner Pfad (/produkte) oder externe URL (https://...)' },
     },
     {
+      // DEPRECATED (CQ-05): the React renderer no longer reads this field.
+      // Kept in the schema so existing CMS rows don't lose data on save, but
+      // `hidden: true` stops new content from using it. Delete in a future
+      // release together with a data migration and a regenerate of payload-types.
       name: 'buttonVariant',
       type: 'select',
       defaultValue: 'primary',
@@ -142,6 +146,10 @@ export const CTABlock: Block = {
         { label: 'Ghost', value: 'ghost' },
         { label: 'Warnung (rot)', value: 'danger' },
       ],
+      admin: {
+        description: 'VERALTET: wird nicht mehr gerendert. Wird in einem späteren Release entfernt.',
+        hidden: true,
+      },
     },
     {
       name: 'isExternal',

@@ -120,11 +120,15 @@ export default async function Produkte() {
 
         <div className="max-w-6xl mx-auto px-5 py-12">
           <div className="grid sm:grid-cols-3 gap-4 mb-12">
-            {[{ic:'search',t:'Präzise Diagnose',d:'Alle Steuergeräte auslesen'},{ic:'cog',t:'Einfache Codierung',d:'Funktionen freischalten'},{ic:'bolt',t:'Auto-Scan',d:'Komplett in Minuten'}].map(f => (
-              <Card key={f.t} className="text-center">
-                <IconBox icon={f.ic} size="lg" className="mx-auto mb-4" />
-                <h3 className="font-bold text-slate-900 mb-1">{f.t}</h3>
-                <p className="text-sm text-slate-500">{f.d}</p>
+            {[
+              { icon: 'search', title: 'Präzise Diagnose', description: 'Alle Steuergeräte auslesen' },
+              { icon: 'cog', title: 'Einfache Codierung', description: 'Funktionen freischalten' },
+              { icon: 'bolt', title: 'Auto-Scan', description: 'Komplett in Minuten' },
+            ].map(f => (
+              <Card key={f.title} className="text-center">
+                <IconBox icon={f.icon} size="lg" className="mx-auto mb-4" />
+                <h3 className="font-bold text-slate-900 mb-1">{f.title}</h3>
+                <p className="text-sm text-slate-500">{f.description}</p>
               </Card>
             ))}
           </div>
