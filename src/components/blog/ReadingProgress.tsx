@@ -19,7 +19,14 @@ export function ReadingProgress() {
   }, [])
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-[60] h-[3px] pointer-events-none">
+    <div
+      className="fixed top-0 left-0 right-0 z-[60] h-[3px] pointer-events-none"
+      role="progressbar"
+      aria-valuenow={Math.round(p)}
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-label="Lesefortschritt"
+    >
       <div
         className={`h-full bg-gradient-to-r from-primary-500 via-cyan-400 to-primary-500 transition-all duration-150 ${p > 2 ? 'progress-glow' : ''}`}
         style={{ width: `${p}%` }}

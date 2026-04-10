@@ -20,7 +20,7 @@ export function ImageBlockComponent({ image, caption, size = 'full' }: ImageBloc
       <div className="rounded-2xl overflow-hidden shadow-lg">
         <Image
           src={image.url}
-          alt={image.alt || 'Bild'}
+          alt={image.alt || ''}
           width={image.width ?? 1200}
           height={image.height ?? 675}
           className="w-full h-auto"

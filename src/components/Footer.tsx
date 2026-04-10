@@ -2,6 +2,10 @@ import Link from 'next/link'
 import { Icon } from './Icon'
 import { getSiteSettings, getNavigation } from '@/lib/payload'
 
+function stripTel(phone: string): string {
+  return phone.replace(/[\s()\-/]/g, '')
+}
+
 const fallbackCompany = {
   street: 'Herner Straße 299, Gebäude 29B',
   zipCode: '44809',
@@ -106,8 +110,8 @@ export async function Footer() {
           <div>
             <p className="font-semibold text-white text-sm mb-4">Kontakt & Support</p>
             <div className="space-y-3">
-              <div className="flex items-center gap-2.5"><Icon name="phone" size={14} className="text-primary-400" /><span className="text-sm">{company.phone}</span></div>
-              <div className="flex items-center gap-2.5"><Icon name="mail" size={14} className="text-primary-400" /><span className="text-sm">{company.email}</span></div>
+              <div className="flex items-center gap-2.5"><Icon name="phone" size={14} className="text-primary-400" /><a href={`tel:${stripTel(company.phone)}`} className="text-sm hover:text-primary-400 transition-colors">{company.phone}</a></div>
+              <div className="flex items-center gap-2.5"><Icon name="mail" size={14} className="text-primary-400" /><a href={`mailto:${company.email}`} className="text-sm hover:text-primary-400 transition-colors">{company.email}</a></div>
               <div className="flex items-center gap-2.5"><Icon name="clock" size={14} className="text-primary-400" /><span className="text-sm">{hours}</span></div>
             </div>
           </div>

@@ -28,14 +28,22 @@ interface InfoBoxProps extends VariantProps<typeof infoBoxVariants> {
   icon?: string
   children: React.ReactNode
   className?: string
+  role?: string
 }
 
-export function InfoBox({ variant = 'info', title, icon, children, className }: InfoBoxProps) {
+function getDefaultRole(variant: string): string {
+  if (variant === 'warning' || variant === 'danger') return 'alert'
+  if (variant === 'info' || variant === 'success') return 'status'
+  return 'status'
+}
+
+export function InfoBox({ variant = 'info', title, icon, children, className, role }: InfoBoxProps) {
   const config = iconConfig[variant!]
   const iconName = icon ?? config.name
+  const ariaRole = role !== undefined ? role : getDefaultRole(variant!)
 
   return (
-    <div className={cn(infoBoxVariants({ variant }), className)}>
+    <div role={ariaRole || undefined} className={cn(infoBoxVariants({ variant }), className)}>
       <div className={cn('w-9 h-9 rounded-lg flex items-center justify-center shrink-0', config.bg)}>
         <Icon name={iconName} size={18} className={config.color} />
       </div>

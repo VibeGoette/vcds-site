@@ -168,12 +168,20 @@ const BulkUploadView: React.FC = () => {
       </p>
 
       {/* Drop Zone */}
-      <div
+      <label
+        htmlFor="bulk-upload-input"
         onDrop={handleDrop}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
-        onClick={() => fileInputRef.current?.click()}
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault()
+            fileInputRef.current?.click()
+          }
+        }}
         style={{
+          display: 'block',
           border: `2px dashed ${isDragging ? '#2563eb' : '#d1d5db'}`,
           borderRadius: '12px',
           padding: '48px 24px',
@@ -194,6 +202,7 @@ const BulkUploadView: React.FC = () => {
           PNG, JPEG, WebP, SVG, GIF
         </p>
         <input
+          id="bulk-upload-input"
           ref={fileInputRef}
           type="file"
           accept="image/*"
@@ -201,7 +210,7 @@ const BulkUploadView: React.FC = () => {
           onChange={handleFileSelect}
           style={{ display: 'none' }}
         />
-      </div>
+      </label>
 
       {/* File List */}
       {files.length > 0 && (

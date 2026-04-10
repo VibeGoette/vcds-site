@@ -43,7 +43,14 @@ export function QuickstartWizard() {
           <span>Schritt {step+1} von {steps.length}</span>
           <span>{Math.round(pct)}%</span>
         </div>
-        <div className="h-1.5 bg-slate-200 rounded-full overflow-hidden">
+        <div
+          className="h-1.5 bg-slate-200 rounded-full overflow-hidden"
+          role="progressbar"
+          aria-valuenow={Math.round(pct)}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-label={`Schritt ${step + 1} von ${steps.length}`}
+        >
           <div className="h-full bg-primary-600 rounded-full transition-all duration-500" style={{ width: `${pct}%` }} />
         </div>
       </div>

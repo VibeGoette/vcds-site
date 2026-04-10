@@ -14,6 +14,8 @@ export function HeaderClient({ navItems, logoUrl, logoHeight = 32 }: { navItems:
   const [scrolled, setScrolled] = useState(false)
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null)
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const dropdownRefs = useRef<Record<string, HTMLUListElement | null>>({})
+  const triggerRefs = useRef<Record<string, HTMLButtonElement | null>>({})
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 16)
@@ -45,6 +47,56 @@ export function HeaderClient({ navItems, logoUrl, logoHeight = 32 }: { navItems:
     closeTimer.current = setTimeout(() => setActiveDrop(null), 150)
   }
 
+  const focusMenuItemAt = useCallback((label: string, index: 'first' | 'last' | number) => {
+    const ul = dropdownRefs.current[label]
+    if (!ul) return
+    const items = Array.from(ul.querySelectorAll<HTMLElement>('[role="menuitem"]'))
+    if (!items.length) return
+    const target = index === 'first' ? items[0] : index === 'last' ? items[items.length - 1] : items[index]
+    target?.focus()
+  }, [])
+
+  const handleTriggerKeyDown = useCallback((e: React.KeyboardEvent<HTMLButtonElement>, label: string) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault()
+      setActiveDrop(label)
+      // Focus first item after state update renders the menu visible
+      requestAnimationFrame(() => focusMenuItemAt(label, 'first'))
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault()
+      setActiveDrop(label)
+      requestAnimationFrame(() => focusMenuItemAt(label, 'last'))
+    }
+  }, [focusMenuItemAt])
+
+  const handleMenuKeyDown = useCallback((e: React.KeyboardEvent<HTMLUListElement>, label: string) => {
+    const ul = dropdownRefs.current[label]
+    if (!ul) return
+    const items = Array.from(ul.querySelectorAll<HTMLElement>('[role="menuitem"]'))
+    const focused = document.activeElement as HTMLElement
+    const currentIndex = items.indexOf(focused)
+
+    if (e.key === 'Escape') {
+      e.preventDefault()
+      setActiveDrop(null)
+      triggerRefs.current[label]?.focus()
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault()
+      const next = currentIndex < items.length - 1 ? currentIndex + 1 : 0
+      items[next]?.focus()
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault()
+      const prev = currentIndex > 0 ? currentIndex - 1 : items.length - 1
+      items[prev]?.focus()
+    } else if (e.key === 'Home') {
+      e.preventDefault()
+      items[0]?.focus()
+    } else if (e.key === 'End') {
+      e.preventDefault()
+      items[items.length - 1]?.focus()
+    }
+  }, [])
+
   return (
     <header className={`sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b transition-all duration-200 ${scrolled ? 'h-14 shadow-sm border-slate-100' : 'h-16 border-slate-200'}`}>
       <div className="max-w-6xl mx-auto px-4 sm:px-5 h-full flex items-center justify-between">
@@ -66,9 +118,12 @@ export function HeaderClient({ navItems, logoUrl, logoHeight = 32 }: { navItems:
               onMouseEnter={() => item.children && handleMouseEnter(item.label)}
               onMouseLeave={handleMouseLeave}>
               {item.children ? (
-                <button className={`px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-1 ${isActive(item.href) ? 'text-primary-600' : 'text-slate-700 hover:text-primary-600 hover:bg-primary-50'}`}
+                <button
+                  ref={el => { triggerRefs.current[item.label] = el }}
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-1 ${isActive(item.href) ? 'text-primary-600' : 'text-slate-700 hover:text-primary-600 hover:bg-primary-50'}`}
                   aria-expanded={activeDrop === item.label} aria-haspopup="true"
-                  onClick={() => setActiveDrop(activeDrop === item.label ? null : item.label)}>
+                  onClick={() => setActiveDrop(activeDrop === item.label ? null : item.label)}
+                  onKeyDown={e => handleTriggerKeyDown(e, item.label)}>
                   {item.label}
                   <Icon name="chevron" size={12} className={`text-slate-400 transition-transform duration-200 ${activeDrop === item.label ? 'rotate-180' : ''}`} />
                 </button>
@@ -86,45 +141,50 @@ export function HeaderClient({ navItems, logoUrl, logoHeight = 32 }: { navItems:
                       ? 'opacity-100 visible translate-y-0'
                       : 'opacity-0 invisible -translate-y-1 pointer-events-none'
                   }`}
-                  role="menu"
                   onMouseEnter={() => handleMouseEnter(item.label)}
                   onMouseLeave={handleMouseLeave}
                 >
-                  <div className="py-1.5 px-1.5">
+                  <ul
+                    role="menu"
+                    ref={el => { dropdownRefs.current[item.label] = el }}
+                    onKeyDown={e => handleMenuKeyDown(e, item.label)}
+                    className="py-1.5 px-1.5 list-none m-0 p-0"
+                  >
                     {item.children.map((c) => {
                       const active = isActive(c.href)
                       return (
-                        <Link
-                          key={c.href}
-                          href={c.href}
-                          role="menuitem"
-                          className={`group flex items-center gap-2.5 px-3 py-2 rounded-md transition-colors ${
-                            active
-                              ? 'bg-slate-50 text-primary-600'
-                              : 'text-slate-700 hover:bg-slate-50'
-                          }`}
-                          {...(c.isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                        >
-                          <Icon name={c.icon ?? 'arrow'} size={14} className={active ? 'text-primary-500' : 'text-slate-400 group-hover:text-slate-600'} />
-                          <div className="flex-1 min-w-0">
-                            <span className={`text-[13px] font-medium ${
-                              active ? 'text-primary-600' : 'text-slate-700 group-hover:text-slate-900'
-                            }`}>
-                              {c.label}
-                            </span>
-                            {c.desc && (
-                              <p className="text-[11px] text-slate-400 leading-snug">{c.desc}</p>
+                        <li key={c.href} role="none">
+                          <Link
+                            href={c.href}
+                            role="menuitem"
+                            className={`group flex items-center gap-2.5 px-3 py-2 rounded-md transition-colors ${
+                              active
+                                ? 'bg-slate-50 text-primary-600'
+                                : 'text-slate-700 hover:bg-slate-50'
+                            }`}
+                            {...(c.isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                          >
+                            <Icon name={c.icon ?? 'arrow'} size={14} className={active ? 'text-primary-500' : 'text-slate-400 group-hover:text-slate-600'} />
+                            <div className="flex-1 min-w-0">
+                              <span className={`text-[13px] font-medium ${
+                                active ? 'text-primary-600' : 'text-slate-700 group-hover:text-slate-900'
+                              }`}>
+                                {c.label}
+                              </span>
+                              {c.desc && (
+                                <p className="text-[11px] text-slate-400 leading-snug">{c.desc}</p>
+                              )}
+                            </div>
+                            {c.isExternal && (
+                              <svg className="w-3 h-3 text-slate-300 shrink-0" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                                <path d="M3.5 1.5h7v7M10.5 1.5L1.5 10.5" strokeLinecap="round" strokeLinejoin="round" />
+                              </svg>
                             )}
-                          </div>
-                          {c.isExternal && (
-                            <svg className="w-3 h-3 text-slate-300 shrink-0" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-                              <path d="M3.5 1.5h7v7M10.5 1.5L1.5 10.5" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                          )}
-                        </Link>
+                          </Link>
+                        </li>
                       )
                     })}
-                  </div>
+                  </ul>
                 </div>
               )}
             </div>

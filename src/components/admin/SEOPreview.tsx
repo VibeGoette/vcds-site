@@ -9,9 +9,15 @@ function CharCount({ current, greenMax, yellowMax }: { current: number; greenMax
     current <= yellowMax ? 'text-yellow-600' :
     'text-red-600'
 
+  const label =
+    current === 0 ? '' :
+    current <= greenMax ? ' — OK' :
+    current <= yellowMax ? ' — Zu lang' :
+    ' — Zu lang'
+
   return (
     <span className={`text-xs font-mono ${color}`}>
-      {current}/{yellowMax}
+      {current}/{yellowMax}{label}
     </span>
   )
 }
