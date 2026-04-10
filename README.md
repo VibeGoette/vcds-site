@@ -49,7 +49,7 @@ src/
   fields/           # Reusable Payload field definitions (slug, seo)
   hooks/            # afterChange revalidation hooks
   lib/              # CMS access, color utils, SEO helpers, serializers
-  test/             # 16 Vitest test files (~227 tests)
+  test/             # 16 Vitest test files (239 tests)
 ```
 
 See `CLAUDE.md` for a full annotated tree with component-level detail.
@@ -94,7 +94,7 @@ See `.env.example` for comments and defaults.
 
 - **Framework:** Vitest + Testing Library + jsdom
 - **Test files:** 16 files in `src/test/`
-- **Approximate test count:** ~227 tests
+- **Test count:** 239 total (238 passing + 1 skipped)
 - **Run:** `npm run test`
 
 Critical paths covered: API routes (contact, draft, update), access control, CSS sanitizer, German date parser, Lexical serializer, Markdown renderer, structured data, security headers, revalidation hooks, contact form validation, blog utilities, SEO metadata.
