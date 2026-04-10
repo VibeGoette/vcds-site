@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { publicReadAdminWrite } from '@/access'
+import { validateStringArray } from '@/fields/validateStringArray'
 
 export const TeamMembers: CollectionConfig = {
   slug: 'team-members',
@@ -52,6 +53,7 @@ export const TeamMembers: CollectionConfig = {
       name: 'specialties',
       type: 'json',
       label: 'Spezialgebiete',
+      validate: validateStringArray,
       admin: {
         description: 'Array von Spezialgebieten, z.B. ["Codierungen", "Retrofit", "Oszilloskop"]',
       },

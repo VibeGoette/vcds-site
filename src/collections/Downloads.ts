@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import { publicReadAdminWrite } from '@/access'
 import { validateUrl } from '@/fields/validateUrl'
+import { validateStringArray } from '@/fields/validateStringArray'
 
 export const Downloads: CollectionConfig = {
   slug: 'downloads',
@@ -144,6 +145,7 @@ export const Downloads: CollectionConfig = {
       name: 'compatibleAdapters',
       type: 'json',
       label: 'Kompatible Adapter',
+      validate: validateStringArray,
       admin: {
         description: 'Array von kompatiblen Adaptern, z.B. ["HEX-V2", "HEX-NET", "Auto-Intern Multiscan"]',
       },

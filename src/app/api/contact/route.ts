@@ -6,6 +6,23 @@ import { getPayloadClient } from '@/lib/payload'
 // On Vercel (stateless), this resets on cold starts and cannot prevent
 // distributed attacks. For production hardening, add Cloudflare Turnstile
 // (NEXT_PUBLIC_TURNSTILE_SITE_KEY + TURNSTILE_SECRET_KEY) or Upstash Redis.
+//
+// TODO (SEC-05): Migrate to a distributed rate-limiter once infra/billing is
+// confirmed with the client. The two recommended backends are:
+//   1. Upstash Redis  — npm install @upstash/ratelimit @upstash/redis
+//   2. Vercel KV      — npm install @vercel/kv (backed by Upstash under the hood)
+//
+// Without shared state, the current Map only protects against scripted floods
+// that happen to hit the same Lambda instance; a distributed attack that
+// spreads across cold-start instances or multiple regions bypasses it entirely.
+//
+// Migration sketch (Upstash Redis example):
+//   import { Ratelimit } from '@upstash/ratelimit'
+//   import { Redis } from '@upstash/redis'
+//   const redis = new Redis({ url: process.env.UPSTASH_REDIS_REST_URL!, token: process.env.UPSTASH_REDIS_REST_TOKEN! })
+//   const ratelimit = new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(3, '15 m') })
+//   // Then replace isRateLimited(ip) with: const { success } = await ratelimit.limit(ip)
+//   // Credentials: set UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN in Vercel env vars.
 const rateLimit = new Map<string, { count: number; resetAt: number }>()
 const RATE_LIMIT_MAX = 3
 const RATE_LIMIT_WINDOW = 15 * 60 * 1000 // 15 Minuten

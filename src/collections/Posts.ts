@@ -4,6 +4,7 @@ import { seoFields } from '@/fields/seo'
 import { publicReadMarketingWrite } from '@/access'
 import { contentBlocks } from '@/blocks'
 import { revalidateCollection } from '@/hooks/revalidate'
+import { validateStringArray } from '@/fields/validateStringArray'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -108,6 +109,7 @@ export const Posts: CollectionConfig = {
       name: 'tags',
       type: 'json',
       label: 'Tags',
+      validate: validateStringArray,
       admin: {
         position: 'sidebar',
         description: 'Komma-getrennte Tags als Array, z.B. ["HEX-V2", "Kaufberatung", "Codierung"]',
