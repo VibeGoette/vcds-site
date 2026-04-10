@@ -1,4 +1,12 @@
-const BASE = 'https://vcds-site.vercel.app'
+import { SITE_URL as BASE } from '@/lib/site-url'
+
+/**
+ * Escape `</` sequences so a CMS string containing `</script>` cannot break out
+ * of the JSON-LD script tag. Standard JSON-LD embedding pattern.
+ */
+function jsonLd(data: unknown): string {
+  return JSON.stringify(data).replace(/</g, '\\u003c')
+}
 
 // Organization schema — for homepage + all pages via footer
 export function OrganizationSchema() {
@@ -36,7 +44,7 @@ export function OrganizationSchema() {
       },
     },
   }
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(data) }} />
 }
 
 // Product schema — for HEX-V2 and HEX-NET
@@ -60,7 +68,7 @@ export function ProductSchema({ name, description, price, sku, url }: {
     },
     sku,
   }
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(data) }} />
 }
 
 // FAQ schema — for FAQ page
@@ -74,7 +82,7 @@ export function FAQSchema({ items }: { items: { q: string; a: string }[] }) {
       acceptedAnswer: { '@type': 'Answer', text: i.a },
     })),
   }
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(data) }} />
 }
 
 // Article schema — for blog posts
@@ -95,7 +103,7 @@ export function ArticleSchema({ title, description, datePublished, slug }: {
     },
     mainEntityOfPage: `${BASE}/blog/${slug}`,
   }
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(data) }} />
 }
 
 // SoftwareApplication schema — for download page
@@ -114,7 +122,7 @@ export function SoftwareSchema() {
     author: { '@type': 'Organization', name: 'Ross-Tech, LLC' },
     description: 'Diagnosesoftware fuer VW, Audi, Skoda, Seat und weitere Fahrzeuge der Volkswagen-Gruppe.',
   }
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(data) }} />
 }
 
 // BreadcrumbList schema
@@ -129,5 +137,5 @@ export function BreadcrumbSchema({ items }: { items: { name: string; url: string
       item: item.url.startsWith('http') ? item.url : `${BASE}${item.url}`,
     })),
   }
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(data) }} />
 }

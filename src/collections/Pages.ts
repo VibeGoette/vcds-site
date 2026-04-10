@@ -13,7 +13,7 @@ export const Pages: CollectionConfig = {
     defaultColumns: ['title', 'slug', 'status', 'updatedAt'],
     group: 'Inhalt',
     livePreview: {
-      url: ({ data }) => `/api/draft?secret=${process.env.PAYLOAD_SECRET}&slug=${data?.slug}&collection=pages`,
+      url: ({ data }) => `/api/draft?secret=${process.env.DRAFT_SECRET ?? process.env.PAYLOAD_SECRET}&slug=${data?.slug}&collection=pages`,
     },
   },
   access: publicReadAdminWrite,

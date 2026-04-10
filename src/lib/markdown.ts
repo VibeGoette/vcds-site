@@ -4,13 +4,8 @@
  * No external dependencies needed.
  */
 
-function slugify(text: string): string {
-  return text.toLowerCase().replace(/[^a-z0-9äöüß]+/g, '-').replace(/^-|-$/g, '')
-}
-
-function escapeHtml(str: string): string {
-  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
-}
+import { escapeHtml } from '@/lib/utils'
+import { slugifyHeading as slugify } from '@/lib/slug'
 
 function inlineMarkdown(text: string): string {
   let out = escapeHtml(text)

@@ -1,4 +1,5 @@
 import type { TextField } from 'payload'
+import { slugify } from '@/lib/slug'
 
 /**
  * Reusable slug field with auto-generation from title.
@@ -31,26 +32,3 @@ export const slugField = (
     ],
   },
 })
-
-/**
- * German-friendly slugification.
- * Handles umlauts (ä→ae, ö→oe, ü→ue, ß→ss) and special chars.
- */
-function slugify(text: string): string {
-  return text
-    .toString()
-    .toLowerCase()
-    .trim()
-    // German umlauts
-    .replace(/ä/g, 'ae')
-    .replace(/ö/g, 'oe')
-    .replace(/ü/g, 'ue')
-    .replace(/ß/g, 'ss')
-    // Remove accents from other chars
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    // Replace non-alphanumeric with hyphens
-    .replace(/[^a-z0-9]+/g, '-')
-    // Remove leading/trailing hyphens
-    .replace(/^-+|-+$/g, '')
-}

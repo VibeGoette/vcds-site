@@ -10,7 +10,7 @@ import type { Access, FieldAccess } from 'payload'
  *   - editor:        Pages, Posts, Products (read + update, no delete)
  */
 
-function hasAdminRole(role?: string): boolean {
+export function hasAdminRole(role?: string): boolean {
   return role === 'super-philipp' || role === 'admin'
 }
 

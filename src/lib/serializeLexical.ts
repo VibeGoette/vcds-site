@@ -3,6 +3,9 @@
  * Used for FAQ answers (text), blog posts (HTML), and reading time calculation.
  */
 
+import { escapeHtml } from '@/lib/utils'
+import { slugifyHeading as slugify } from '@/lib/slug'
+
 interface LexicalNode {
   type: string
   text?: string
@@ -43,14 +46,6 @@ function extractText(nodes: LexicalNode[]): string {
 }
 
 // ── HTML serialization ──
-
-function escapeHtml(str: string): string {
-  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
-}
-
-function slugify(text: string): string {
-  return text.toLowerCase().replace(/[^a-z0-9äöüß]+/g, '-').replace(/^-|-$/g, '')
-}
 
 function serializeInline(nodes: LexicalNode[]): string {
   return nodes.map((node) => {

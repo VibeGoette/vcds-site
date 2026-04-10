@@ -11,6 +11,17 @@ const RATE_LIMIT_MAX = 3
 const RATE_LIMIT_WINDOW = 15 * 60 * 1000 // 15 Minuten
 const MIN_SUBMISSION_TIME_MS = 3000 // Mensch braucht mind. 3s fuer ein Formular
 
+const IS_PROD = process.env.NODE_ENV === 'production'
+
+// Loud warning on module load so Vercel deploy logs flag a missing Turnstile
+// key in production. We don't throw — that would break cold starts and is
+// hard to diagnose. At runtime, requests will be rejected 403 anyway.
+if (IS_PROD && !process.env.TURNSTILE_SECRET_KEY) {
+  console.error(
+    '[Contact] TURNSTILE_SECRET_KEY not set in production — contact form will reject all submissions (fail-closed).',
+  )
+}
+
 function cleanupExpiredEntries() {
   const now = Date.now()
   for (const [ip, entry] of rateLimit) {
@@ -30,19 +41,35 @@ function isRateLimited(ip: string): boolean {
   return entry.count >= RATE_LIMIT_MAX
 }
 
-async function verifyTurnstile(token: string): Promise<boolean> {
+/**
+ * Verify a Cloudflare Turnstile token.
+ *
+ * Fail-mode depends on NODE_ENV:
+ *  - Production: fail-closed. Missing secret, network error, non-200, or
+ *    `success: false` → rejected. This enforces bot protection even if
+ *    Cloudflare is transiently unreachable.
+ *  - Development: fail-open for missing secret and network errors so local
+ *    contact-form testing works without a Cloudflare account.
+ */
+async function verifyTurnstile(token: string): Promise<{ ok: boolean }> {
   const secret = process.env.TURNSTILE_SECRET_KEY
-  if (!secret) return true // Turnstile not configured — skip verification
+  if (!secret) return { ok: !IS_PROD }
   try {
     const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({ secret, response: token }),
+      signal: AbortSignal.timeout(5000),
     })
-    const data = await res.json() as { success: boolean }
-    return data.success
-  } catch {
-    return true // On verification error, allow submission (fail open)
+    if (!res.ok) {
+      console.error('[Contact] Turnstile verify returned non-200:', res.status)
+      return { ok: !IS_PROD }
+    }
+    const data = (await res.json()) as { success: boolean }
+    return { ok: data.success }
+  } catch (err) {
+    console.error('[Contact] Turnstile verify error:', err)
+    return { ok: !IS_PROD }
   }
 }
 
@@ -99,13 +126,16 @@ export async function POST(request: NextRequest) {
     isSuspiciouslyFast = elapsed < MIN_SUBMISSION_TIME_MS
   }
 
-  // Cloudflare Turnstile verification (optional — only active if TURNSTILE_SECRET_KEY is set)
-  if (process.env.TURNSTILE_SECRET_KEY) {
+  // Cloudflare Turnstile verification.
+  // In production, always require a valid token — even if TURNSTILE_SECRET_KEY
+  // is not set (fail-closed). In dev, only verify when the key is configured.
+  const needVerify = IS_PROD || !!process.env.TURNSTILE_SECRET_KEY
+  if (needVerify) {
     if (!turnstileToken || typeof turnstileToken !== 'string') {
       return NextResponse.json({ error: 'Bot-Schutz-Verifizierung fehlt. Bitte laden Sie die Seite neu.' }, { status: 403 })
     }
-    const valid = await verifyTurnstile(turnstileToken)
-    if (!valid) {
+    const { ok } = await verifyTurnstile(turnstileToken)
+    if (!ok) {
       return NextResponse.json({ error: 'Bot-Schutz-Verifizierung fehlgeschlagen.' }, { status: 403 })
     }
   }
@@ -147,8 +177,9 @@ export async function POST(request: NextRequest) {
   }
 
   if (!apiKey) {
-    console.warn('[Contact] RESEND_API_KEY nicht konfiguriert. Nachricht geloggt:')
-    console.log({ name: safeName, email: safeEmail, message: safeMessage, adapterNr: safeAdapter, phone: safePhone })
+    // DSGVO: personenbezogene Daten NICHT ins Log schreiben. Der Eintrag wurde
+    // bereits oben im CMS gespeichert, sodass keine Nachricht verloren geht.
+    console.warn('[Contact] RESEND_API_KEY nicht konfiguriert — Nachricht im CMS gespeichert, keine E-Mail versendet.')
     return NextResponse.json({ success: true })
   }
 

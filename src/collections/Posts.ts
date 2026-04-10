@@ -13,7 +13,7 @@ export const Posts: CollectionConfig = {
     defaultColumns: ['title', 'category', 'status', 'publishedAt', 'author'],
     group: 'Inhalt',
     livePreview: {
-      url: ({ data }) => `/api/draft?secret=${process.env.PAYLOAD_SECRET}&slug=${data?.slug}&collection=posts`,
+      url: ({ data }) => `/api/draft?secret=${process.env.DRAFT_SECRET ?? process.env.PAYLOAD_SECRET}&slug=${data?.slug}&collection=posts`,
     },
   },
   access: {

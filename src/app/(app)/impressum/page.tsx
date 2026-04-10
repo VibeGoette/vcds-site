@@ -22,7 +22,7 @@ export default function Impressum() {
             <p>Telefon: +49 (0) 234 58 545 800<br />E-Mail: info@vcds.de</p>
           </div>
           <div>
-            <p>Handelsregister: Amtsgericht Bochum<br />Geschäftsführer: [Name eintragen]</p>
+            <p>Handelsregister: Amtsgericht Bochum<br />Geschäftsführer: Max Götte</p>
           </div>
           <div>
             <p className="font-bold text-slate-900 mb-1">Haftungshinweis</p>

@@ -1,7 +1,6 @@
 import type { MetadataRoute } from 'next'
 import { getPosts, getPages } from '@/lib/payload'
-
-const BASE = 'https://vcds-site.vercel.app'
+import { SITE_URL as BASE } from '@/lib/site-url'
 
 /** Hardcoded blog slugs as fallback when CMS is unavailable */
 const fallbackBlogSlugs = [

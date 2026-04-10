@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Quicksand } from 'next/font/google'
 import Script from 'next/script'
 import { getGlobalSeo } from '@/lib/seo'
+import { SITE_URL } from '@/lib/site-url'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import { StyleProvider } from '@/components/StyleProvider'
 import { AnimateOnScroll } from '@/components/AnimateOnScroll'
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
   creator: 'Auto-Intern GmbH',
   publisher: 'Auto-Intern GmbH',
   formatDetection: { telephone: true, email: true },
-  metadataBase: new URL('https://vcds-site.vercel.app'),
+  metadataBase: new URL(SITE_URL),
   alternates: {
     canonical: '/',
     languages: { 'de-DE': '/', 'de-AT': '/', 'de-CH': '/' },
@@ -31,7 +32,7 @@ export const metadata: Metadata = {
     siteName: 'VCDS.de',
     title: 'VCDS – Diagnosegerät für VW, Audi, Skoda & Seat',
     description: 'VCDS Diagnoseadapter von Ross-Tech. HEX-V2 ab 294€, HEX-NET ab 514€. Kostenloser Telefon-Support aus Bochum.',
-    url: 'https://vcds-site.vercel.app',
+    url: SITE_URL,
     images: [{ url: '/images/og-default.png', width: 1200, height: 630, alt: 'VCDS.de – Fahrzeugdiagnose von Ross-Tech' }],
   },
   twitter: {

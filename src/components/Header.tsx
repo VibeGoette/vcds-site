@@ -89,8 +89,8 @@ export async function Header() {
         } : {}),
       }))
     }
-  } catch {
-    // CMS not available — use fallback
+  } catch (err) {
+    console.error('[Header] CMS-Navigation konnte nicht geladen werden, Fallback wird verwendet:', err)
   }
 
   // Enrich nav items with icon + description metadata

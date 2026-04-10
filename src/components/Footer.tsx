@@ -75,8 +75,8 @@ export async function Footer() {
         isExternal: item.isExternal ?? false,
       }))
     }
-  } catch {
-    // CMS not available
+  } catch (err) {
+    console.error('[Footer] CMS-Daten konnten nicht geladen werden, Fallback wird verwendet:', err)
   }
 
   return (

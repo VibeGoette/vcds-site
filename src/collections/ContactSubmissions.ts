@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { isAdmin } from '@/access'
 
 export const ContactSubmissions: CollectionConfig = {
   slug: 'contact-submissions',
@@ -9,11 +10,14 @@ export const ContactSubmissions: CollectionConfig = {
     group: 'System',
     description: 'Eingegangene Kontaktanfragen über das Website-Formular.',
   },
+  // DSGVO: personenbezogene Daten nur für Admins sichtbar. Die öffentliche
+  // /api/contact-Route schreibt mit overrideAccess über den Payload-Client,
+  // daher bleibt `create: () => false` hier unverändert (kein öffentliches Schreiben über die REST API).
   access: {
-    read: ({ req: { user } }) => !!user,
+    read: isAdmin,
     create: () => false,
-    update: () => false,
-    delete: ({ req: { user } }) => !!user,
+    update: isAdmin,
+    delete: isAdmin,
   },
   fields: [
     {

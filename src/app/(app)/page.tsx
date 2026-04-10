@@ -39,8 +39,8 @@ export default async function Home() {
         net ? toCard(net, fallbackProducts[1]) : fallbackProducts[1],
       ]
     }
-  } catch {
-    // DB not available — use fallback
+  } catch (err) {
+    console.error('[Home] CMS-Produkte konnten nicht geladen werden, Fallback wird verwendet:', err)
   }
   return (
     <>

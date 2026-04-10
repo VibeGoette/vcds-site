@@ -1,9 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { adminFieldAccess } from '@/access'
-
-function isAdminRole(role?: string): boolean {
-  return role === 'super-philipp' || role === 'admin'
-}
+import { adminFieldAccess, hasAdminRole } from '@/access'
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -16,15 +12,15 @@ export const Users: CollectionConfig = {
   },
   access: {
     read: ({ req: { user } }) => {
-      if (isAdminRole(user?.role)) return true
+      if (hasAdminRole(user?.role)) return true
       return { id: { equals: user?.id } }
     },
-    create: ({ req: { user } }) => isAdminRole(user?.role),
+    create: ({ req: { user } }) => hasAdminRole(user?.role),
     update: ({ req: { user } }) => {
-      if (isAdminRole(user?.role)) return true
+      if (hasAdminRole(user?.role)) return true
       return { id: { equals: user?.id } }
     },
-    delete: ({ req: { user } }) => isAdminRole(user?.role),
+    delete: ({ req: { user } }) => hasAdminRole(user?.role),
   },
   fields: [
     {

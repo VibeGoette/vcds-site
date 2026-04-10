@@ -15,8 +15,8 @@ export function ShareButtons({ title, slug }: ShareButtonsProps) {
       await navigator.clipboard.writeText(url)
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
-    } catch {
-      // Fallback: do nothing
+    } catch (err) {
+      console.error('[ShareButtons] Clipboard-Zugriff fehlgeschlagen:', err)
     }
   }
 

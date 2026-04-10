@@ -76,7 +76,8 @@ export async function GET(request: NextRequest) {
         systemRequirements: latest.systemRequirements ?? null,
       },
     })
-  } catch {
+  } catch (err) {
+    console.error('[Update] Version-Check fehlgeschlagen:', err)
     return NextResponse.json(
       { error: 'Update-Check fehlgeschlagen.' },
       { status: 500 }

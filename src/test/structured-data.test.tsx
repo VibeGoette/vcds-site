@@ -155,7 +155,7 @@ describe('BreadcrumbSchema', () => {
     const { container } = render(<BreadcrumbSchema items={items} />)
     const data = getJsonLd(container)
     const elements = data.itemListElement as Array<Record<string, unknown>>
-    expect(elements[0].item).toBe('https://vcds-site.vercel.app/test')
+    expect(elements[0].item).toBe('https://vcds.de/test')
   })
 
   it('keeps absolute URLs as-is', () => {
