@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { SITE_URL } from '@/lib/site-url'
 
 interface ShareButtonsProps {
   title: string
@@ -8,7 +9,7 @@ interface ShareButtonsProps {
 
 export function ShareButtons({ title, slug }: ShareButtonsProps) {
   const [copied, setCopied] = useState(false)
-  const url = typeof window !== 'undefined' ? window.location.href : `https://vcds.de/blog/${slug}`
+  const url = typeof window !== 'undefined' ? window.location.href : `${SITE_URL}/blog/${slug}`
 
   const handleCopy = async () => {
     try {

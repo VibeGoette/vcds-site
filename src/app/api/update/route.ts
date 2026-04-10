@@ -93,10 +93,21 @@ export async function GET(request: NextRequest) {
  * numeric on the major.minor.patch segments — pre-release ordering is NOT
  * honoured. Good enough for VCDS's min-version gate; switch to `semver` if
  * full SemVer precedence is ever needed.
+ *
+ * Non-numeric garbage in any segment (e.g. "25.x.1") is coerced to 0 via the
+ * Number.isFinite guard, matching how the rest of the route treats invalid
+ * data as "no update available" rather than crashing.
  */
 function compareVersions(a: string, b: string): number {
-  const pa = a.split('-')[0].split('.').map(Number)
-  const pb = b.split('-')[0].split('.').map(Number)
+  const parse = (v: string): number[] =>
+    v.split('-')[0]
+      .split('.')
+      .map((segment) => {
+        const n = Number(segment)
+        return Number.isFinite(n) ? n : 0
+      })
+  const pa = parse(a)
+  const pb = parse(b)
   const len = Math.max(pa.length, pb.length)
   for (let i = 0; i < len; i++) {
     const na = pa[i] ?? 0

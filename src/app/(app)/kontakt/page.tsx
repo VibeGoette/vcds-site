@@ -11,6 +11,7 @@ import { getPageSeo } from '@/lib/seo'
 import type { Metadata } from 'next'
 import { LocalBusinessSchema } from '@/components/StructuredData'
 import { SITE_URL } from '@/lib/site-url'
+import { stripTel } from '@/lib/phone'
 
 export async function generateMetadata(): Promise<Metadata> {
   return getPageSeo('kontakt', {
@@ -107,7 +108,7 @@ export default async function Kontakt() {
                 <h3 className="font-bold text-slate-900 mb-4">Auto-Intern GmbH</h3>
                 <div className="space-y-3">
                   <div className="flex items-center gap-3"><Icon name="map" size={16} className="text-slate-400" /><span className="text-sm text-slate-600">{contact.address}</span></div>
-                  <div className="flex items-center gap-3"><Icon name="phone" size={16} className="text-slate-400" /><a href={`tel:${contact.phone.replace(/[^+0-9]/g, '')}`} className="text-sm text-primary-600 font-semibold hover:underline">{contact.phone}</a></div>
+                  <div className="flex items-center gap-3"><Icon name="phone" size={16} className="text-slate-400" /><a href={`tel:${stripTel(contact.phone)}`} className="text-sm text-primary-600 font-semibold hover:underline">{contact.phone}</a></div>
                   <div className="flex items-center gap-3"><Icon name="mail" size={16} className="text-slate-400" /><span className="text-sm text-slate-600">{contact.email}</span></div>
                   <div className="flex items-center gap-3"><Icon name="clock" size={16} className="text-slate-400" /><span className="text-sm text-slate-500">{contact.hours}</span></div>
                 </div>
