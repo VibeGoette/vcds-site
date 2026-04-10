@@ -20,6 +20,35 @@ function inlineMarkdown(text: string): string {
   return out
 }
 
+/**
+ * Convert a Markdown string to styled HTML.
+ *
+ * This is a hand-rolled line-by-line parser — no external library is used.
+ * It intentionally supports only the subset of Markdown needed for changelogs,
+ * update posts, and short CMS-authored content blocks.
+ *
+ * Supported features:
+ *  - Headings: # H1 through #### H4 (slugified anchors for ToC)
+ *  - Unordered lists: lines starting with `-`, `*`, or `+`
+ *  - Ordered lists: lines starting with `1.`, `2.`, etc.
+ *  - Blockquotes: lines starting with `> `
+ *  - Fenced code blocks: ``` … ``` (no syntax highlighting)
+ *  - Horizontal rules: `---` (three or more dashes on a bare line)
+ *  - Paragraphs: any other non-empty line
+ *  - Inline: **bold**, *italic*, ***bold-italic***, `inline code`, [links](url)
+ *
+ * Intentionally NOT supported (use Lexical rich text for these):
+ *  - Nested lists
+ *  - Tables
+ *  - HTML pass-through (raw HTML in content is entity-escaped)
+ *  - Footnotes, task lists, definition lists
+ *
+ * XSS posture: all text content passes through `escapeHtml()` before being
+ * emitted into the HTML string. Link URLs are allow-listed to `https?://` and
+ * `mailto:` prefixes; any other scheme is replaced with `#`. This means the
+ * output is safe to inject via `dangerouslySetInnerHTML` for CMS-authored
+ * content — it is NOT safe for arbitrary user input.
+ */
 export function renderMarkdown(content: string): string {
   const lines = content.split('\n')
   const html: string[] = []

@@ -82,6 +82,30 @@ function uniqueId(base: string, usedIds: Set<string>): string {
   return id
 }
 
+/**
+ * Serialize an array of Lexical nodes to styled HTML.
+ *
+ * @param nodes   - Top-level or nested Lexical node array from the rich text root.
+ * @param usedIds - Optional Set used to deduplicate heading anchor IDs across
+ *                  recursive calls (e.g. a blockquote containing headings).
+ *                  Callers should omit it; it is created automatically on the
+ *                  first call and threaded through recursion.
+ * @returns       HTML string with Tailwind utility classes applied inline.
+ *
+ * Supported node types (each maps to a case in the switch):
+ *  - paragraph      → <p> with prose styling
+ *  - heading        → <h1>–<h4> with a slugified id for ToC anchors
+ *  - list           → <ol>/<ul> depending on listType ('number' vs 'bullet')
+ *  - quote          → <blockquote>; children are recursively serialized
+ *  - horizontalrule → <hr>
+ *  - default        → unknown node types are unwrapped: if they have children
+ *                     those children are serialized; otherwise the node is
+ *                     silently dropped. This keeps the output stable when
+ *                     Payload adds new node types we haven't handled yet.
+ *
+ * Inline formatting (bold, italic, strikethrough, code, sub, sup) and links
+ * are handled by `serializeInline()`, not this function.
+ */
 function serializeNodes(nodes: LexicalNode[], usedIds?: Set<string>): string {
   const ids = usedIds ?? new Set<string>()
   const html: string[] = []

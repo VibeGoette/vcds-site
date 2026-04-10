@@ -38,11 +38,23 @@ export function HeaderClient({ navItems, logoUrl, logoHeight = 32 }: { navItems:
 
   const isActive = useCallback((href: string) => href === '/' ? pathname === '/' : pathname.startsWith(href), [pathname])
 
-  // Delayed close to prevent flickering when moving mouse between trigger and dropdown
+  /**
+   * Open a dropdown immediately when the mouse enters the trigger or the menu
+   * panel. If a pending close timer is running (set by handleMouseLeave), cancel
+   * it so the dropdown stays visible while the cursor moves from the trigger
+   * button across the small gap to the floating menu.
+   */
   const handleMouseEnter = (label: string) => {
     if (closeTimer.current) { clearTimeout(closeTimer.current); closeTimer.current = null }
     setActiveDrop(label)
   }
+
+  /**
+   * Schedule a close rather than closing immediately. The 150 ms delay gives the
+   * cursor enough time to travel from the trigger into the dropdown panel before
+   * the menu disappears. Without this timer, any pixel gap between the button
+   * and the panel would cause an instant close-and-reopen flicker on hover-out.
+   */
   const handleMouseLeave = () => {
     closeTimer.current = setTimeout(() => setActiveDrop(null), 150)
   }

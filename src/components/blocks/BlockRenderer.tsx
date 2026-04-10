@@ -19,6 +19,26 @@ interface BlockRendererProps {
   blocks: Block[]
 }
 
+/**
+ * Central dispatcher that renders a sequence of Payload CMS blocks.
+ *
+ * Why this exists: Payload stores page content as a heterogeneous array of
+ * block objects, each identified by a `blockType` discriminator string. The
+ * generated TypeScript union (`Page['layout'][number]`) does not narrow cleanly
+ * through a switch statement because the union members share no common base type
+ * that TypeScript can use for exhaustiveness narrowing. As a result, every case
+ * must cast its block props with `as` before passing them to the typed component.
+ *
+ * These are deliberate, localised type assertions — not unsafe casts — because
+ * each `case` branch is only reached when `block.blockType` matches the
+ * corresponding slug, which guarantees the runtime shape is correct. Keeping the
+ * assertions here (rather than inside each block component) means the components
+ * themselves stay fully typed and testable in isolation.
+ *
+ * Unknown block types fall through to `default: return null`, so adding a new
+ * block to the CMS schema without a renderer here fails silently (nothing is
+ * rendered) rather than throwing at runtime.
+ */
 export function BlockRenderer({ blocks }: BlockRendererProps) {
   if (!blocks || blocks.length === 0) return null
 

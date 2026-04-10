@@ -1,9 +1,24 @@
 import { getStyleSettings } from '@/lib/payload'
 
 /**
- * Sanitize user-provided CSS to prevent injection attacks.
- * Strips script tags, closing style tags, javascript: URLs, CSS expressions, and @import.
- * Note: This CSS is only editable by super-philipp role (trusted admin), not public input.
+ * Strip the most dangerous CSS constructs from an admin-authored CSS string.
+ *
+ * Approach: blocklist of known-dangerous patterns.
+ *  - `<script>…</script>` blocks  — prevents JS injection if CSS lands in HTML
+ *  - `</style>`                   — prevents breaking out of the enclosing <style> tag
+ *  - `javascript:` URLs           — blocks CSS `url(javascript:…)` vectors
+ *  - `expression(…)`              — blocks legacy IE CSS expressions that execute JS
+ *  - `@import`                    — prevents loading external stylesheets
+ *
+ * What this does NOT block:
+ *  - HTML entities (not a risk inside a <style> block)
+ *  - Obfuscated URLs such as `url(data:…)` — acceptable for trusted admin use
+ *  - Valid CSS custom properties, calc(), variables, etc.
+ *
+ * Security posture: defense-in-depth only. This CSS is exclusively editable by
+ * the `super-philipp` role — a single trusted admin — so it is NOT designed to
+ * sanitize arbitrary untrusted input. The blocklist exists to catch accidental
+ * mistakes and provide a safety net; it is not a replacement for access control.
  */
 export function sanitizeCss(css: string): string {
   return css

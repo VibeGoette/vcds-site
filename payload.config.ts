@@ -1,3 +1,34 @@
+/**
+ * Payload CMS configuration for VCDS.de
+ *
+ * Architecture decisions documented here:
+ *
+ * Database:
+ *  - Local development uses SQLite via @payloadcms/db-sqlite with a local file
+ *    (DATABASE_URI=file:./database.db). No extra services needed to run locally.
+ *  - Production on Vercel uses Turso/LibSQL (a distributed SQLite edge database)
+ *    via the same adapter — swap DATABASE_URI to the Turso connection string and
+ *    set TURSO_AUTH_TOKEN. The adapter is identical for both environments.
+ *
+ * Secret resolution (`resolvePayloadSecret()`):
+ *  - Payload uses PAYLOAD_SECRET for JWT signing and field-level encryption.
+ *    A missing or weak secret is a security misconfiguration, not a crash-worthy
+ *    error. `resolvePayloadSecret()` logs loudly on invalid config but keeps the
+ *    runtime alive so Vercel deployments don't fail silently with no diagnostics.
+ *
+ * Bulk upload admin view:
+ *  - The custom view at `/admin/bulk-upload` (BulkUploadView component) allows
+ *    admins to upload multiple media files in one operation. It is registered as
+ *    a top-level admin view rather than a collection action so it has its own URL
+ *    and can be bookmarked. The route path is `/admin/bulk-upload`.
+ *
+ * Hook dispatch:
+ *  - `afterChange` and `afterDelete` hooks are defined in `src/hooks/revalidate.ts`
+ *    and attached to individual collections/globals. They call Next.js
+ *    `revalidatePath()` to purge the ISR cache for the affected pages when CMS
+ *    content changes. See `src/hooks/revalidate.ts` for the per-collection
+ *    path mapping.
+ */
 import { buildConfig } from 'payload'
 import { sqliteAdapter } from '@payloadcms/db-sqlite'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'

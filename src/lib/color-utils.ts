@@ -4,6 +4,24 @@
  * No dependencies — pure math.
  */
 
+/**
+ * Convert a 6-digit hex color string (e.g. "#2563eb") to HSL components.
+ *
+ * The conversion follows the standard RGB→HSL algorithm:
+ *  1. Normalise R, G, B to the [0, 1] range.
+ *  2. Lightness = (max + min) / 2
+ *  3. Saturation = delta / (1 - |2L - 1|)  (where delta = max - min)
+ *  4. Hue is derived from which channel is dominant (R, G, or B sector).
+ *
+ * HSL is used — rather than RGB or hex directly — because it lets
+ * `generatePalette()` produce a consistent shade scale by varying only the
+ * lightness while preserving the hue and (approximately) the saturation.
+ * This is what powers the CMS-editable Tailwind CSS variable palette
+ * (--color-primary-50 … --color-primary-950).
+ *
+ * @param hex - A 6-digit hex color string with leading "#".
+ * @returns   Object with h (0–360), s (0–100), l (0–100), all rounded to integers.
+ */
 export function hexToHSL(hex: string): { h: number; s: number; l: number } {
   const r = parseInt(hex.slice(1, 3), 16) / 255
   const g = parseInt(hex.slice(3, 5), 16) / 255

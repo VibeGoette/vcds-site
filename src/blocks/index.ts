@@ -258,10 +258,23 @@ export const FAQBlock: Block = {
 
 /**
  * Testimonial Block — Customer quotes
+ *
+ * DEPRECATED (2026-04-10): No renderer exists for this block. Content editors
+ * adding this block will see it render as nothing on the public site.
+ * Migration: use RichTextBlock or PullquoteBlock to display customer quotes.
+ * Safe to delete: once a CMS content audit confirms no page row uses this block.
  */
 export const TestimonialBlock: Block = {
   slug: 'testimonialBlock',
-  labels: { singular: 'Kundenstimmen', plural: 'Kundenstimmen' },
+  labels: { singular: 'Kundenstimmen [VERALTET]', plural: 'Kundenstimmen [VERALTET]' },
+  admin: {
+    custom: {
+      deprecated: true,
+      hidden: true,
+      description:
+        'VERALTET: Dieser Block wird nicht gerendert. Bitte RichText- oder Zitat-Block verwenden. Wird in einem späteren Release entfernt.',
+    },
+  },
   fields: [
     {
       name: 'testimonials',
@@ -314,10 +327,23 @@ export const StatsBlock: Block = {
 
 /**
  * Team Block — Displays team member cards
+ *
+ * DEPRECATED (2026-04-10): No renderer exists for this block. Content editors
+ * adding this block will see it render as nothing on the public site.
+ * Migration: use RichTextBlock to describe team members inline.
+ * Safe to delete: once a CMS content audit confirms no page row uses this block.
  */
 export const TeamBlock: Block = {
   slug: 'teamBlock',
-  labels: { singular: 'Team-Bereich', plural: 'Team-Bereiche' },
+  labels: { singular: 'Team-Bereich [VERALTET]', plural: 'Team-Bereiche [VERALTET]' },
+  admin: {
+    custom: {
+      deprecated: true,
+      hidden: true,
+      description:
+        'VERALTET: Dieser Block wird nicht gerendert. Bitte RichText-Block verwenden. Wird in einem späteren Release entfernt.',
+    },
+  },
   fields: [
     {
       name: 'heading',
@@ -415,10 +441,23 @@ export const DividerBlock: Block = {
 /**
  * Step Guide Block — Step-by-step instructions with optional screenshots
  * Ideal for Quickstart, AHK-Anleitungen, Troubleshooting guides
+ *
+ * DEPRECATED (2026-04-10): No renderer exists for this block. Content editors
+ * adding this block will see it render as nothing on the public site.
+ * Migration: use RichTextBlock with an ordered list for step-by-step instructions.
+ * Safe to delete: once a CMS content audit confirms no page row uses this block.
  */
 export const StepGuideBlock: Block = {
   slug: 'stepGuide',
-  labels: { singular: 'Schritt-für-Schritt Anleitung', plural: 'Schritt-für-Schritt Anleitungen' },
+  labels: { singular: 'Schritt-für-Schritt Anleitung [VERALTET]', plural: 'Schritt-für-Schritt Anleitungen [VERALTET]' },
+  admin: {
+    custom: {
+      deprecated: true,
+      hidden: true,
+      description:
+        'VERALTET: Dieser Block wird nicht gerendert. Bitte RichText-Block mit nummerierter Liste verwenden. Wird in einem späteren Release entfernt.',
+    },
+  },
   fields: [
     {
       name: 'heading',
@@ -489,10 +528,23 @@ export const StepGuideBlock: Block = {
 /**
  * Screenshot Block — Annotated screenshot with optional numbered markers
  * Useful for UI walkthroughs and visual guides
+ *
+ * DEPRECATED (2026-04-10): No renderer exists for this block. Content editors
+ * adding this block will see it render as nothing on the public site.
+ * Migration: use ImageBlock instead for displaying screenshots.
+ * Safe to delete: once a CMS content audit confirms no page row uses this block.
  */
 export const ScreenshotBlock: Block = {
   slug: 'screenshot',
-  labels: { singular: 'Screenshot (annotiert)', plural: 'Screenshots (annotiert)' },
+  labels: { singular: 'Screenshot [VERALTET]', plural: 'Screenshots [VERALTET]' },
+  admin: {
+    custom: {
+      deprecated: true,
+      hidden: true,
+      description:
+        'VERALTET: Dieser Block wird nicht gerendert. Bitte Bild-Block verwenden. Wird in einem späteren Release entfernt.',
+    },
+  },
   fields: [
     {
       name: 'image',
