@@ -236,3 +236,5 @@ Erreichbar unter `/admin`. Erster Besuch → Admin-User erstellen. Credentials i
 - **Feature Branches:** `claude/<feature-name>-<id>`
 - **Commits:** Conventional Commits (feat/fix/chore), Englisch
 - **Vor Push:** `npx tsc --noEmit` + `npm run test` + `npm run build`
+- **CI:** `.github/workflows/ci.yml` laeuft bei jedem Push und bei PRs auf `main` — fuehrt automatisch `tsc --noEmit`, `npm run test`, `npm audit` (non-blocking) und `npm run build` aus.
+- **Dependabot:** `.github/dependabot.yml` prueft npm- und GitHub-Actions-Abhaengigkeiten woechentlich; Major-Bumps fuer `next`, `react`, `react-dom`, `payload` und `@payloadcms/*` werden ignoriert.
