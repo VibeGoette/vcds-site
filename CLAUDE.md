@@ -20,7 +20,7 @@
 | UI Primitives | Radix UI (Accordion, Tabs, Slot) |
 | Icons | Lucide React + eigene Icon-Komponente |
 | E-Mail | Resend SDK (Kontaktformular) |
-| Tests | Vitest + Testing Library + jsdom (99 Tests) |
+| Tests | Vitest + Testing Library + jsdom (239 Tests) |
 | Deployment | Vercel (auto-deploy auf main) |
 
 ## Befehle
@@ -29,7 +29,7 @@
 npm run dev          # Entwicklungsserver (localhost:3000)
 npm run build        # Produktions-Build
 npm run seed         # Datenbank mit Startdaten befuellen
-npm run test         # Vitest ausfuehren (99 Tests)
+npm run test         # Vitest ausfuehren (239 Tests)
 npm run test:watch   # Vitest im Watch-Modus
 npm run generate:types  # Payload TypeScript-Types generieren
 npx tsc --noEmit     # Type-Check (bekannter Fehler in seo.test.ts ignorieren)
@@ -82,9 +82,11 @@ src/
     TeamMembers.ts      # Team
     Testimonials.ts     # Kundenstimmen
     ContactSubmissions.ts # Kontaktformular-Eintraege
-  globals/              # Payload Globals (3)
+  globals/              # Payload Globals (4)
     SiteSettings.ts     # Firmendaten, Social, Analytics, SEO
     Navigation.ts       # Haupt- und Footer-Navigation
+    ThemeSettings.ts    # CMS-editierbare Farben, Fonts, Layout
+    StyleSettings.ts    # Global Custom CSS (super-philipp only)
     ThemeSettings.ts    # CMS-editierbare Farben, Fonts, Layout
   hooks/
     revalidate.ts       # afterChange Hooks fuer Cache Invalidation
@@ -116,7 +118,7 @@ src/
     markdown.ts         # Markdown → HTML (XSS-safe)
     blog-utils.ts       # Lesezeit-Berechnung
     utils.ts            # cn() Tailwind-Merge
-  test/                 # Vitest Tests (8 Dateien, 99 Tests)
+  test/                 # Vitest Tests (16 Dateien, 239 Tests)
 ```
 
 ## Design System
