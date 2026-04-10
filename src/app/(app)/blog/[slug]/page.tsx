@@ -4,7 +4,8 @@ import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { Icon } from '@/components/Icon'
 import { Markdown } from '@/components/Markdown'
-import { BlogPostClient, hardcodedSlugs } from './BlogPostClient'
+import { BlogPostClient } from './BlogPostClient'
+import { HARDCODED_POSTS, HARDCODED_SLUGS } from './hardcoded-posts'
 import { BlockRenderer } from '@/components/blocks'
 import { ReadingProgress } from '@/components/blog/ReadingProgress'
 import { TableOfContents } from '@/components/blog/TableOfContents'
@@ -38,7 +39,18 @@ const catGradients: Record<string, string> = {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
 
-  if (hardcodedSlugs.has(slug)) return {}
+  if (HARDCODED_SLUGS.has(slug)) {
+    const post = HARDCODED_POSTS[slug]
+    return {
+      title: post.title,
+      description: post.subtitle,
+      openGraph: {
+        title: post.title,
+        description: post.subtitle,
+        type: 'article',
+      },
+    }
+  }
 
   let post: Awaited<ReturnType<typeof getPostBySlug>> | null = null
   try {
@@ -71,7 +83,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const { slug } = await params
 
   // Hardcoded posts use the existing client component, wrapped with server Header/Footer
-  if (hardcodedSlugs.has(slug)) {
+  if (HARDCODED_SLUGS.has(slug)) {
     return (
       <>
         <Header />

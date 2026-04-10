@@ -38,7 +38,7 @@ export function BlockRenderer({ blocks }: BlockRendererProps) {
             return <YouTubeBlockComponent key={key} videoId={block.videoId as string} title={block.title as string} aspectRatio={block.aspectRatio as '16:9' | '4:3'} />
 
           case 'cta':
-            return <CTABlockComponent key={key} heading={block.heading as string} text={block.text as string} buttonLabel={block.buttonLabel as string} buttonLink={block.buttonLink as string} buttonVariant={block.buttonVariant as string} isExternal={block.isExternal as boolean} style={block.style as 'light' | 'dark' | 'primary'} />
+            return <CTABlockComponent key={key} heading={block.heading as string} headingLevel={block.headingLevel as 'h2' | 'h3' | 'h4'} text={block.text as string} buttonLabel={block.buttonLabel as string} buttonLink={block.buttonLink as string} buttonVariant={block.buttonVariant as string} isExternal={block.isExternal as boolean} style={block.style as 'light' | 'dark' | 'primary'} />
 
           case 'callout':
             return <CalloutBlockComponent key={key} variant={block.variant as 'info' | 'warning' | 'success' | 'danger'} title={block.title as string} content={block.content as Parameters<typeof CalloutBlockComponent>[0]['content']} />
@@ -50,13 +50,13 @@ export function BlockRenderer({ blocks }: BlockRendererProps) {
             return <DividerBlockComponent key={key} style={block.style as 'default' | 'dot' | 'gradient'} />
 
           case 'faqBlock':
-            return <FAQBlockComponent key={key} heading={block.heading as string} faqs={block.faqs as Parameters<typeof FAQBlockComponent>[0]['faqs']} />
+            return <FAQBlockComponent key={key} heading={block.heading as string} headingLevel={block.headingLevel as 'h2' | 'h3' | 'h4'} faqs={block.faqs as Parameters<typeof FAQBlockComponent>[0]['faqs']} />
 
           case 'stats':
             return <StatsBlockComponent key={key} items={block.items as Parameters<typeof StatsBlockComponent>[0]['items']} />
 
           case 'productGrid':
-            return <ProductGridBlockComponent key={key} heading={block.heading as string} products={block.products as Parameters<typeof ProductGridBlockComponent>[0]['products']} columns={block.columns as '2' | '3' | '4'} />
+            return <ProductGridBlockComponent key={key} heading={block.heading as string} headingLevel={block.headingLevel as 'h2' | 'h3' | 'h4'} products={block.products as Parameters<typeof ProductGridBlockComponent>[0]['products']} columns={block.columns as '2' | '3' | '4'} />
 
           default:
             return null

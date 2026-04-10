@@ -7,6 +7,9 @@ import {
   ArticleSchema,
   SoftwareSchema,
   BreadcrumbSchema,
+  LocalBusinessSchema,
+  StoreSchema,
+  parsePriceToSchemaValue,
 } from '@/components/StructuredData'
 
 function getJsonLd(container: HTMLElement): Record<string, unknown> {
@@ -57,12 +60,25 @@ describe('ProductSchema', () => {
     expect(data.name).toBe('HEX-V2')
   })
 
-  it('strips non-numeric chars from price', () => {
+  it('parses price to schema-compatible decimal string', () => {
     const { container } = render(<ProductSchema {...props} />)
     const data = getJsonLd(container)
     const offers = data.offers as Record<string, unknown>
     expect(offers.price).toBe('294')
     expect(offers.priceCurrency).toBe('EUR')
+  })
+
+  it('omits offers block when price has no numeric component', () => {
+    const { container } = render(<ProductSchema {...props} price="auf Anfrage" />)
+    const data = getJsonLd(container)
+    expect(data.offers).toBeUndefined()
+  })
+
+  it('preserves decimal in price like "294,00 €"', () => {
+    const { container } = render(<ProductSchema {...props} price="ab 294,00 €" />)
+    const data = getJsonLd(container)
+    const offers = data.offers as Record<string, unknown>
+    expect(offers.price).toBe('294.00')
   })
 
   it('includes brand and manufacturer', () => {

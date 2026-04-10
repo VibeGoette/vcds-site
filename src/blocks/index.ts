@@ -100,6 +100,18 @@ export const CTABlock: Block = {
       label: 'Überschrift',
     },
     {
+      name: 'headingLevel',
+      type: 'select',
+      label: 'Heading-Ebene',
+      defaultValue: 'h3',
+      options: [
+        { label: 'H2 (grosse Abschnittsueberschrift)', value: 'h2' },
+        { label: 'H3 (Standard)', value: 'h3' },
+        { label: 'H4 (Unterabschnitt)', value: 'h4' },
+      ],
+      admin: { description: 'Wie wichtig ist diese Ueberschrift im Seiten-Outline? Standard ist H3.' },
+    },
+    {
       name: 'text',
       type: 'textarea',
       label: 'Beschreibung',
@@ -162,6 +174,18 @@ export const ProductGridBlock: Block = {
       label: 'Überschrift',
     },
     {
+      name: 'headingLevel',
+      type: 'select',
+      label: 'Heading-Ebene',
+      defaultValue: 'h3',
+      options: [
+        { label: 'H2 (grosse Abschnittsueberschrift)', value: 'h2' },
+        { label: 'H3 (Standard)', value: 'h3' },
+        { label: 'H4 (Unterabschnitt)', value: 'h4' },
+      ],
+      admin: { description: 'Wie wichtig ist diese Ueberschrift im Seiten-Outline? Standard ist H3.' },
+    },
+    {
       name: 'products',
       type: 'relationship',
       relationTo: 'products',
@@ -196,6 +220,18 @@ export const FAQBlock: Block = {
       type: 'text',
       label: 'Überschrift',
       defaultValue: 'Häufig gestellte Fragen',
+    },
+    {
+      name: 'headingLevel',
+      type: 'select',
+      label: 'Heading-Ebene',
+      defaultValue: 'h3',
+      options: [
+        { label: 'H2 (grosse Abschnittsueberschrift)', value: 'h2' },
+        { label: 'H3 (Standard)', value: 'h3' },
+        { label: 'H4 (Unterabschnitt)', value: 'h4' },
+      ],
+      admin: { description: 'Wie wichtig ist diese Ueberschrift im Seiten-Outline? Standard ist H3.' },
     },
     {
       name: 'faqs',
@@ -379,6 +415,18 @@ export const StepGuideBlock: Block = {
       type: 'text',
       label: 'Überschrift',
       admin: { description: 'Optional. Z.B. "So installieren Sie VCDS"' },
+    },
+    {
+      name: 'headingLevel',
+      type: 'select',
+      label: 'Heading-Ebene',
+      defaultValue: 'h3',
+      options: [
+        { label: 'H2 (grosse Abschnittsueberschrift)', value: 'h2' },
+        { label: 'H3 (Standard)', value: 'h3' },
+        { label: 'H4 (Unterabschnitt)', value: 'h4' },
+      ],
+      admin: { description: 'Wie wichtig ist diese Ueberschrift im Seiten-Outline? Standard ist H3.' },
     },
     {
       name: 'steps',

@@ -9,6 +9,8 @@ import { getTeamMembers, getSiteSettings } from '@/lib/payload'
 import { ContactForm } from './ContactForm'
 import { getPageSeo } from '@/lib/seo'
 import type { Metadata } from 'next'
+import { LocalBusinessSchema } from '@/components/StructuredData'
+import { SITE_URL } from '@/lib/site-url'
 
 export async function generateMetadata(): Promise<Metadata> {
   return getPageSeo('kontakt', {
@@ -31,9 +33,20 @@ const fallbackContact = {
   note: 'Bei Supportanfragen bitte vor dem Anruf einen Auto-Scan per Mail schicken!',
 }
 
+const fallbackLocalBusiness = {
+  name: 'Auto-Intern GmbH',
+  street: 'Herner Straße 299, Gebäude 29B',
+  zipCode: '44809',
+  city: 'Bochum',
+  country: 'DE',
+  phone: '+49 234 58 545 800',
+  email: 'support@vcds.de',
+}
+
 export default async function Kontakt() {
   let team = fallbackTeam
   let contact = fallbackContact
+  let localBusiness = fallbackLocalBusiness
 
   try {
     const [cmsTeam, settings] = await Promise.all([
@@ -58,6 +71,15 @@ export default async function Kontakt() {
         hours: settings.hours?.weekdays ?? fallbackContact.hours,
         note: settings.hours?.note ?? fallbackContact.note,
       }
+      localBusiness = {
+        name: settings.company.name ?? fallbackLocalBusiness.name,
+        street: settings.company.street ?? fallbackLocalBusiness.street,
+        zipCode: settings.company.zipCode ?? fallbackLocalBusiness.zipCode,
+        city: settings.company.city ?? fallbackLocalBusiness.city,
+        country: settings.company.country ?? fallbackLocalBusiness.country,
+        phone: settings.company.phone ?? fallbackLocalBusiness.phone,
+        email: settings.company.email ?? fallbackLocalBusiness.email,
+      }
     }
   } catch {
     // CMS not available
@@ -65,6 +87,7 @@ export default async function Kontakt() {
 
   return (
     <>
+      <LocalBusinessSchema {...localBusiness} url={SITE_URL} />
       <Header />
       <main id="main">
         <PageHero

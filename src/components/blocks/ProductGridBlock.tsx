@@ -15,6 +15,7 @@ interface Product {
 
 interface ProductGridBlockProps {
   heading?: string
+  headingLevel?: 'h2' | 'h3' | 'h4'
   products?: Product[] | null
   columns?: '2' | '3' | '4'
 }
@@ -25,12 +26,14 @@ const colsClass: Record<string, string> = {
   '4': 'sm:grid-cols-2 lg:grid-cols-4',
 }
 
-export function ProductGridBlockComponent({ heading, products, columns = '3' }: ProductGridBlockProps) {
+export function ProductGridBlockComponent({ heading, headingLevel, products, columns = '3' }: ProductGridBlockProps) {
   if (!products || products.length === 0) return null
+
+  const HeadingTag = (headingLevel ?? 'h3') as 'h2' | 'h3' | 'h4'
 
   return (
     <div className="my-10">
-      {heading && <h3 className="text-lg font-bold text-slate-800 mb-4">{heading}</h3>}
+      {heading && <HeadingTag className="text-lg font-bold text-slate-800 mb-4">{heading}</HeadingTag>}
       <div className={`grid gap-4 ${colsClass[columns]}`}>
         {products.map((product) => {
           const name = product.name ?? product.title ?? ''

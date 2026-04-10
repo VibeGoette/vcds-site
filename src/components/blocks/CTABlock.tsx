@@ -2,6 +2,7 @@ import { Icon } from '@/components/Icon'
 
 interface CTABlockProps {
   heading: string
+  headingLevel?: 'h2' | 'h3' | 'h4'
   text?: string
   buttonLabel: string
   buttonLink: string
@@ -10,7 +11,7 @@ interface CTABlockProps {
   style?: 'light' | 'dark' | 'primary'
 }
 
-export function CTABlockComponent({ heading, text, buttonLabel, buttonLink, isExternal, style = 'light' }: CTABlockProps) {
+export function CTABlockComponent({ heading, headingLevel, text, buttonLabel, buttonLink, isExternal, style = 'light' }: CTABlockProps) {
   const isDark = style === 'dark'
   const isPrimary = style === 'primary'
 
@@ -21,6 +22,7 @@ export function CTABlockComponent({ heading, text, buttonLabel, buttonLink, isEx
     : 'bg-slate-50 text-slate-900 border border-slate-200'
 
   const linkProps = isExternal ? { target: '_blank' as const, rel: 'noopener noreferrer' } : {}
+  const HeadingTag = (headingLevel ?? 'h3') as 'h2' | 'h3' | 'h4'
 
   return (
     <div className={`relative overflow-hidden rounded-2xl p-8 sm:p-10 text-center my-10 ${bgClass}`}>
@@ -31,7 +33,7 @@ export function CTABlockComponent({ heading, text, buttonLabel, buttonLink, isEx
         </>
       )}
       <div className="relative">
-        <h3 className="text-xl font-extrabold mb-2 tracking-tight">{heading}</h3>
+        <HeadingTag className="text-xl font-extrabold mb-2 tracking-tight">{heading}</HeadingTag>
         {text && <p className={`text-sm mb-6 max-w-md mx-auto ${isDark || isPrimary ? 'text-white/60' : 'text-slate-500'}`}>{text}</p>}
         <a
           href={buttonLink}

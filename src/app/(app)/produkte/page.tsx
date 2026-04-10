@@ -9,6 +9,8 @@ import { getProducts } from '@/lib/payload'
 import Image from 'next/image'
 import { getPageSeo } from '@/lib/seo'
 import type { Metadata } from 'next'
+import { ProductSchema } from '@/components/StructuredData'
+import { SITE_URL } from '@/lib/site-url'
 
 export async function generateMetadata(): Promise<Metadata> {
   return getPageSeo('produkte', { title: 'Produkte', description: 'VCDS Diagnoseadapter: HEX-V2 ab 294€, HEX-NET ab 514€. Komplettsysteme, Upgrades, Zubehör.' })
@@ -65,8 +67,17 @@ function extractSizeUrl(media: unknown, size: string): string | null {
   return null
 }
 
+interface ProductSchemaData {
+  name: string
+  description: string
+  price: string
+  sku: string
+  url: string
+}
+
 export default async function Produkte() {
   let cats = fallbackCats
+  let schemaProducts: ProductSchemaData[] = []
 
   try {
     const cmsProducts = await getProducts()
@@ -82,6 +93,13 @@ export default async function Produkte() {
         imgDesktop: extractSizeUrl(p.featuredImage, 'desktop'),
         imgMobile: extractSizeUrl(p.featuredImage, 'mobile'),
       }))
+      schemaProducts = cmsProducts.map(p => ({
+        name: p.name,
+        description: p.shortDescription ?? p.name,
+        price: p.price ?? '',
+        sku: p.slug ?? String(p.id),
+        url: `${SITE_URL}/produkte#${p.slug ?? p.id}`,
+      }))
     }
   } catch {
     // CMS not available
@@ -89,6 +107,9 @@ export default async function Produkte() {
 
   return (
     <>
+      {schemaProducts.map(sp => (
+        <ProductSchema key={sp.sku} {...sp} />
+      ))}
       <Header />
       <main id="main">
         <PageHero

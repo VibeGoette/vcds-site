@@ -22,7 +22,7 @@ export default async function Home() {
   let homeProducts = fallbackProducts
   try {
     const [cms, cmsProducts] = await Promise.all([getTestimonials(), getProducts()])
-    if (cms.length > 0) testimonials = cms as typeof fallbackTestimonials
+    if (cms.length > 0) testimonials = cms as unknown as typeof fallbackTestimonials
     if (cmsProducts.length > 0) {
       // Pick the first hex-v2 and hex-net for the homepage
       const v2 = cmsProducts.find(p => p.category === 'hex-v2')

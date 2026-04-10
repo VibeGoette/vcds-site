@@ -26,8 +26,6 @@ export async function ThemeProvider({ children }: { children: React.ReactNode })
   const textColor = settings?.colors?.textColor || '#0f172a'
   const backgroundColor = settings?.colors?.backgroundColor || '#ffffff'
 
-  const headingFont = settings?.typography?.headingFont || 'quicksand'
-  const bodyFont = settings?.typography?.bodyFont || 'quicksand'
   const buttonRadius = settings?.layout?.buttonRadius || 'md'
   const sectionSpacing = settings?.layout?.sectionSpacing || 'default'
 

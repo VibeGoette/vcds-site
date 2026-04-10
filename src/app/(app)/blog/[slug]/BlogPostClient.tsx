@@ -243,8 +243,8 @@ function Section({ s }: { s: Sec }) {
   )
 }
 
-/* ═══ HARDCODED POST SLUGS — exported for page.tsx to check ═══ */
-export const hardcodedSlugs = new Set(Object.keys(P))
+/* ═══ HARDCODED POST SLUGS — re-exported from hardcoded-posts for page.tsx ═══ */
+export { HARDCODED_SLUGS as hardcodedSlugs } from './hardcoded-posts'
 
 /* ═══ PAGE COMPONENT ═══ */
 export function BlogPostClient({ slug }: { slug: string }) {

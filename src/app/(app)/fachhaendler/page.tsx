@@ -6,6 +6,7 @@ import { IconBox } from '@/components/ui/IconBox'
 import { getDealers } from '@/lib/payload'
 import { getPageSeo } from '@/lib/seo'
 import type { Metadata } from 'next'
+import { StoreSchema } from '@/components/StructuredData'
 
 export async function generateMetadata(): Promise<Metadata> {
   return getPageSeo('fachhaendler', { title: 'Fachhändler', description: 'Autorisierte VCDS Fachhändler in Deutschland, Österreich und der Schweiz.' })
@@ -23,8 +24,28 @@ const fallbackDealers = [
   { name:'Autotronic', city:'Schweiz', country:'CH', url:'https://www.autotronic-shop.ch' },
 ]
 
+interface DealerDisplay {
+  name: string
+  city: string
+  country: string
+  url: string
+}
+
+interface DealerSchemaData {
+  name: string
+  city: string
+  country: string
+  url: string
+  street?: string
+  zipCode?: string
+  phone?: string
+  email?: string
+  description?: string
+}
+
 export default async function Fachhaendler() {
-  let dealers = fallbackDealers
+  let dealers: DealerDisplay[] = fallbackDealers
+  let dealerSchemas: DealerSchemaData[] = []
 
   try {
     const cmsDealers = await getDealers()
@@ -35,6 +56,17 @@ export default async function Fachhaendler() {
         country: d.country,
         url: d.shopUrl,
       }))
+      dealerSchemas = cmsDealers.map(d => ({
+        name: d.companyName,
+        city: d.city ?? '',
+        country: d.country,
+        url: d.shopUrl,
+        street: d.street ?? undefined,
+        zipCode: d.zipCode ?? undefined,
+        phone: d.phone ?? undefined,
+        email: d.email ?? undefined,
+        description: d.description ?? undefined,
+      }))
     }
   } catch {
     // CMS not available
@@ -42,6 +74,9 @@ export default async function Fachhaendler() {
 
   return (
     <>
+      {dealerSchemas.map(ds => (
+        <StoreSchema key={ds.name} {...ds} />
+      ))}
       <Header />
       <main id="main">
         <PageHero

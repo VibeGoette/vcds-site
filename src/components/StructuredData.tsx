@@ -47,27 +47,94 @@ export function OrganizationSchema() {
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(data) }} />
 }
 
+/**
+ * Convert a CMS free-text price like "ab 294,00 €" into a schema.org-compatible
+ * string like "294.00". Returns null if no numeric component is present (e.g.
+ * "auf Anfrage"), so the caller can omit the offer entirely.
+ */
+export function parsePriceToSchemaValue(price: string | undefined | null): string | null {
+  if (!price) return null
+  const match = price.match(/(\d+(?:[.,]\d+)?)/)
+  if (!match) return null
+  return match[1].replace(',', '.')
+}
+
 // Product schema — for HEX-V2 and HEX-NET
 export function ProductSchema({ name, description, price, sku, url }: {
   name: string; description: string; price: string; sku: string; url: string
 }) {
-  const data = {
+  const parsedPrice = parsePriceToSchemaValue(price)
+  const data: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name,
     description,
     brand: { '@type': 'Brand', name: 'Ross-Tech' },
     manufacturer: { '@type': 'Organization', name: 'Ross-Tech, LLC' },
-    offers: {
+    sku,
+  }
+  if (parsedPrice !== null) {
+    data.offers = {
       '@type': 'Offer',
-      price: price.replace(/[^0-9]/g, ''),
+      price: parsedPrice,
       priceCurrency: 'EUR',
       availability: 'https://schema.org/InStock',
       seller: { '@type': 'Organization', name: 'Auto-Intern GmbH' },
       url,
-    },
-    sku,
+    }
   }
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(data) }} />
+}
+
+// LocalBusiness schema — for contact/company page
+export function LocalBusinessSchema({
+  name, street, zipCode, city, country, phone, email, url,
+}: {
+  name: string; street: string; zipCode: string; city: string; country: string;
+  phone?: string; email?: string; url: string;
+}) {
+  const data: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    name,
+    url,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: street,
+      postalCode: zipCode,
+      addressLocality: city,
+      addressCountry: country,
+    },
+  }
+  if (phone) data.telephone = phone
+  if (email) data.email = email
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(data) }} />
+}
+
+// Store schema — for dealer listings
+export function StoreSchema({
+  name, street, zipCode, city, country, phone, email, url, description,
+}: {
+  name: string; street?: string; zipCode?: string; city: string; country: string;
+  phone?: string; email?: string; url: string; description?: string;
+}) {
+  const address: Record<string, unknown> = {
+    '@type': 'PostalAddress',
+    addressLocality: city,
+    addressCountry: country,
+  }
+  if (street) address.streetAddress = street
+  if (zipCode) address.postalCode = zipCode
+  const data: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': 'Store',
+    name,
+    url,
+    address,
+  }
+  if (phone) data.telephone = phone
+  if (email) data.email = email
+  if (description) data.description = description
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(data) }} />
 }
 

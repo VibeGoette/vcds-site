@@ -9,15 +9,18 @@ interface FAQItem {
 
 interface FAQBlockProps {
   heading?: string
+  headingLevel?: 'h2' | 'h3' | 'h4'
   faqs?: FAQItem[] | null
 }
 
-export function FAQBlockComponent({ heading, faqs }: FAQBlockProps) {
+export function FAQBlockComponent({ heading, headingLevel, faqs }: FAQBlockProps) {
   if (!faqs || faqs.length === 0) return null
+
+  const HeadingTag = (headingLevel ?? 'h3') as 'h2' | 'h3' | 'h4'
 
   return (
     <div className="my-10">
-      {heading && <h3 className="text-lg font-bold text-slate-800 mb-4">{heading}</h3>}
+      {heading && <HeadingTag className="text-lg font-bold text-slate-800 mb-4">{heading}</HeadingTag>}
       <div className="rounded-xl border border-slate-200 overflow-hidden">
         <Accordion type="single" collapsible>
           {faqs.map((faq, i) => (
