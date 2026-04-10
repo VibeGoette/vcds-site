@@ -1,5 +1,5 @@
 import { withPayload } from '@payloadcms/next/withPayload'
-import { buildHeaders } from './src/lib/security-headers.js'
+import { buildHeaders } from './src/lib/security-headers.mjs'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {

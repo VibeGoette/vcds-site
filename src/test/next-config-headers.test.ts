@@ -1,8 +1,11 @@
 /**
- * Tests for the security headers exported from src/lib/security-headers.ts.
+ * Tests for the security headers exported from src/lib/security-headers.mjs.
  *
  * next.config.mjs delegates to buildHeaders() from that module so we can test
- * the headers without importing withPayload() from @payloadcms/next.
+ * the headers without importing withPayload() from @payloadcms/next. The file
+ * is .mjs (plain JS with JSDoc types) because Node's ESM loader can't transpile
+ * TypeScript when loading next.config.mjs. The explicit .mjs extension in the
+ * import is required by TypeScript's bundler moduleResolution.
  */
 import { describe, it, expect } from 'vitest'
 import {
@@ -10,7 +13,7 @@ import {
   publicCsp,
   PUBLIC_ROUTES_REGEX,
   buildHeaders,
-} from '@/lib/security-headers'
+} from '@/lib/security-headers.mjs'
 
 // ── securityHeaders ──────────────────────────────────────────────────────────
 

@@ -1,12 +1,23 @@
 /**
- * Security headers extracted from next.config.mjs so they can be unit-tested
- * without importing withPayload() from @payloadcms/next.
+ * Security headers for next.config.mjs.
+ *
+ * This file is plain JavaScript (not TypeScript) because next.config.mjs runs
+ * in Node's ESM loader, which does not transpile TypeScript. Tests import it
+ * via the `@/lib/security-headers` path alias which Vitest resolves to this
+ * `.mjs` file through the bundler-style moduleResolution in tsconfig.json.
+ *
+ * JSDoc type annotations give editor support without requiring a .d.ts file.
  */
 
-export type HeaderEntry = { key: string; value: string }
+/**
+ * @typedef {{ key: string; value: string }} HeaderEntry
+ */
 
-/** Baseline security headers applied to every response (incl. /admin and /api). */
-export const securityHeaders: HeaderEntry[] = [
+/**
+ * Baseline security headers applied to every response (incl. /admin and /api).
+ * @type {HeaderEntry[]}
+ */
+export const securityHeaders = [
   { key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains' },
   { key: 'X-Content-Type-Options', value: 'nosniff' },
   { key: 'X-Frame-Options', value: 'DENY' },
@@ -40,8 +51,9 @@ export const PUBLIC_ROUTES_REGEX = '/((?!admin|api).*)'
 /**
  * Returns the Next.js headers() array.
  * Extracted so it can be tested without calling withPayload().
+ * @returns {Array<{ source: string; headers: HeaderEntry[] }>}
  */
-export function buildHeaders(): Array<{ source: string; headers: HeaderEntry[] }> {
+export function buildHeaders() {
   return [
     // Baseline security headers on every route (incl. /admin and /api).
     {
