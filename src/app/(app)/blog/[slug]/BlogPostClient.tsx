@@ -1,6 +1,7 @@
 'use client'
 import { Icon } from '@/components/Icon'
 import { ReadingProgress } from '@/components/blog/ReadingProgress'
+import { ShareButtons } from '@/components/blog/ShareButtons'
 import Link from 'next/link'
 
 /* ═══ SVG ILLUSTRATIONS — Rich, detailed, unique per article ═══ */
@@ -328,15 +329,8 @@ export function BlogPostClient({ slug }: { slug: string }) {
             </div>
           </div>
 
-          {/* Share buttons */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 pb-10 border-b border-slate-200 mb-12">
-            <span className="text-sm font-bold text-slate-500 tracking-wide uppercase text-[11px]">Teilen</span>
-            <div className="flex gap-2">
-              {['Forum','E-Mail','Link kopieren'].map(s => (
-                <button key={s} className="px-4 py-2 text-xs font-semibold bg-slate-100 text-slate-600 rounded-lg hover:bg-primary-50 hover:text-primary-600 transition-colors min-h-[40px] border border-slate-200/50">{s}</button>
-              ))}
-            </div>
-          </div>
+          {/* Share buttons (PERF-04: replaced fake three-button stub with the working component used by CMS-backed posts) */}
+          <ShareButtons title={post.title} slug={slug} />
 
           {/* ═══ RELATED ARTICLES ═══ */}
           {related.length > 0 && (
