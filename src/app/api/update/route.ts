@@ -85,10 +85,18 @@ export async function GET(request: NextRequest) {
   }
 }
 
-/** Simple semver comparison: returns -1, 0, or 1 */
+/**
+ * Simple numeric version comparison: returns -1, 0, or 1.
+ *
+ * PERF-15: pre-release suffixes (e.g. '25.3.1-beta.1') are truncated before
+ * parsing so they don't produce NaN components. The comparison is purely
+ * numeric on the major.minor.patch segments — pre-release ordering is NOT
+ * honoured. Good enough for VCDS's min-version gate; switch to `semver` if
+ * full SemVer precedence is ever needed.
+ */
 function compareVersions(a: string, b: string): number {
-  const pa = a.split('.').map(Number)
-  const pb = b.split('.').map(Number)
+  const pa = a.split('-')[0].split('.').map(Number)
+  const pb = b.split('-')[0].split('.').map(Number)
   const len = Math.max(pa.length, pb.length)
   for (let i = 0; i < len; i++) {
     const na = pa[i] ?? 0

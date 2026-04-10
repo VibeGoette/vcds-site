@@ -2,30 +2,81 @@ import { cn } from '@/lib/utils'
 import { BreadcrumbSchema } from '@/components/StructuredData'
 import Link from 'next/link'
 
+interface CrumbItem {
+  label: string
+  /** Optional override for the crumb's href. If omitted, falls back to the static map below. */
+  href?: string
+}
+
 interface PageHeroProps {
-  breadcrumb: string
+  /** Legacy string API: "Start / Blog / VCDS Adapter". Split by ' / '. */
+  breadcrumb?: string
+  /** Preferred API: explicit array of crumbs with per-item href overrides. */
+  crumbs?: CrumbItem[]
   title: string
   description?: string
   children?: React.ReactNode
   className?: string
 }
 
-/** Maps breadcrumb labels to their href paths */
+/**
+ * Maps breadcrumb labels to their href paths. Covers every public route under
+ * `src/app/(app)/*` so the legacy string API produces correct hrefs without
+ * each caller having to pass the `crumbs` prop.
+ */
 const crumbPaths: Record<string, string> = {
   'Start': '/',
   'Startseite': '/',
   'Blog': '/blog',
   'Produkte': '/produkte',
   'Hilfe & FAQ': '/faq',
+  'FAQ': '/faq',
+  'Kaufberatung': '/kaufberatung',
+  'Downloads': '/download',
+  'Download': '/download',
+  'Quickstart': '/quickstart',
+  'Einrichtung': '/quickstart',
+  'Fachhändler': '/fachhaendler',
+  'Fachhaendler': '/fachhaendler',
+  'Fernwartung': '/fernwartung',
+  'Troubleshooting': '/troubleshooting',
+  'Fehlerbehebung': '/troubleshooting',
+  'AHK-Codieren': '/ahk-codieren',
+  'AHK Codieren': '/ahk-codieren',
+  'Über VCDS': '/ueber-vcds',
+  'Ueber VCDS': '/ueber-vcds',
+  'Upgrade': '/upgrade',
+  'User Map': '/usermap',
+  'Usermap': '/usermap',
+  'Kontakt': '/kontakt',
+  'Datenschutz': '/datenschutz',
+  'Impressum': '/impressum',
 }
 
-export function PageHero({ breadcrumb, title, description, children, className }: PageHeroProps) {
-  const crumbs = breadcrumb.split(' / ').filter(Boolean)
+function resolveCrumbs(
+  breadcrumb: string | undefined,
+  crumbs: CrumbItem[] | undefined,
+): CrumbItem[] {
+  if (crumbs && crumbs.length > 0) return crumbs
+  if (!breadcrumb) return []
+  return breadcrumb
+    .split(' / ')
+    .filter(Boolean)
+    .map((label) => ({ label }))
+}
+
+function hrefFor(crumb: CrumbItem): string {
+  if (crumb.href) return crumb.href
+  return crumbPaths[crumb.label] || `/${crumb.label.toLowerCase().replace(/\s+/g, '-')}`
+}
+
+export function PageHero({ breadcrumb, crumbs: crumbsProp, title, description, children, className }: PageHeroProps) {
+  const crumbs = resolveCrumbs(breadcrumb, crumbsProp)
 
   // Build structured data items
-  const schemaItems = crumbs.map(crumb => ({
-    name: crumb,
-    url: crumbPaths[crumb] || `/${crumb.toLowerCase().replace(/\s+/g, '-')}`,
+  const schemaItems = crumbs.map((crumb) => ({
+    name: crumb.label,
+    url: hrefFor(crumb),
   }))
 
   return (
@@ -42,13 +93,13 @@ export function PageHero({ breadcrumb, title, description, children, className }
         <nav aria-label="Breadcrumb" className="mb-4">
           <ol className="flex items-center gap-1.5 text-xs text-slate-400">
             {crumbs.map((crumb, i) => (
-              <li key={crumb} className="flex items-center gap-1.5">
+              <li key={crumb.label} className="flex items-center gap-1.5">
                 {i > 0 && <span aria-hidden="true" className="text-slate-600">/</span>}
                 {i === crumbs.length - 1 ? (
-                  <span aria-current="page" className="text-primary-300">{crumb}</span>
+                  <span aria-current="page" className="text-primary-300">{crumb.label}</span>
                 ) : (
-                  <Link href={crumbPaths[crumb] || '/'} className="hover:text-white transition-colors duration-200">
-                    {crumb}
+                  <Link href={hrefFor(crumb)} className="hover:text-white transition-colors duration-200">
+                    {crumb.label}
                   </Link>
                 )}
               </li>

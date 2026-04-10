@@ -873,10 +873,8 @@ export async function seed(payload: Payload): Promise<void> {
         textColor: '#0f172a',
         backgroundColor: '#ffffff',
       },
-      typography: {
-        headingFont: 'quicksand',
-        bodyFont: 'quicksand',
-      },
+      // PERF-08: Typography is fixed to Quicksand (VCDS corporate font).
+      // The `typography` group was removed from ThemeSettings in 70a751a.
       layout: {
         buttonRadius: 'md',
         sectionSpacing: 'default',

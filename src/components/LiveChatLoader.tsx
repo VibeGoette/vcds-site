@@ -11,7 +11,21 @@ export function LiveChatLoader() {
   const consent = useCookieConsent()
 
   useEffect(() => {
-    if (consent !== 'accepted') return
+    if (typeof window === 'undefined') return
+
+    // PERF-09: when consent is revoked (rejected) or reset (pending), tear
+    // down any previously injected script + widget so the user isn't still
+    // tracked after they opt out.
+    if (consent !== 'accepted') {
+      const existing = document.getElementById('livechat-script')
+      if (existing) existing.remove()
+      const w = window as unknown as Record<string, unknown>
+      const widget = w.LiveChatWidget as { call?: (method: string) => void } | undefined
+      if (widget?.call) {
+        try { widget.call('destroy') } catch { /* widget not yet ready */ }
+      }
+      return
+    }
 
     // Prevent double-loading
     if (document.getElementById('livechat-script')) return

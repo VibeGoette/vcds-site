@@ -9,6 +9,9 @@ export function ReadingProgress() {
       if (!el) return
       const r = el.getBoundingClientRect()
       const t = el.scrollHeight - window.innerHeight
+      // PERF-06: short articles that fit entirely on screen have t <= 0,
+      // which would otherwise produce Infinity/NaN. Treat them as fully read.
+      if (t <= 0) { setP(100); return }
       setP(Math.min(100, Math.max(0, (-r.top / t) * 100)))
     }
     window.addEventListener('scroll', u, { passive: true })

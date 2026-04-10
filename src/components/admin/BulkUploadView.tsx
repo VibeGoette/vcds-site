@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useCallback, useState, useRef } from 'react'
+import React, { useCallback, useEffect, useState, useRef } from 'react'
 
 interface FileEntry {
   file: File
@@ -24,6 +24,20 @@ const BulkUploadView: React.FC = () => {
   const [isUploading, setIsUploading] = useState(false)
   const [uploadComplete, setUploadComplete] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  // PERF-12: keep a ref in sync with the latest `files` so the unmount
+  // cleanup can revoke every object URL that wasn't manually removed.
+  const filesRef = useRef<FileEntry[]>([])
+  useEffect(() => {
+    filesRef.current = files
+  }, [files])
+  useEffect(() => {
+    return () => {
+      for (const entry of filesRef.current) {
+        URL.revokeObjectURL(entry.preview)
+      }
+    }
+  }, [])
 
   const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10 MB
 
