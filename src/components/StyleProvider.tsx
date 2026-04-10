@@ -5,7 +5,7 @@ import { getStyleSettings } from '@/lib/payload'
  * Strips script tags, closing style tags, javascript: URLs, CSS expressions, and @import.
  * Note: This CSS is only editable by super-philipp role (trusted admin), not public input.
  */
-function sanitizeCss(css: string): string {
+export function sanitizeCss(css: string): string {
   return css
     .replace(/<script[\s\S]*?<\/script>/gi, '')
     .replace(/<\/style>/gi, '')
