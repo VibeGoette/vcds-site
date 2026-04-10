@@ -6,18 +6,45 @@ const BUSINESS_START = 9 * 60  // 9:00
 const BUSINESS_END = 16 * 60   // 16:00
 const LIVECHAT_URL = 'https://direct.lc.chat/17285498/'
 
+const WEEKDAY_INDEX: Record<string, number> = {
+  Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6,
+}
+
+/**
+ * Returns the current date/time components in Europe/Berlin.
+ *
+ * Uses `Intl.DateTimeFormat.formatToParts` rather than the old
+ * `new Date(toLocaleString(...))` trick, which is unspecified and produces
+ * different results in Safari/Firefox vs Chrome.
+ */
+function getBerlinNow(): { day: number; hour: number; minute: number } {
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'Europe/Berlin',
+    weekday: 'short',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  }).formatToParts(new Date())
+  const get = (type: Intl.DateTimeFormatPartTypes): string =>
+    parts.find((p) => p.type === type)?.value ?? ''
+  // Intl can return '24' for midnight in hour12:false mode — normalise to 0.
+  const hour = Number(get('hour')) % 24
+  return {
+    day: WEEKDAY_INDEX[get('weekday')] ?? 0,
+    hour,
+    minute: Number(get('minute')),
+  }
+}
+
 /** Check business hours in German timezone (Europe/Berlin) */
 function isBusinessHours(): boolean {
-  const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Berlin' }))
-  const day = now.getDay() // 0=Sun, 6=Sat
-  const timeInMinutes = now.getHours() * 60 + now.getMinutes()
+  const { day, hour, minute } = getBerlinNow()
+  const timeInMinutes = hour * 60 + minute
   return day >= 1 && day <= 5 && timeInMinutes >= BUSINESS_START && timeInMinutes < BUSINESS_END
 }
 
 function getNextAvailable(): string {
-  const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Berlin' }))
-  const day = now.getDay()
-  const hour = now.getHours()
+  const { day, hour } = getBerlinNow()
 
   if (day === 0) return 'Montag ab 9:00 Uhr'
   if (day === 6) return 'Montag ab 9:00 Uhr'
