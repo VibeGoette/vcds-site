@@ -31,11 +31,11 @@ const categoryIcons: Record<string, string> = {
 }
 
 interface ProductCard {
-  n: string
-  p: string
-  b: string
-  d: string
-  ic: string
+  name: string
+  price: string
+  badge: string
+  description: string
+  icon: string
   url: string
   img: { url: string; alt?: string; width?: number; height?: number } | null
   imgDesktop: string | null
@@ -43,12 +43,12 @@ interface ProductCard {
 }
 
 const fallbackCats: ProductCard[] = [
-  { n:'HEX-NET', p:'ab 514 €', b:'WLAN', d:'Kabelloser Diagnoseadapter mit WLAN. 10 oder unbegrenzte Fahrzeuge.', ic:'wifi', url:'https://www.auto-intern.de/shop/diagnose-adapter/199/hex-net-wifi-inkl.-vcds-lizenz', img: null, imgDesktop: null, imgMobile: null },
-  { n:'HEX-V2', p:'ab 294 €', b:'USB', d:'Kabelgebundener Adapter. 3, 10 oder unbegrenzte Fahrzeuge.', ic:'usb', url:'https://www.auto-intern.de/shop/diagnose-adapter/198/hex-v2-inkl.-vcds-lizenz', img: null, imgDesktop: null, imgMobile: null },
-  { n:'Diagnose-Adapter', p:'', b:'', d:'Diverse Adapter mit Fehlercode-Auslesung und Messwertaufzeichnung.', ic:'plug', url:'https://auto-intern.de/shop/', img: null, imgDesktop: null, imgMobile: null },
-  { n:'Komplettsysteme', p:'', b:'', d:'Komplettsets für professionelle Werkstätten.', ic:'shield', url:'https://auto-intern.de/shop/', img: null, imgDesktop: null, imgMobile: null },
-  { n:'Upgrades', p:'', b:'', d:'Ältere Adapter auf den neuesten Standard upgraden.', ic:'bolt', url:'https://www.auto-intern.de/shop/upgrades-erweiterungsmodule/', img: null, imgDesktop: null, imgMobile: null },
-  { n:'Zubehör', p:'', b:'', d:'Adapterkabel, Transportkoffer, USB-Sticks mit Software.', ic:'cog', url:'https://auto-intern.de/shop/', img: null, imgDesktop: null, imgMobile: null },
+  { name:'HEX-NET', price:'ab 514 €', badge:'WLAN', description:'Kabelloser Diagnoseadapter mit WLAN. 10 oder unbegrenzte Fahrzeuge.', icon:'wifi', url:'https://www.auto-intern.de/shop/diagnose-adapter/199/hex-net-wifi-inkl.-vcds-lizenz', img: null, imgDesktop: null, imgMobile: null },
+  { name:'HEX-V2', price:'ab 294 €', badge:'USB', description:'Kabelgebundener Adapter. 3, 10 oder unbegrenzte Fahrzeuge.', icon:'usb', url:'https://www.auto-intern.de/shop/diagnose-adapter/198/hex-v2-inkl.-vcds-lizenz', img: null, imgDesktop: null, imgMobile: null },
+  { name:'Diagnose-Adapter', price:'', badge:'', description:'Diverse Adapter mit Fehlercode-Auslesung und Messwertaufzeichnung.', icon:'plug', url:'https://auto-intern.de/shop/', img: null, imgDesktop: null, imgMobile: null },
+  { name:'Komplettsysteme', price:'', badge:'', description:'Komplettsets für professionelle Werkstätten.', icon:'shield', url:'https://auto-intern.de/shop/', img: null, imgDesktop: null, imgMobile: null },
+  { name:'Upgrades', price:'', badge:'', description:'Ältere Adapter auf den neuesten Standard upgraden.', icon:'bolt', url:'https://www.auto-intern.de/shop/upgrades-erweiterungsmodule/', img: null, imgDesktop: null, imgMobile: null },
+  { name:'Zubehör', price:'', badge:'', description:'Adapterkabel, Transportkoffer, USB-Sticks mit Software.', icon:'cog', url:'https://auto-intern.de/shop/', img: null, imgDesktop: null, imgMobile: null },
 ]
 
 function extractImage(media: unknown): { url: string; alt?: string; width?: number; height?: number } | null {
@@ -83,11 +83,11 @@ export default async function Produkte() {
     const cmsProducts = await getProducts()
     if (cmsProducts.length > 0) {
       cats = cmsProducts.map(p => ({
-        n: p.name,
-        p: p.price ?? '',
-        b: p.connection ? (connectionLabels[p.connection] ?? '') : '',
-        d: p.shortDescription ?? '',
-        ic: p.connection ? (categoryIcons[p.category] ?? 'plug') : (categoryIcons[p.category] ?? 'plug'),
+        name: p.name,
+        price: p.price ?? '',
+        badge: p.connection ? (connectionLabels[p.connection] ?? '') : '',
+        description: p.shortDescription ?? '',
+        icon: p.connection ? (categoryIcons[p.category] ?? 'plug') : (categoryIcons[p.category] ?? 'plug'),
         url: p.shopUrl ?? 'https://auto-intern.de/shop/',
         img: extractImage(p.featuredImage),
         imgDesktop: extractSizeUrl(p.featuredImage, 'desktop'),
@@ -131,30 +131,30 @@ export default async function Produkte() {
 
           <div className="space-y-3">
             {cats.map(c => (
-              <Card key={c.n} variant="interactive" padding="tight" className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <Card key={c.name} variant="interactive" padding="tight" className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                 {/* Product image or icon fallback */}
                 {c.img ? (
                   <div className="w-full sm:w-28 h-36 sm:h-24 relative rounded-lg overflow-hidden bg-slate-50 shrink-0">
                     <Image
                       src={c.imgDesktop ?? c.img.url}
-                      alt={c.img.alt ?? c.n}
+                      alt={c.img.alt ?? c.name}
                       fill
                       className="object-contain p-2"
                       sizes="(max-width: 640px) 480px, 112px"
                     />
                   </div>
                 ) : (
-                  <IconBox icon={c.ic} />
+                  <IconBox icon={c.icon} />
                 )}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-0.5">
-                    <h3 className="font-bold text-slate-900">{c.n}</h3>
-                    {c.b && <Badge>{c.b}</Badge>}
+                    <h3 className="font-bold text-slate-900">{c.name}</h3>
+                    {c.badge && <Badge>{c.badge}</Badge>}
                   </div>
-                  <p className="text-sm text-slate-500">{c.d}</p>
+                  <p className="text-sm text-slate-500">{c.description}</p>
                 </div>
                 <div className="shrink-0 flex items-center gap-3">
-                  {c.p && <span className="font-bold text-primary-600">{c.p}</span>}
+                  {c.price && <span className="font-bold text-primary-600">{c.price}</span>}
                   <Button variant="primary" size="sm" href={c.url} external>Zum Shop</Button>
                 </div>
               </Card>

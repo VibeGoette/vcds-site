@@ -1,13 +1,40 @@
+/**
+ * NOTE (CQ-09): The Payload admin panel does NOT load Tailwind CSS.
+ *
+ * The project's Tailwind styles are only injected via `src/app/(app)/layout.tsx`
+ * (which imports `globals.css` with `@tailwind base/components/utilities`).
+ * The admin route group at `src/app/(payload)/layout.tsx` only imports
+ * `custom.scss` — a nearly-empty file with no Tailwind directives — and
+ * `payload.config.ts` has no `admin.css` entry that would load Tailwind either.
+ *
+ * Tailwind's content scanner does process this file (tailwind.config.ts scans
+ * `./src/**`), so class names are generated in the output CSS bundle — but that
+ * bundle is never served to the admin panel. Using Tailwind classes here would
+ * silently produce unstyled elements.
+ *
+ * The `CharCount` component below uses `className` with Tailwind color classes
+ * (e.g. `text-green-600`, `text-red-600`) for the character-count indicator.
+ * These class names are currently non-functional in the admin panel and should
+ * be replaced with inline styles if the visual indicator is important. The
+ * surrounding SERP mockup already uses inline styles for this reason.
+ *
+ * Therefore this component intentionally uses inline `style={{...}}` objects
+ * for the majority of its styling. Do not convert to Tailwind classes without
+ * first verifying that Tailwind CSS is actually loaded in the admin panel.
+ */
 'use client'
 
 import { useFormFields } from '@payloadcms/ui'
 
 function CharCount({ current, greenMax, yellowMax }: { current: number; greenMax: number; yellowMax: number }) {
+  // Inline colors because the admin panel does not load Tailwind — see the
+  // header comment. The previous version used text-green-600 / text-red-600
+  // className strings which silently produced grey text in the admin.
   const color =
-    current === 0 ? 'text-gray-400' :
-    current <= greenMax ? 'text-green-600' :
-    current <= yellowMax ? 'text-yellow-600' :
-    'text-red-600'
+    current === 0 ? '#9ca3af' :       // gray-400
+    current <= greenMax ? '#16a34a' : // green-600
+    current <= yellowMax ? '#ca8a04' :// yellow-600
+    '#dc2626'                         // red-600
 
   const label =
     current === 0 ? '' :
@@ -16,7 +43,7 @@ function CharCount({ current, greenMax, yellowMax }: { current: number; greenMax
     ' — Zu lang'
 
   return (
-    <span className={`text-xs font-mono ${color}`}>
+    <span style={{ fontSize: '12px', fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace', color }}>
       {current}/{yellowMax}{label}
     </span>
   )

@@ -1,11 +1,6 @@
 import type { GlobalConfig } from 'payload'
 import { revalidateGlobal } from '@/hooks/revalidate'
-
-const validateHref = (value: string | null | undefined): string | true => {
-  if (!value) return true
-  if (value.startsWith('/') || value.startsWith('https://') || value.startsWith('http://')) return true
-  return "Link muss mit '/' (intern) oder 'https://' (extern) beginnen."
-}
+import { validateUrl } from '@/fields/validateUrl'
 
 export const Navigation: GlobalConfig = {
   slug: 'navigation',
@@ -40,7 +35,7 @@ export const Navigation: GlobalConfig = {
           type: 'text',
           required: true,
           label: 'Link',
-          validate: validateHref,
+          validate: validateUrl,
           admin: { description: 'Interner Pfad (/produkte) oder externe URL.' },
         },
         {
@@ -65,7 +60,7 @@ export const Navigation: GlobalConfig = {
               type: 'text',
               required: true,
               label: 'Link',
-              validate: validateHref,
+              validate: validateUrl,
             },
             {
               name: 'isExternal',
@@ -91,7 +86,7 @@ export const Navigation: GlobalConfig = {
           name: 'href',
           type: 'text',
           required: true,
-          validate: validateHref,
+          validate: validateUrl,
         },
         {
           name: 'isExternal',

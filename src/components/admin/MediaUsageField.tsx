@@ -1,3 +1,21 @@
+/**
+ * NOTE (CQ-09): The Payload admin panel does NOT load Tailwind CSS.
+ *
+ * The project's Tailwind styles are only injected via `src/app/(app)/layout.tsx`
+ * (which imports `globals.css` with `@tailwind base/components/utilities`).
+ * The admin route group at `src/app/(payload)/layout.tsx` only imports
+ * `custom.scss` — a nearly-empty file with no Tailwind directives — and
+ * `payload.config.ts` has no `admin.css` entry that would load Tailwind either.
+ *
+ * Tailwind's content scanner does process this file (tailwind.config.ts scans
+ * `./src/**`), so class names are generated in the output CSS bundle — but that
+ * bundle is never served to the admin panel. Using Tailwind classes here would
+ * silently produce unstyled elements.
+ *
+ * Therefore this component intentionally uses inline `style={{...}}` objects.
+ * Do not convert to Tailwind classes without first verifying that Tailwind CSS
+ * is actually loaded in the admin panel.
+ */
 'use client'
 
 import React, { useEffect, useState } from 'react'

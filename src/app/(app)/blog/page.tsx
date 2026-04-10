@@ -193,7 +193,7 @@ export default async function Blog() {
         <div className="max-w-6xl mx-auto px-4 sm:px-5 py-10 md:py-14">
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
             {rest.map(function(post) {
-              var cat = cats[post.category] || cats.beratung
+              const cat = cats[post.category] || cats.beratung
               return (
                 <Link key={post.slug} href={'/blog/' + post.slug}
                   className="blog-card group flex flex-col bg-white rounded-2xl border border-slate-200/80 overflow-hidden hover:shadow-xl hover:border-slate-300 hover:-translate-y-1 transition-all duration-400">

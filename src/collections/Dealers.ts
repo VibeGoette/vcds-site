@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { publicReadAdminWrite } from '@/access'
+import { validateUrl } from '@/fields/validateUrl'
 
 export const Dealers: CollectionConfig = {
   slug: 'dealers',
@@ -59,6 +60,7 @@ export const Dealers: CollectionConfig = {
       type: 'text',
       required: true,
       label: 'Shop-URL',
+      validate: validateUrl,
       admin: {
         description: 'Link zum Online-Shop des Händlers.',
       },

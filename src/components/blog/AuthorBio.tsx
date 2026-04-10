@@ -1,7 +1,6 @@
 interface AuthorBioProps {
   name: string
   role?: string
-  email?: string
 }
 
 export function AuthorBio({ name, role }: AuthorBioProps) {

@@ -6,7 +6,6 @@ interface CTABlockProps {
   text?: string
   buttonLabel: string
   buttonLink: string
-  buttonVariant?: string
   isExternal?: boolean
   style?: 'light' | 'dark' | 'primary'
 }

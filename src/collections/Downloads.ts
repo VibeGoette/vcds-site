@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { publicReadAdminWrite } from '@/access'
+import { validateUrl } from '@/fields/validateUrl'
 
 export const Downloads: CollectionConfig = {
   slug: 'downloads',
@@ -72,6 +73,7 @@ export const Downloads: CollectionConfig = {
       name: 'downloadUrl',
       type: 'text',
       label: 'Download-URL (extern)',
+      validate: validateUrl,
       admin: {
         description: 'Direkt-Link zum Download (z.B. https://download.ross-tech.de/drv, ftp://...)',
         condition: (data) => data?.downloadSource === 'url',

@@ -38,7 +38,7 @@ export function BlockRenderer({ blocks }: BlockRendererProps) {
             return <YouTubeBlockComponent key={key} videoId={block.videoId as string} title={block.title as string} aspectRatio={block.aspectRatio as '16:9' | '4:3'} />
 
           case 'cta':
-            return <CTABlockComponent key={key} heading={block.heading as string} headingLevel={block.headingLevel as 'h2' | 'h3' | 'h4'} text={block.text as string} buttonLabel={block.buttonLabel as string} buttonLink={block.buttonLink as string} buttonVariant={block.buttonVariant as string} isExternal={block.isExternal as boolean} style={block.style as 'light' | 'dark' | 'primary'} />
+            return <CTABlockComponent key={key} heading={block.heading as string} headingLevel={block.headingLevel as 'h2' | 'h3' | 'h4'} text={block.text as string} buttonLabel={block.buttonLabel as string} buttonLink={block.buttonLink as string} isExternal={block.isExternal as boolean} style={block.style as 'light' | 'dark' | 'primary'} />
 
           case 'callout':
             return <CalloutBlockComponent key={key} variant={block.variant as 'info' | 'warning' | 'success' | 'danger'} title={block.title as string} content={block.content as Parameters<typeof CalloutBlockComponent>[0]['content']} />

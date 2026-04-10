@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { validateUrl } from '@/fields/validateUrl'
 
 /**
  * Rich Text Block — Standard content with headings, lists, links
@@ -128,6 +129,7 @@ export const CTABlock: Block = {
       type: 'text',
       required: true,
       label: 'Button-Link',
+      validate: validateUrl,
       admin: { description: 'Interner Pfad (/produkte) oder externe URL (https://...)' },
     },
     {
