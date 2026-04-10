@@ -27,6 +27,24 @@ import { StyleSettings } from '@/globals/StyleSettings'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
+// SEC-01: In production, a missing or weak PAYLOAD_SECRET is a hard error.
+// In dev, a documented fallback is used so local setup works without env files.
+function resolvePayloadSecret(): string {
+  const secret = process.env.PAYLOAD_SECRET
+  if (secret && secret.length >= 32) return secret
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error(
+      'PAYLOAD_SECRET is required in production and must be at least 32 characters. ' +
+      'Set it in your environment (e.g. Vercel project settings) before deploying.',
+    )
+  }
+  console.warn(
+    '[payload.config] PAYLOAD_SECRET not set — using insecure dev fallback. ' +
+    'This value MUST NOT be used in production.',
+  )
+  return 'vcds-dev-secret-change-in-production-min-32-chars!!'
+}
+
 export default buildConfig({
   admin: {
     user: Users.slug,
@@ -75,7 +93,7 @@ export default buildConfig({
     },
   }),
 
-  secret: process.env.PAYLOAD_SECRET || 'vcds-dev-secret-change-in-production-min-32-chars!!',
+  secret: resolvePayloadSecret(),
 
   sharp,
 

@@ -76,9 +76,10 @@ html { scroll-behavior: smooth; }
   }
 }
 
-/* Prevent horizontal overflow on mobile */
-html, body { overflow-x: hidden; }
-main { overflow-x: hidden; }
+/* Prevent horizontal overflow on mobile.
+   Only set on <body>: duplicating on <html> and <main> can break position:sticky
+   and overlay-positioning inside main content (PERF-10). */
+body { overflow-x: hidden; }
 
 /* Skip link */
 .sr-only { position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0; }

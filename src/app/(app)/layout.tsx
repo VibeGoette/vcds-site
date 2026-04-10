@@ -3,6 +3,7 @@ import { Quicksand } from 'next/font/google'
 import Script from 'next/script'
 import { getGlobalSeo } from '@/lib/seo'
 import { SITE_URL } from '@/lib/site-url'
+import { isAllowedAnalyticsUrl } from '@/lib/analytics-allowlist'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import { StyleProvider } from '@/components/StyleProvider'
 import { AnimateOnScroll } from '@/components/AnimateOnScroll'
@@ -48,8 +49,20 @@ export const metadata: Metadata = {
 }
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
-  // Fetch CMS global settings for analytics & SEO verification
+  // Fetch CMS global settings for analytics & SEO verification.
+  // `getGlobalSeo()` handles CMS errors internally and always returns safe defaults,
+  // so layout rendering never depends on a reachable database.
   const globalSeo = await getGlobalSeo()
+
+  // SEC-09: only render the Umami <Script> if the CMS-configured URL matches
+  // an allowlisted host. Log a warning in dev if an admin set an invalid URL.
+  const umamiUrlAllowed = isAllowedAnalyticsUrl(globalSeo.umamiUrl)
+  if (globalSeo.umamiUrl && !umamiUrlAllowed && process.env.NODE_ENV !== 'production') {
+    console.warn(
+      `[layout] Umami analytics URL "${globalSeo.umamiUrl}" is not in the allowlist ` +
+      'and will not be loaded. Set UMAMI_ALLOWED_HOSTS or update the CMS setting.',
+    )
+  }
 
   return (
     <div className={`${quicksand.variable} font-sans antialiased min-h-screen flex flex-col`}>
@@ -69,8 +82,9 @@ export default async function AppLayout({ children }: { children: React.ReactNod
         </a>
         {children}
 
-        {/* Umami Analytics (DSGVO-konform, cookieless — from Admin Panel) */}
-        {globalSeo.umamiSiteId && globalSeo.umamiUrl && (
+        {/* Umami Analytics (DSGVO-konform, cookieless — from Admin Panel).
+            Only rendered if the CMS-configured URL is in the analytics host allowlist. */}
+        {globalSeo.umamiSiteId && umamiUrlAllowed && (
           <Script
             id="umami-analytics"
             strategy="lazyOnload"
