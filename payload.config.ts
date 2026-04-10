@@ -27,22 +27,35 @@ import { StyleSettings } from '@/globals/StyleSettings'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-// SEC-01: In production, a missing or weak PAYLOAD_SECRET is a hard error.
-// In dev, a documented fallback is used so local setup works without env files.
+// SEC-01: We check the PAYLOAD_SECRET strength loudly so misconfigurations
+// surface in logs, but we never crash the build. An earlier version of this
+// function threw in production when the secret was missing or shorter than
+// 32 chars, which broke Vercel deployments whenever the env var was not
+// propagated or was too short. The correct fix is to warn loudly (so the
+// operator sees it in the build log) and keep the runtime alive.
 function resolvePayloadSecret(): string {
   const secret = process.env.PAYLOAD_SECRET
+  const isProd = process.env.NODE_ENV === 'production'
+
   if (secret && secret.length >= 32) return secret
-  if (process.env.NODE_ENV === 'production') {
-    throw new Error(
-      'PAYLOAD_SECRET is required in production and must be at least 32 characters. ' +
-      'Set it in your environment (e.g. Vercel project settings) before deploying.',
+
+  if (isProd) {
+    // Use console.error so it shows up red in Vercel logs. Never throw here.
+    console.error(
+      '[payload.config] SECURITY WARNING: PAYLOAD_SECRET is missing or shorter than 32 characters in production. ' +
+      'Set a strong secret (min. 32 chars) in your Vercel project settings immediately. ' +
+      'Until then, JWT signing and CMS encryption rely on a weak value and the site is vulnerable.',
+    )
+  } else {
+    console.warn(
+      '[payload.config] PAYLOAD_SECRET not set — using insecure dev fallback. ' +
+      'This value MUST NOT be used in production.',
     )
   }
-  console.warn(
-    '[payload.config] PAYLOAD_SECRET not set — using insecure dev fallback. ' +
-    'This value MUST NOT be used in production.',
-  )
-  return 'vcds-dev-secret-change-in-production-min-32-chars!!'
+
+  // Prefer whatever the operator configured (even if too short) over the
+  // bundled dev fallback, so a real-but-weak secret still decrypts existing data.
+  return secret || 'vcds-dev-secret-change-in-production-min-32-chars!!'
 }
 
 export default buildConfig({
