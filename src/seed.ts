@@ -562,6 +562,15 @@ export async function seed(payload: Payload): Promise<void> {
       excerpt: 'Clone-Produkte täuschen mit niedrigeren Preisen, verursachen jedoch häufig fehlerhafte Diagnosen und können Steuergeräte beschädigen.',
       tags: ['Fälschungen', 'Clone', 'Sicherheit', 'Original'],
     },
+    {
+      title: 'SFD-Registrierung mit VCDS – Schritt für Schritt zur Freischaltung',
+      slug: 'sfd-registrierung-vcds-anleitung',
+      category: 'anleitungen' as const,
+      status: 'published' as const,
+      publishedAt: '2025-05-08T00:00:00.000Z',
+      excerpt: 'Die komplette Anleitung zur SFD-Registrierung für HEX-V2 und HEX-NET. Voraussetzungen, Beta-Setup, Ross-Tech-Account und 2FA-Passwort – verständlich erklärt.',
+      tags: ['SFD', 'Registrierung', 'HEX-V2', 'HEX-NET', 'Ross-Tech', 'Anleitung'],
+    },
   ]
 
   for (const post of posts) {
