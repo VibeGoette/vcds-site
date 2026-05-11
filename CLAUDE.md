@@ -232,6 +232,22 @@ Erreichbar unter `/admin`. Erster Besuch → Admin-User erstellen. Credentials i
 - **Einstellungen:** Website-Einstellungen, Navigation, Design-Einstellungen
 - **Custom Views:** Massenupload (/admin/bulk-upload)
 
+## Blog-Workflow
+
+Blog-Inhalte werden zweigleisig gepflegt: Der **CMS-Eintrag** (Payload) ist die Source of Truth fuer die Live-Site, der **Markdown-Spiegel** in `content/blog/` dient als versionierte Referenz fuer Reviews, Reuse und Wiederherstellung bei DB-Verlust.
+
+- **Verzeichnis:** `content/blog/<slug>.md` (Dateiname identisch zum Post-Slug)
+- **Seed-Eintrag:** In `src/seed.ts` → `posts`-Array. Metadaten (title, slug, category, status, publishedAt, excerpt, tags) — Content selbst bleibt im Markdown-Spiegel und wird im Admin gepastet.
+- **Kategorien:** `beratung`, `versionshistorie`, `mini`, `anleitungen`, `news` (siehe `Posts.ts`).
+- **Schreibstil:** MaxScript-Qualitaet, BOFU-orientiert, max. Informationsdichte. Umlaute immer ausschreiben (ae/oe/ue/ss verboten ausser in URL-Slugs).
+- **Workflow neuer Post:**
+  1. Markdown in `content/blog/<slug>.md` erstellen
+  2. Seed-Eintrag in `src/seed.ts` einfuegen
+  3. PR auf `main` → Vercel deployed
+  4. `npm run seed` oder Admin-UI → Post-Stub anlegen
+  5. Markdown in Lexical-Editor pasten, Featured Image + SEO-Felder ergaenzen
+  6. Status auf "Veroeffentlicht" → revalidiert `/blog` automatisch
+
 ## Git
 
 - **Main Branch:** `main` (Produktion auf Vercel)
